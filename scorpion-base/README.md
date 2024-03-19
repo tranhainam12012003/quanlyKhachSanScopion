@@ -1,0 +1,7 @@
+- git clone http://git.teca.vn/scopio/scopio-base.git {projectCode}
+- Rename scopio-base project name to scopio-{projectCode} (use Refactor of IDE)
+- Rename vn.teca.scopio.base package (in src/main/java and src/test/java) to vn.teca.scopio.{projectCode} package (use Refactor of IDE)
+- Rename BaseApplication class to {ProjectCode}Application class (use Refactor of IDE)
+- Rename BaseApplicationTests class to {ProjectCode}ApplicationTests class (use Refactor of IDE)
+- Update artifactId, name, description in pom.xml
+- git remote remove origin or git remote set-url origin http://git.teca.vn/scopio/scopio-{projectCode}.git

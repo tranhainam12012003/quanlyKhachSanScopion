@@ -1,0 +1,81 @@
+server:
+  port: 8080
+# spring
+spring:
+  application:
+    name: scopio-base
+  sleuth:
+    sampler:
+      probability: 1
+  zipkin:
+    enabled: false
+
+  # cloud
+  cloud:
+    config:
+      enabled: false
+  # messages
+  messages:
+    basename: messages
+    encoding: UTF-8
+  # jackson
+  jackson:
+    time-zone: Asia/Ho_Chi_Minh
+    date-format: dd/MM/yyyy HH:mm:ss
+  main:
+    allow-bean-definition-overriding: true
+  # datasource
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;database=SCORPIO
+    username: sa
+    password: 123456
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    name: SQL Scorpio
+#    maximum-pool-size: 1000
+#    minimum-idle: 20
+#    max-lifetime: 1800000
+#    idle-timeout: 180000
+#    connection-timeout: 50000
+#    pool-name: report-HikariCP
+  # jpa
+  jpa:
+    show-sql: false
+    properties:
+      hibernate.format_sql: false
+
+# eureka
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://scopio:scopio2024@localhost:8001/eureka/
+#  instance:
+#    health-check-url-path: /actuator/health
+#    metadata-map:
+#      startup: ${random.int}
+#    prefer-ip-address: true
+
+# management
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  info:
+    env:
+      enabled: true
+
+# JWT
+jwt.secret: scopio2024
+
+# services
+rest:
+  connect-timeout: 30s
+  read-timeout: 30s
+  services:
+    security: http://scopio-security
