@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "hoa_don_phong")
-public class HoaDonPhong {
+public class  HoaDonPhong {
     @Id
     @Column(name = "id_hoa_don", nullable = false)
     private Integer id;
