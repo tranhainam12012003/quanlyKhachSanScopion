@@ -9,7 +9,7 @@ import vn.teca.scopio.base.repository.TaiKhoanKhachRepository;
 import java.util.List;
 
 @Service
-public class taiKhoanKhachServices {
+public class TaiKhoanKhachServices {
     @Autowired
     TaiKhoanKhachRepository taiKhoanKhachRepository;
 

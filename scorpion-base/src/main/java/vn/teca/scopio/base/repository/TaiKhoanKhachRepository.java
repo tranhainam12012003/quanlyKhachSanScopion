@@ -2,20 +2,31 @@ package vn.teca.scopio.base.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import vn.teca.scopio.base.model.TaiKhoanKhach;
+import vn.teca.scopio.base.model.authentication.TaiKhoanKhachDtoLogin;
 
 import java.util.List;
 
 @Repository
 public interface TaiKhoanKhachRepository extends JpaRepository<TaiKhoanKhach, Integer> {
-    // câu lệnh join 3 bảng --(taiKhoanKhach-thongtinkhachdat-dondat) theo id tai khoan
-//    @Query(value = "SELECT ttkd.ho_ten, ttkd.ngay_sinh, ttkd.gioi_tinh, ttkd.email, ttkd.dia_chi, dd.id_don_dat, dd.thoi_gian_vao, dd.thoi_gian_ra, tkk.so_dien_thoai\n" +
-//            "FROM thong_tin_khach_dat AS ttkd\n" +
-//            "JOIN don_dat AS dd ON ttkd.id_khach_dat = dd.thong_tin_khach_dat_id_khach_dat\n" +
-//            "JOIN tai_khoan_khach AS tkk ON ttkd.id_khach_dat = tkk.thong_tin_khach_dat_id_khach_dat\n" +
-//            "WHERE tkk.id_tai_khoan_khach = ?1;", nativeQuery = true)
-//    TaiKhoanKhach detail(Integer id);
+    @Query(value = "SELECT thong_tin_khach_dat_id_khach_dat AS IdThongTinKhachDat FROM tai_khoan_khach WHERE so_dien_thoai = :soDienThoai\n" +
+            "AND mat_khau = :matKhau", nativeQuery = true)
+    TaiKhoanKhachDtoLogin getInfoKhachByLogin(@Param("soDienThoai") String soDienThoai, @Param("matKhau") String matKhau);
 
-// câu lệnh join 3 bảng lấy loại phòng và số lượng (loai_phong,don_dat,loai_phong_dat)
+    @Query(value = "SELECT COUNT(*) FROM tai_khoan_khach WHERE so_dien_thoai LIKE :soDienThoai", nativeQuery = true)
+    int isExistSoDienThoai(@Param("soDienThoai") String soDienThoai);
+
+    @Query(value = "BEGIN TRANSACTION;\n" +
+            "INSERT INTO thong_tin_khach_dat (ho_ten, so_dien_thoai,email,gioi_tinh)\n" +
+            "VALUES ( :ho_ten, :so_dien_thoai, :email, :gioi_tinh);\n" +
+            "INSERT INTO tai_khoan_khach (thong_tin_khach_dat_id_khach_dat, so_dien_thoai, mat_khau)\n" +
+            "VALUES ((SELECT id_khach_dat FROM thong_tin_khach_dat WHERE so_dien_thoai LIKE :so_dien_thoai), :so_dien_thoai, :mat_khau);\n" +
+            "COMMIT TRANSACTION;", nativeQuery = true)
+    void addNewInfoTaiKhoanKhachAndThongTinKhachDat(@Param("ho_ten") String hoVaTen,
+                                                    @Param("so_dien_thoai") String soDienThoai,
+                                                    @Param("email") String email,
+                                                    @Param("gioi_tinh") int gioiTinh,
+                                                    @Param("mat_khau") String password);
 }
