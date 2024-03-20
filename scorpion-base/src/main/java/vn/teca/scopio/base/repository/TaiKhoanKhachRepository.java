@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface TaiKhoanKhachRepository extends JpaRepository<TaiKhoanKhach, Integer> {
+    // day là code login
     @Query(value = "SELECT thong_tin_khach_dat_id_khach_dat AS IdThongTinKhachDat FROM tai_khoan_khach WHERE so_dien_thoai = :soDienThoai\n" +
             "AND mat_khau = :matKhau", nativeQuery = true)
     TaiKhoanKhachDtoLogin getInfoKhachByLogin(@Param("soDienThoai") String soDienThoai, @Param("matKhau") String matKhau);
