@@ -2,9 +2,11 @@ package vn.teca.scopio.base.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.teca.scopio.base.model.TaiKhoanNv;
 import vn.teca.scopio.base.model.authentication.TaiKhoanNVDtoLogin;
 import vn.teca.scopio.base.repository.TaiKhoanNvRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,5 +27,27 @@ public class TaiKhoanNVService {
             System.out.println("Login failed. Invalid phone number or password.");
             return Optional.empty();
         }
+    }
+    public TaiKhoanNv add(TaiKhoanNv taiKhoanNv){
+        return repository.save(taiKhoanNv);
+    }
+    public List<TaiKhoanNv> getAll(){
+        return repository.findAll();
+    }
+    public TaiKhoanNv update(TaiKhoanNv taiKhoanNv, Integer id) {
+        Optional<TaiKhoanNv> optional = repository.findById(id);
+        return optional.map(o -> {
+            o.setHoTen(taiKhoanNv.getHoTen());
+            o.setTenTaiKhoan(taiKhoanNv.getTenTaiKhoan());
+            o.setQuyenHanIdQuyenHan(taiKhoanNv.getQuyenHanIdQuyenHan());
+            o.setCccd(taiKhoanNv.getCccd());
+            o.setEmail(taiKhoanNv.getEmail());
+            o.setMatKhau(taiKhoanNv.getMatKhau());
+            o.setSoDienThoai(taiKhoanNv.getSoDienThoai());
+            return repository.save(o);
+        }).orElse(null);
+    }
+    public TaiKhoanNv add(Integer id){
+        return repository.findById(id).get();
     }
 }

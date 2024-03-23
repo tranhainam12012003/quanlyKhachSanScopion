@@ -16,19 +16,19 @@ import java.sql.Date;
 @Controller
 @RequestMapping("admin")
 public class thongTinKhachOController {
-//    @Autowired
-//    ThongtinKhachOSevices thongtinKhachOSevices;
-//
-//    @GetMapping("/khach-hang-o/hien-thi-tat-ca")
-//    public ResponseEntity<?> getall(){
-//        return ResponseEntity.ok(thongtinKhachOSevices.getAll());
-//    }
-//    @GetMapping("/khach-hang-o/view-chi-tiet/{id}")
-//    public ResponseEntity<?>getone(@PathVariable String id) {
-//        return ResponseEntity.ok(thongtinKhachOSevices.detail(Integer.parseInt(id)));
-//    }
-//    @GetMapping("/khach-hang-o/tim-kiem")
-//    public ResponseEntity<?> timKiem(@RequestParam("hovaten") String hoVaTen , @RequestParam("thoiGIanVao")Date thoiGianVao,@RequestParam("thoiGIanRa")Date thoiGianRa){
-//        return ResponseEntity.ok(thongtinKhachOSevices.timKiem(hoVaTen,thoiGianVao,thoiGianRa));
-//    }
+    @Autowired
+    ThongtinKhachOSevices thongtinKhachOSevices;
+
+    @GetMapping("/khach-hang-o/hien-thi-tat-ca")
+    public ResponseEntity<?> getall(){
+        return ResponseEntity.ok(thongtinKhachOSevices.getAll());
+    }
+    @GetMapping("/khach-hang-o/view-chi-tiet/{id}")
+    public ResponseEntity<?>getone(@PathVariable String id) {
+        return ResponseEntity.ok(thongtinKhachOSevices.detail(Integer.parseInt(id)));
+    }
+    @GetMapping("/khach-hang-o/tim-kiem")
+    public ResponseEntity<?> timKiem(@RequestParam("hovaten") String hoVaTen , @RequestParam("thoiGIanVao")Date thoiGianVao,@RequestParam("thoiGIanRa")Date thoiGianRa,@RequestParam("soGiayTo") String soGiayTo){
+        return ResponseEntity.ok(thongtinKhachOSevices.timKiem(hoVaTen,thoiGianVao,thoiGianRa,soGiayTo));
+    }
 }

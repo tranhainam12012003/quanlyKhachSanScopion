@@ -1,6 +1,8 @@
 package vn.teca.scopio.base.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tai_khoan_khach")
 public class TaiKhoanKhach {
     @Id
