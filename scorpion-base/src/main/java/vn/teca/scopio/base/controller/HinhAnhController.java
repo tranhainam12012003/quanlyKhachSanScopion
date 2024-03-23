@@ -22,10 +22,11 @@ import java.io.IOException;
 public class HinhAnhController {
     @Autowired
     private  HinhAnhServices hinhAnhServices;
-    @GetMapping("/hien-thi")
-    public ResponseEntity<?>getall(){
-        return ResponseEntity.ok(hinhAnhServices.getall());
-    }
+    //    @GetMapping("/hien-thi")
+//    public ResponseEntity<?>getall(){
+//
+//        return ResponseEntity.ok(hinhAnhServices.getAllImagesAsBase64());
+//    }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?>delete(@PathVariable String id){
         return ResponseEntity.ok(hinhAnhServices.delete(Integer.parseInt(id)));
@@ -35,15 +36,13 @@ public class HinhAnhController {
         return ResponseEntity.ok(hinhAnhServices.detail(Integer.parseInt(id)));
     }
     @PostMapping("/add")
-    public ResponseEntity<?>add(HinhAnh hinhAnh ,@RequestParam("image")MultipartFile file,String id) throws IOException {
+    public ResponseEntity<?>add(@RequestParam("image")MultipartFile file,String id) throws IOException {
 
-        String uploadImage = hinhAnhServices.uploadImage(file,Integer.parseInt(id));
+        return ResponseEntity.ok(hinhAnhServices.add(Integer.parseInt(id),file.getBytes())) ;
+    }
+//    @PostMapping("/update/{id}")
+//    public ResponseEntity<?>update(@PathVariable String id, @RequestBody HinhAnh ha){
+//        return ResponseEntity.ok(hinhAnhServices.update(ha,Integer.parseInt(id)));
+//    }
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(uploadImage);
-    }
-    @PostMapping("/update/{id}")
-    public ResponseEntity<?>update(@PathVariable String id, @RequestBody HinhAnh ha){
-        return ResponseEntity.ok(hinhAnhServices.update(ha,Integer.parseInt(id)));
-    }
 }

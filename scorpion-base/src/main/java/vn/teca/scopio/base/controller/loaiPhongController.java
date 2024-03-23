@@ -13,31 +13,52 @@ import org.springframework.web.bind.annotation.RestController;
 import vn.teca.scopio.base.model.LoaiPhong;
 import vn.teca.scopio.base.service.LoaiPhongServices;
 
+import java.math.BigDecimal;
+
 @Controller
 @RestController
-@RequestMapping("admin/loai-phong")
+@RequestMapping("/admin/loai-phong")
 public class loaiPhongController {
     @Autowired
     LoaiPhongServices loaiPhongServices;
+
     @GetMapping("/list")
-    public ResponseEntity<?>getall(){
+    public ResponseEntity<?> getall() {
         return ResponseEntity.ok(loaiPhongServices.getall());
     }
+
     @GetMapping("/detail/{id}")
-    public ResponseEntity<?>getone(@PathVariable String id){
+    public ResponseEntity<?> getone(@PathVariable String id) {
         return ResponseEntity.ok(loaiPhongServices.findbyId(Integer.parseInt(id)));
     }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?>delete(@PathVariable String id){
+    public ResponseEntity<?> delete(@PathVariable String id) {
         return ResponseEntity.ok(loaiPhongServices.delete(Integer.parseInt(id)));
     }
+
     @PostMapping("/sua/{id}")
-    public ResponseEntity<?>update(@PathVariable String id, @RequestBody LoaiPhong loaiPhong){
-        return ResponseEntity.ok(loaiPhongServices.update(loaiPhong,Integer.parseInt(id)));
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody LoaiPhong loaiPhong) {
+        return ResponseEntity.ok(loaiPhongServices.update(loaiPhong, Integer.parseInt(id)));
     }
+
     @PostMapping("/luu")
-    public ResponseEntity<?>add(@RequestBody LoaiPhong loaiPhong){
+    public ResponseEntity<?> add(@RequestBody LoaiPhong loaiPhong) {
         return ResponseEntity.ok(loaiPhongServices.add(loaiPhong));
 
+    }
+
+    @GetMapping("/tim-theo-ten/{ten}")
+    public ResponseEntity<?>timtheoten(@PathVariable String ten){
+        return ResponseEntity.ok(loaiPhongServices.timthemten(ten));
+    }
+
+    @GetMapping("tim-kiem-theo-gia/{gia}")
+    public ResponseEntity<?>timtheogia(@PathVariable String gia){
+        return ResponseEntity.ok(loaiPhongServices.timTheoGia(BigDecimal.valueOf(Long.parseLong(gia))));
+    }
+    @GetMapping("tim-kiem-theo-so-luong/{sl}")
+    public ResponseEntity<?>timTheoSoLuong(@PathVariable String sl){
+        return ResponseEntity.ok(loaiPhongServices.timTheoSoNguoi(Integer.parseInt(sl)));
     }
 }

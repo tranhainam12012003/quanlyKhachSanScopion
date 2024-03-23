@@ -1,7 +1,9 @@
 package vn.teca.scopio.base.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +13,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "hinh_anh")
 public class HinhAnh {
     @Id
@@ -19,7 +23,7 @@ public class HinhAnh {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "loai_phong_Id_loai_phong", nullable = false)
     private LoaiPhong loaiPhongIdLoaiPhong;
 

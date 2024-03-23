@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.LoaiPhong;
 import vn.teca.scopio.base.repository.LoaiPhongRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +24,8 @@ public class LoaiPhongServices {
         }).orElse(null);
     }
     public  LoaiPhong findbyId(Integer id){
-         Optional<LoaiPhong>optional=loaiPhongRepository.findById(id);
-         return optional.isPresent() ? optional.get() : null;
+        Optional<LoaiPhong>optional=loaiPhongRepository.findById(id);
+        return optional.isPresent() ? optional.get() : null;
     }
     public LoaiPhong add(LoaiPhong lp){
         return loaiPhongRepository.save(lp);
@@ -39,8 +40,18 @@ public class LoaiPhongServices {
             o.setMoTa(lp.getMoTa());
             o.setTrangThai(lp.getTrangThai());
             o.setSoLuongNguoiO(lp.getSoLuongNguoiO());
-            return loaiPhongRepository.save(lp);
+            return loaiPhongRepository.save(o);
         }).orElse(null);
     }
+    public List<LoaiPhong>timthemten(String name){
+        return loaiPhongRepository.findByTenLoaiPhong(name);
 
+    }
+    public List<LoaiPhong>timTheoGia(BigDecimal gia){
+        return loaiPhongRepository.findByGiaTienLessThanEqualOrderByGiaTienDesc(gia);
+    }
+
+    public List<LoaiPhong>timTheoSoNguoi(Integer sl){
+        return loaiPhongRepository.findBySoLuongNguoiOLessThanEqualOrderBySoLuongNguoiODesc(sl);
+    }
 }
