@@ -1,7 +1,12 @@
 package vn.teca.scopio.base.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import vn.teca.scopio.base.util.DateDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,10 +32,16 @@ public class PhongDat {
     private DonDat donDatIdDonDat;
 
     @NotNull
+    @CreatedDate
+    @JsonDeserialize(using = DateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "thoi_gian_vao", nullable = false)
     private Instant thoiGianVao;
 
     @NotNull
+    @LastModifiedDate
+    @JsonDeserialize(using = DateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "thoi_gian_ra", nullable = false)
     private Instant thoiGianRa;
 

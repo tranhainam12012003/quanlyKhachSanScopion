@@ -1,8 +1,11 @@
 package vn.teca.scopio.base.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
+import vn.teca.scopio.base.util.DateDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -42,6 +45,8 @@ public class ThongTinKhachDat {
     @Column(name = "dia_chi")
     private String diaChi;
 
+    @JsonDeserialize(using = DateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "ngay_sinh")
     private LocalDate ngaySinh;
 

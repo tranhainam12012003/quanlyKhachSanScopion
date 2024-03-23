@@ -25,8 +25,8 @@ public class QuyenHan {
     @Nationalized
     @Column(name = "ten_quyen_han", nullable = false, length = 50)
     private String tenQuyenHan;
-
-    @OneToMany(mappedBy = "quyenHanIdQuyenHan")
-    private Set<TaiKhoanNv> taiKhoanNvs = new LinkedHashSet<>();
+//
+//    @OneToMany(mappedBy = "quyenHanIdQuyenHan")
+//    private Set<TaiKhoanNv> taiKhoanNvs = new LinkedHashSet<>();
 
 }

@@ -1,5 +1,6 @@
 package vn.teca.scopio.base.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
@@ -39,8 +40,8 @@ public class DichVu {
     @NotNull
     @Column(name = "trang_thai", nullable = false)
     private Boolean trangThai = false;
-
-    @OneToMany(mappedBy = "dichVuIdDichVu")
-    private Set<DichVuDat> dichVuDats = new LinkedHashSet<>();
+//    @JsonIgnore // khi truy xuuất sang json thì không truy xuất one to many này
+//    @OneToMany(mappedBy = "dichVuIdDichVu")
+//    private Set<DichVuDat> dichVuDats = new LinkedHashSet<>();
 
 }

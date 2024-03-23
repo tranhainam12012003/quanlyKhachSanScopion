@@ -26,7 +26,7 @@ public class HinhThucThanhToan {
     @Column(name = "ten_hinh_thuc_tra", nullable = false, length = 200)
     private String tenHinhThucTra;
 
-    @OneToMany(mappedBy = "hinhThucThanhToanIdHinhThuc")
-    private Set<HoaDonPhong> hoaDonPhongs = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "hinhThucThanhToanIdHinhThuc")
+//    private Set<HoaDonPhong> hoaDonPhongs = new LinkedHashSet<>();
 
 }

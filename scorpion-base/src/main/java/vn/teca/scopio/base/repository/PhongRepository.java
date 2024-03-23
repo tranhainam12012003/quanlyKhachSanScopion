@@ -10,4 +10,6 @@ import java.util.List;
 public interface PhongRepository extends JpaRepository<Phong,Integer> {
     @Query(value = "SELECT * FROM [dbo].[phong] WHERE [loai_phong_Id_loai_phong] = ?1", nativeQuery = true)
     List<Phong> loc(Integer id);
+
+
 }
