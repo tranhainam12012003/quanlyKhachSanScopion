@@ -1,6 +1,6 @@
 package vn.teca.scopio.base.repository;
 
-import jdk.nashorn.internal.runtime.options.Option;
+//import jdk.nashorn.internal.runtime.options.Option;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
