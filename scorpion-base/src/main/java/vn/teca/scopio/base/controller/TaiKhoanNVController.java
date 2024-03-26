@@ -2,7 +2,9 @@
 package vn.teca.scopio.base.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.teca.scopio.base.model.TaiKhoanNv;
 import vn.teca.scopio.base.model.authentication.LoginRequest;
 import vn.teca.scopio.base.model.authentication.TaiKhoanNVDtoLogin;
 import vn.teca.scopio.base.service.TaiKhoanNVService;
@@ -20,5 +22,17 @@ public class TaiKhoanNVController {
         return taiKhoanNVService.findTaiKhoan(request.getSoDienThoai(),request.getPassword());
     }
 
+    @GetMapping("/hien-thi-list")
+    public ResponseEntity<?> getallnv(){
+        return ResponseEntity.ok(taiKhoanNVService.getAll());
+    }
+    @PostMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody TaiKhoanNv taiKhoanNv) {
+        return ResponseEntity.ok(taiKhoanNVService.update(taiKhoanNv, Integer.parseInt(id)));
+    }
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody TaiKhoanNv taiKhoanNv) {
+        return ResponseEntity.ok(taiKhoanNVService.add(taiKhoanNv));
+    }
 
 }

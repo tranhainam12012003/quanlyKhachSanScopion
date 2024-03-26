@@ -3,6 +3,7 @@ package vn.teca.scopio.base.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.teca.scopio.base.model.TaiKhoanKhach;
 import vn.teca.scopio.base.model.authentication.LoginRequest;
 import vn.teca.scopio.base.model.authentication.SignUpRequest;
 import vn.teca.scopio.base.model.authentication.TaiKhoanKhachDtoLogin;
@@ -30,5 +31,21 @@ public class TaiKhoanKhachController {
                 info.isGioiTinh(),
                 info.getPassword());
         return ResponseEntity.ok(message);
+    }
+    @GetMapping("/hien-thi-list")
+    public ResponseEntity<?> getallnv(){
+        return ResponseEntity.ok(service.getAll());
+    }
+    @PostMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody TaiKhoanKhach taiKhoanKhach) {
+        return ResponseEntity.ok(service.update(taiKhoanKhach, Integer.parseInt(id)));
+    }
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody TaiKhoanKhach taiKhoanKhach) {
+        return ResponseEntity.ok(service.add(taiKhoanKhach));
+    }
+    @GetMapping("detail/{id}")
+    public ResponseEntity<?> detail(@PathVariable String id) {
+        return ResponseEntity.ok(service.detail(Integer.parseInt(id)));
     }
 }

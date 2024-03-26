@@ -2,9 +2,11 @@ package vn.teca.scopio.base.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.teca.scopio.base.model.TaiKhoanKhach;
 import vn.teca.scopio.base.model.authentication.TaiKhoanKhachDtoLogin;
 import vn.teca.scopio.base.repository.TaiKhoanKhachRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +38,23 @@ public class TaiKhoanKhachService {
             repository.addNewInfoTaiKhoanKhachAndThongTinKhachDat(hoVaTen,soDienThoai,email,gioiTinh?1:0,password);
         }
         return message;
+    }
+    public TaiKhoanKhach add(TaiKhoanKhach taiKhoanKhach){
+        return repository.save(taiKhoanKhach);
+    }
+    public List<TaiKhoanKhach> getAll(){
+        return repository.findAll();
+    }
+    public TaiKhoanKhach update(TaiKhoanKhach taiKhoanKhach, Integer id) {
+        Optional<TaiKhoanKhach> optional = repository.findById(id);
+        return optional.map(o -> {
+            o.setSoDienThoai(taiKhoanKhach.getSoDienThoai());
+            o.setMatKhau(taiKhoanKhach.getMatKhau());
+            o.setThongTinKhachDatIdKhachDat(taiKhoanKhach.getThongTinKhachDatIdKhachDat());
+            return repository.save(o);
+        }).orElse(null);
+    }
+    public TaiKhoanKhach detail(Integer id){
+        return repository.findById(id).get();
     }
 }

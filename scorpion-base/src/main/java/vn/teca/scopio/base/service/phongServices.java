@@ -44,7 +44,7 @@ public class phongServices {
     }
 
     // detail cho phần chuyển màn
-    public Phong findById(Integer id) {
+    public Phong detail(Integer id) {
         Optional<Phong> optional = phongRepository.findById(id);
         return optional.orElse(null);
     }
