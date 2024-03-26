@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.TienIch;
 import vn.teca.scopio.base.repository.TienIchRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,5 +25,19 @@ public class TienIchServices {
             tienIchRepositpry.delete(o);
             return o;
         }).orElse(null);
+    }
+    private TienIch mapToObject(Object[] result) {
+        TienIch tienIch = new TienIch();
+        tienIch.setTenTienIch((String) result[0]);
+        tienIch.setId((Integer) result[1]);
+        return tienIch;
+    }
+    public List<TienIch> getTienIchTheoID(Integer id) {
+        List<Object[]> results = tienIchRepositpry.findTienIchByIdLoaiPhong(id);
+        List<TienIch> tienIchList = new ArrayList<>();
+        for (Object[] result : results) {
+            tienIchList.add(mapToObject(result));
+        }
+        return tienIchList;
     }
 }
