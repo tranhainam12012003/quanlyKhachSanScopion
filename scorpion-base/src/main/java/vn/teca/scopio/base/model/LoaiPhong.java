@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 @Table(name = "loai_phong")
 public class LoaiPhong {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_loai_phong", nullable = false)
     private Integer id;
 

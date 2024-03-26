@@ -18,18 +18,19 @@ import java.time.LocalDate;
 @Table(name = "thong_tin_khach_dat")
 public class ThongTinKhachDat {
     @Id
-    @Column(name = "id_khach_dat", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_khach_dat")
     private Integer id;
 
     @Size(max = 200)
     @NotNull
     @Nationalized
-    @Column(name = "ho_ten", nullable = false, length = 200)
+    @Column(name = "ho_ten",  length = 200)
     private String hoTen;
 
     @Size(max = 20)
     @NotNull
-    @Column(name = "so_dien_thoai", nullable = false, length = 20)
+    @Column(name = "so_dien_thoai", length = 20)
     private String soDienThoai;
 
     @Size(max = 255)
@@ -37,16 +38,16 @@ public class ThongTinKhachDat {
     private String email;
 
     @NotNull
-    @Column(name = "gioi_tinh", nullable = false)
-    private Boolean gioiTinh = false;
+    @Column(name = "gioi_tinh")
+    private Boolean gioiTinh ;
 
     @Nationalized
     @Lob
     @Column(name = "dia_chi")
     private String diaChi;
 
-    @JsonDeserialize(using = DateDeserializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
+//    @JsonDeserialize(using = DateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "ngay_sinh")
     private LocalDate ngaySinh;
 
@@ -63,5 +64,6 @@ public class ThongTinKhachDat {
     @Nationalized
     @Column(name = "ten_giay_to", length = 20)
     private String tenGiayTo;
+
 
 }

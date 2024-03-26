@@ -1,49 +1,85 @@
 package vn.teca.scopio.base.service.giaoDich.impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DonDat;
+import vn.teca.scopio.base.model.LoaiPhongDat;
+import vn.teca.scopio.base.model.dto.DonDatDto;
 import vn.teca.scopio.base.repository.DonDatRepository;
+import vn.teca.scopio.base.repository.LoaiPhongDatRepository;
 import vn.teca.scopio.base.service.giaoDich.DonDatService;
 
 import java.util.Optional;
 
 @Service
 public class DonDatServiceImpl implements DonDatService {
+
     @Autowired
-    DonDatRepository donDatRepository;
+    private DonDatRepository donDatRepository;
+
+    @Autowired
+    private LoaiPhongDatRepository loaiPhongDatRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
 
     @Override
     public Page<DonDat> findAll(Pageable pageable) {
-
-//        pageable = PageRequest.ofSize(20);
         return donDatRepository.findAll(pageable);
     }
-    @Override
-    public Optional<DonDat> findById(Integer id) {
-        return donDatRepository.findById(id);
-    }
+
     @Override
     public DonDat save(DonDat entity) {
         return donDatRepository.save(entity);
     }
-    @Override
-    public DonDat update(DonDat dt, Integer id){
-        Optional<DonDat> donDat = donDatRepository.findById(id);
-        return donDat.map(o -> {
-//            o.setThongTinKhachDatIdKhachDat(dt.getThongTinKhachDatIdKhachDat());
-//            o.setHinhThucDatIdHinhThucDat(dt.getHinhThucDatIdHinhThucDat());
-            o.setTrangThai(dt.getTrangThai());
-            return donDatRepository.save(dt);
-        }).orElse(null);
-    }
 
+    @Override
+    public DonDat findById(Integer integer) {
+        Optional<DonDat> optional = donDatRepository.findById(integer);
+        return optional.isPresent() ? optional.get() : null;
+    }
 
     @Override
     public void deleteById(Integer integer) {
         donDatRepository.deleteById(integer);
+    }
+
+    @Override
+    public void luuDonDat(DonDatDto donDatDto) {
+        DonDat donDat = new DonDat();
+        donDat.setTongTien(donDatDto.getTongTien());
+        donDat.setThoiGianVao(donDatDto.getThoiGianVao());
+        donDat.setTrangThai(donDatDto.getTrangThai());
+        donDat.setHinhThucDatIdHinhThucDat(donDatDto.getHinhThucDatIdHinhThucDat());
+        donDat.setThongTinKhachDatIdKhachDat(donDatDto.getThongTinKhachDatIdKhachDat());
+        donDat.setThoiGianRa(donDatDto.getThoiGianRa());
+        donDatRepository.save(donDat);
+//        DonDat donDat = new DonDat();
+//        donDat = modelMapper.map(donDatDto, DonDat.class);
+//        donDatRepository.save(donDat);
+        LoaiPhongDat loaiPhongDat = new LoaiPhongDat();
+        loaiPhongDat.setDonDatIdDonDat(donDat);
+        loaiPhongDat.setLoaiPhongIdLoaiPhong(donDatDto.getLoaiPhongIdLoaiPhong());
+        loaiPhongDat.setSoLuong(donDatDto.getSoLuong());
+        loaiPhongDatRepository.save(loaiPhongDat);
+
+//        LoaiPhongDat loaiPhongDat = modelMapper.map(donDatDto, LoaiPhongDat.class);
+//        loaiPhongDat.setDonDatIdDonDat(donDat);
+//        loaiPhongDatRepository.save(loaiPhongDat);
+    }
+
+    @Override
+    public void update(DonDatDto donDatDto, Integer i){
+        DonDat donDat = new DonDat();
+        donDat.setId(donDat.getId());
+        Optional<DonDat> optional = donDatRepository.findById(i);
+        optional.map(o ->{
+            o.setTrangThai(donDatDto.getTrangThai());
+            return donDatRepository.save(o);
+        }).orElse(null);
     }
 }

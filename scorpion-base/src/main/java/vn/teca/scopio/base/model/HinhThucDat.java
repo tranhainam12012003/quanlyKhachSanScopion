@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -17,13 +14,14 @@ import javax.validation.constraints.Size;
 @Table(name = "hinh_thuc_dat")
 public class HinhThucDat {
     @Id
-    @Column(name = "id_hinh_thuc_dat", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_hinh_thuc_dat")
     private Integer id;
 
     @Size(max = 200)
     @NotNull
     @Nationalized
-    @Column(name = "ten_hinh_thuc", nullable = false, length = 200)
+    @Column(name = "ten_hinh_thuc",length = 200)
     private String tenHinhThuc;
 
 }

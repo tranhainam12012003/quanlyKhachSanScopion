@@ -19,9 +19,9 @@ public class ThongTinKhachDatController {
     ThongTinKhachDat thongTinKhachDat;
     @PostMapping("/them")
     public ResponseEntity<?> add(@RequestBody ThongTinKhachDat khachDat){
-        if(thongTinKhachDatServices.findBySoDienThoai(thongTinKhachDat.getSoDienThoai()).equals(khachDat.getSoDienThoai())){
-                return ResponseEntity.badRequest().build();
-        }
+//        if(thongTinKhachDatServices.findBySoDienThoai(thongTinKhachDat.getSoDienThoai()).equals(khachDat.getSoDienThoai())){
+//                return ResponseEntity.badRequest().build();
+//        }
         return ResponseEntity.ok(thongTinKhachDatServices.add(khachDat));
     }
     @GetMapping("/tim")
@@ -31,6 +31,10 @@ public class ThongTinKhachDatController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> findByID(@PathVariable("id") String id){
         return ResponseEntity.ok(thongTinKhachDatServices.detail(Integer.parseInt(id)));
+    }
+    @GetMapping()
+    public ResponseEntity<?> findAll(){
+        return ResponseEntity.ok(thongTinKhachDatServices.findAll());
     }
     @PostMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody ThongTinKhachDat ttkd){

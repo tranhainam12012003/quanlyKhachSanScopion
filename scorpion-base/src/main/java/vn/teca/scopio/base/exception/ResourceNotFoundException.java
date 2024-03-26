@@ -13,4 +13,7 @@ public class ResourceNotFoundException extends IOException {
     public ResourceNotFoundException(String message) {
         super(message);
     }
+
+    public ResourceNotFoundException(String donDat, String id, Integer id1) {
+    }
 }

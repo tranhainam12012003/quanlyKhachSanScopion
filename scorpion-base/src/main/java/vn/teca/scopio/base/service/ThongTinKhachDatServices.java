@@ -2,9 +2,11 @@ package vn.teca.scopio.base.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.teca.scopio.base.model.LoaiPhong;
 import vn.teca.scopio.base.model.ThongTinKhachDat;
 import vn.teca.scopio.base.repository.ThongTinKhachDatRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -45,4 +47,11 @@ public class ThongTinKhachDatServices {
              return o;
         }).orElse(null);
     }
+
+    public List<ThongTinKhachDat> findAll() {
+        return thongTinKhachDatRepository.findAll();
+    }
+//    public List<LoaiPhong>getall(){
+//        return loaiPhongRepository.findAll();
+//    }
 }

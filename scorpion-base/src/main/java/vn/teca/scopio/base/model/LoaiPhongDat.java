@@ -12,18 +12,19 @@ import javax.validation.constraints.NotNull;
 @Table(name = "loai_phong_dat")
 public class LoaiPhongDat {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_loai_phong_dat", nullable = false)
     private Integer id;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "don_dat_id_don_dat", nullable = false)
-    private DonDat donDatIdDonDat;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "loai_phong_Id_loai_phong", nullable = false)
+    private LoaiPhong loaiPhongIdLoaiPhong;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "loai_phong_Id_loai_phong", nullable = false)
-    private LoaiPhong loaiPhong;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "don_dat_id_don_dat", nullable = false)
+    private DonDat donDatIdDonDat;
 
     @NotNull
     @Column(name = "so_luong", nullable = false)

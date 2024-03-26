@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 @Table(name = "tai_khoan_nv")
 public class TaiKhoanNv {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_tai_khoan", nullable = false)
     private Integer id;
 
