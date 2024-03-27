@@ -35,6 +35,7 @@ public class TienIch {
     @Column(name = "ten_tien_ich", nullable = false, length = 100)
     private String tenTienIch;
 
+
 //    @OneToMany(mappedBy = "tienIchIdTienIch")
 //    private Set<TienIchLoaiPhong> tienIchLoaiPhongs = new LinkedHashSet<>();
 
