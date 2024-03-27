@@ -22,32 +22,34 @@ public class LoaiPhongCustomRepositoryImpl implements LoaiPhongCustomRepository 
     @Override
     public List<LoaiPhongDto> findAllHinhAnh() {
         StringBuilder str = new StringBuilder();
-        str.append("SELECT lp.ten_loai_phong, lp.huong_nhin, lp.dien_tich, lp.gia_tien, lp.mo_ta,\n");
-        str.append("ha.hinh_anh_loai_phong,ti.ten_tien_ich");
-        str.append("FROM loai_phong lp");
-        str.append("INNER JOIN hinh_anh ha ON lp.Id_loai_phong = ha.loai_phong_Id_loai_phong");
-        str.append("INNER JOIN tien_ich_loai_phong tilp ON lp.Id_loai_phong = tilp.loai_phong_Id_loai_phong");
+        str.append("SELECT lp.Id_loai_phong, lp.ten_loai_phong, lp.huong_nhin, lp.dien_tich, lp.gia_tien, lp.mo_ta,lp.so_luong_nguoi_o ");
+//        str.append("ha.hinh_anh_loai_phong,ti.ten_tien_ich ");
+        str.append("FROM loai_phong lp ");
+        str.append("INNER JOIN hinh_anh ha ON lp.Id_loai_phong = ha.loai_phong_Id_loai_phong ");
+        str.append("INNER JOIN tien_ich_loai_phong tilp ON lp.Id_loai_phong = tilp.loai_phong_Id_loai_phong ");
         str.append("INNER JOIN tien_ich ti ON tilp.tien_ich_id_tien_ich = ti.id_tien_ich;");
         Query query = entityManager.createNativeQuery(str.toString());
         List<Object[]> lst = query.getResultList();
         List<LoaiPhongDto> result = new ArrayList<>();
         try {
-            if (DataConvertUtil.isNullOrEmpty(lst)) {
+            if (!DataConvertUtil.isNullOrEmpty(lst)) {
                 lst.forEach(objects -> {
                     LoaiPhongDto dto = new LoaiPhongDto();
+                    dto.setId(DataConvertUtil.safeToInt(objects[0]));
                     dto.setTenLoaiPhong(DataConvertUtil.safeToString(objects[1]));
                     dto.setHuongNhin(DataConvertUtil.safeToString(objects[2]));
                     dto.setDienTich(DataConvertUtil.safeToString(objects[3]));
                     dto.setGiaTien(DataConvertUtil.safeToBigDecimal(objects[4]));
                     dto.setMoTa(DataConvertUtil.safeToString(objects[5]));
+                    dto.setSoLuongNguoiO(DataConvertUtil.safeToInt(objects[6]));
                     result.add(dto);
                 });
-                return result;
+                return new ArrayList<>(result);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return new ArrayList<>(result);
     }
 }

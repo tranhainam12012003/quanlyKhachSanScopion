@@ -31,6 +31,9 @@ public class LoaiPhongServices {
     @Autowired
     TienIchRepository tienIchRepository;
 
+    @Autowired
+    TienIchServices tienIchServices;
+
     public List<LoaiPhong>getall(){
         return loaiPhongRepository.findAll();
     }
@@ -75,13 +78,13 @@ public class LoaiPhongServices {
     }
     public List<LoaiPhongDto> findAllHinhAnh() {
         List<LoaiPhongDto> result = loaiPhongRepository.findAllHinhAnh();
-        List<LoaiPhongDto> newList = result;
+//        List<LoaiPhongDto> newList = result;
         if (result != null) {
 //            newList = result;
-            newList.forEach(p -> {
+            result.forEach(p -> {
                 p = getMoreInfro(p);
             });
-            return newList;
+//            return result;
         }
        return result;
     }
@@ -91,14 +94,16 @@ public class LoaiPhongServices {
             dto.setHinhAnh(hinhAnhRepository.findByLoaiPhongIdLoaiPhong_Id(dto.getId()));
             }
             catch (Exception e){
+            e.printStackTrace();
                 dto.setHinhAnh(null);
             }
         // set tien ich
         try{
 //            List<TienIch> tienI =
-//            dto.setTienTienIch();
+            dto.setTienTienIch(tienIchServices.getTienIchTheoID(dto.getId()));
         }
         catch (Exception e){
+            e.printStackTrace();
             dto.setTienTienIch(null);
         }
             return dto;
