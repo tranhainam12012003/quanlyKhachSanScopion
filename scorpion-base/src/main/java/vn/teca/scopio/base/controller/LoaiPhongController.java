@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 @Controller
 @RestController
 @RequestMapping("/admin/loai-phong")
-public class loaiPhongController {
+public class LoaiPhongController {
     @Autowired
     LoaiPhongServices loaiPhongServices;
 
@@ -27,6 +27,13 @@ public class loaiPhongController {
         return ResponseEntity.ok(loaiPhongServices.getall());
     }
 
+    // hien thi tat ca hinh anh + loai phong + tien ich
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllList(){
+            return ResponseEntity.ok(loaiPhongServices.findAllHinhAnh());
+    }
+//    @GetMapping("/listAllHinhAnh")
+//    public ResponseEntity<?> getAllHinhAnh(){return ResponseEntity.ok(loaiPhongServices.getAllHinhAnh());};
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> getone(@PathVariable String id) {
         return ResponseEntity.ok(loaiPhongServices.findbyId(Integer.parseInt(id)));
