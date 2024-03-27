@@ -12,10 +12,9 @@ import vn.teca.scopio.base.repository.TienIchLoaiPhongRepository;
 import vn.teca.scopio.base.repository.TienIchRepository;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -76,6 +75,7 @@ public class LoaiPhongServices {
     public List<LoaiPhong>timTheoSoNguoi(Integer sl){
         return loaiPhongRepository.findBySoLuongNguoiOLessThanEqualOrderBySoLuongNguoiODesc(sl);
     }
+    // hien thi tat ca thong tin cua phong + hinh anh + tien ich
     public List<LoaiPhongDto> findAllHinhAnh() {
         List<LoaiPhongDto> result = loaiPhongRepository.findAllHinhAnh();
 //        List<LoaiPhongDto> newList = result;
@@ -87,6 +87,15 @@ public class LoaiPhongServices {
 //            return result;
         }
        return result;
+    }
+    public List<LoaiPhongDto> searchLoaiPhongTrong(LocalDateTime thoiGianVao, LocalDateTime thoiGianRa){
+        List<LoaiPhongDto> result = loaiPhongRepository.searchLoaiPhongTrong(thoiGianVao,thoiGianRa);
+        if (result!=null){
+            result.forEach(p ->{
+                p = getMoreInfro(p);
+            });
+        }
+        return result;
     }
     public LoaiPhongDto getMoreInfro(LoaiPhongDto dto){
         // set hinh anh

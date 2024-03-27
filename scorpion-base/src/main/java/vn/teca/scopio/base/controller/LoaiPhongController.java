@@ -1,19 +1,17 @@
 package vn.teca.scopio.base.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vn.teca.scopio.base.model.LoaiPhong;
 import vn.teca.scopio.base.service.LoaiPhongServices;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RestController
@@ -32,6 +30,26 @@ public class LoaiPhongController {
     public ResponseEntity<?> getAllList(){
             return ResponseEntity.ok(loaiPhongServices.findAllHinhAnh());
     }
+
+
+    // tim kiem so luong con trong cua loai phong
+   @PostMapping("/search")
+   public ResponseEntity<?> searchLoaiPhongTrong(@RequestParam String thoiGianVao, @RequestParam String thoiGianRa){
+//       String str = "1986-04-08 12:30";
+//       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+//       LocalDateTime vao = LocalDateTime.parse(thoiGianVao, formatter);
+//       LocalDateTime ra = LocalDateTime.parse(thoiGianRa, formatter);
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+       LocalDateTime vao = LocalDateTime.parse(thoiGianVao, formatter);
+       LocalDateTime ra = LocalDateTime.parse(thoiGianRa, formatter);
+
+        return ResponseEntity.ok(loaiPhongServices.searchLoaiPhongTrong(vao,ra));
+   }
+
+//    @PostMapping("tim-loai_phong")
+//    public ResponseEntity<?> searchLoaiPhongTrong(@RequestParam String thoiGianVao,@RequestParam String thoiGianRa){
+//        return ResponseEntity.ok(loaiPhongServices.searchLoaiPhongTrong(LocalDate.parse(thoiGianVao),LocalDate.parse(thoiGianRa)));
+//    }
 //    @GetMapping("/listAllHinhAnh")
 //    public ResponseEntity<?> getAllHinhAnh(){return ResponseEntity.ok(loaiPhongServices.getAllHinhAnh());};
     @GetMapping("/detail/{id}")
