@@ -8,10 +8,14 @@ import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DonDat;
 import vn.teca.scopio.base.model.LoaiPhongDat;
 import vn.teca.scopio.base.model.dto.DonDatDto;
+import vn.teca.scopio.base.model.dto.LoaiPhongDatDto;
+import vn.teca.scopio.base.model.dto.LoaiPhongDto;
 import vn.teca.scopio.base.repository.DonDatRepository;
 import vn.teca.scopio.base.repository.LoaiPhongDatRepository;
 import vn.teca.scopio.base.service.giaoDich.DonDatService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -61,11 +65,23 @@ public class DonDatServiceImpl implements DonDatService {
 //        DonDat donDat = new DonDat();
 //        donDat = modelMapper.map(donDatDto, DonDat.class);
 //        donDatRepository.save(donDat);
-        LoaiPhongDat loaiPhongDat = new LoaiPhongDat();
-        loaiPhongDat.setDonDatIdDonDat(donDat);
-        loaiPhongDat.setLoaiPhongIdLoaiPhong(donDatDto.getLoaiPhongIdLoaiPhong());
-        loaiPhongDat.setSoLuong(donDatDto.getSoLuong());
-        loaiPhongDatRepository.save(loaiPhongDat);
+//        LoaiPhongDat loaiPhongDat = new LoaiPhongDat();
+//        loaiPhongDat.setDonDatIdDonDat(donDat);
+//        loaiPhongDat.setLoaiPhongIdLoaiPhong(donDatDto.getLoaiPhongIdLoaiPhong());
+//        loaiPhongDat.setSoLuong(donDatDto.getSoLuong());
+//        loaiPhongDatRepository.save(loaiPhongDat);
+
+        List<LoaiPhongDat> loaiPhongDatList = new ArrayList<>();
+         for(LoaiPhongDatDto loaiPhongDatDto : donDatDto.getLoaiPhongDatDto()){
+             LoaiPhongDat loaiPhongDat = new LoaiPhongDat();
+             loaiPhongDat.setDonDatIdDonDat(donDat);
+             loaiPhongDat.setLoaiPhongIdLoaiPhong(loaiPhongDatDto.getLoaiPhongIdLoaiPhong());
+             loaiPhongDat.setSoLuong(loaiPhongDatDto.getSoLuong());
+             loaiPhongDatList.add(loaiPhongDat);
+         }
+         loaiPhongDatRepository.saveAll(loaiPhongDatList);
+//         donDatDto.setLoaiPhongDatDto(loaiPhongDat);
+
 
 //        LoaiPhongDat loaiPhongDat = modelMapper.map(donDatDto, LoaiPhongDat.class);
 //        loaiPhongDat.setDonDatIdDonDat(donDat);

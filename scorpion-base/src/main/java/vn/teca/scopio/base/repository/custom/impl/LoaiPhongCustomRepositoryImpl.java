@@ -92,7 +92,7 @@ public class LoaiPhongCustomRepositoryImpl implements LoaiPhongCustomRepository 
         str.append(" ) ");
         str.append(" SELECT lp.Id_loai_phong, lp.ten_loai_phong, lp.huong_nhin, lp.dien_tich, lp.gia_tien, ");
         str.append(" lp.mo_ta, lp.trang_thai, lp.so_luong_nguoi_o, ");
-        str.append(" (ISNULL(SoLuongPhong, 0) - ISNULL(SoLuongPhongDat, 0)) AS SoLuongConTrong ");
+        str.append(" (ISNULL(SoLuongPhong, 0) - ISNULL(So7LuongPhongDat, 0)) AS SoLuongConTrong ");
         str.append(" FROM loai_phong lp ");
         str.append(" LEFT JOIN SoLuongLoaiPhong splp ON lp.Id_loai_phong = splp.Id_loai_phong ");
         str.append(" LEFT JOIN SoLuongLoaiPhongDat splpd ON lp.Id_loai_phong = splpd.loai_phong_Id_loai_phong ");

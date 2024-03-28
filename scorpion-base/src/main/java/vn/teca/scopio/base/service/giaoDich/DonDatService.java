@@ -6,6 +6,7 @@ import vn.teca.scopio.base.exception.ResourceNotFoundException;
 import vn.teca.scopio.base.model.DonDat;
 import vn.teca.scopio.base.model.LoaiPhongDat;
 import vn.teca.scopio.base.model.dto.DonDatDto;
+import vn.teca.scopio.base.model.dto.LoaiPhongDatDto;
 
 import java.util.Optional;
 
