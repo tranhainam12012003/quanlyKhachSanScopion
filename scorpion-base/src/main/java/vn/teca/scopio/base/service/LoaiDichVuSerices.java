@@ -3,8 +3,12 @@ package vn.teca.scopio.base.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.LoaiDichVu;
+import vn.teca.scopio.base.model.TienIch;
+import vn.teca.scopio.base.model.dto.LoaiDichVuDto;
 import vn.teca.scopio.base.repository.LoaiDichVuRepository;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,5 +48,20 @@ public class LoaiDichVuSerices {
     }
     public List<LoaiDichVu> search(String ten){
         return loaiDichVuRepository.findByTenLoaiDichVu(ten);
+    }
+    private LoaiDichVuDto mapToObject(Object[] result) {
+        LoaiDichVuDto loaiDichVuDto=new LoaiDichVuDto();
+        loaiDichVuDto.setTenLoaiDichVu((String) result[0]);
+        loaiDichVuDto.setTendichVu((String) result[1]);
+        loaiDichVuDto.setGia((BigDecimal) result[2]);
+        return loaiDichVuDto;
+    }
+    public List<LoaiDichVuDto> getDichVuTheoID(Integer id) {
+        List<Object[]> results =loaiDichVuRepository.findDichVuTheoID(id);
+        List<LoaiDichVuDto> loaiDichVuDtos = new ArrayList<>();
+        for (Object[] result : results) {
+            loaiDichVuDtos.add(mapToObject(result));
+        }
+        return loaiDichVuDtos;
     }
 }
