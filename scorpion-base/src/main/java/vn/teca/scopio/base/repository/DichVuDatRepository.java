@@ -13,6 +13,6 @@ import java.util.List;
 public interface DichVuDatRepository extends JpaRepository<DichVuDat, Integer> {
     @Query(value = "  select Sum(dvd.so_tien)as 'tong tien'from dich_vu_dat dvd " +
             "join phong_dat pd on dvd.phong_dat_id_phong_dat=pd.id_phong_dat" +
-            " where pd.phong_id_phong=:idPhong",nativeQuery = true)
-    List<Object[]>getPriceWithIdPhong(@Param("idPhong") Integer id);
+            " where pd.id_phong_dat=:idPhongDat",nativeQuery = true)
+    List<Object[]>getPriceWithIdPhong(@Param("idPhongDat") Integer id);
 }
