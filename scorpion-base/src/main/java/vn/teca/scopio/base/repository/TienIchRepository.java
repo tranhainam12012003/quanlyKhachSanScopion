@@ -12,6 +12,8 @@ import java.util.List;
 public interface TienIchRepository extends JpaRepository<TienIch, Integer> {
     @Query(value = "SELECT ti.ten_tien_ich, ti.id_tien_ich FROM tien_ich ti INNER JOIN tien_ich_loai_phong tilp ON ti.id_tien_ich = tilp.tien_ich_id_tien_ich WHERE tilp.loai_phong_id_loai_phong = :idLoaiPhong", nativeQuery = true)
     List<Object[]> findTienIchByIdLoaiPhong(@Param("idLoaiPhong") Integer idLoaiPhong);
+    
+
 
 }
 

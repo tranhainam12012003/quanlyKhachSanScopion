@@ -2,6 +2,7 @@ package vn.teca.scopio.base.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import vn.teca.scopio.base.model.LoaiPhong;
 import vn.teca.scopio.base.model.dto.LoaiPhongDto;
@@ -16,8 +17,11 @@ public interface LoaiPhongRepository extends JpaRepository<LoaiPhong, Integer>, 
     List<LoaiPhong>findByGiaTienLessThanEqualOrderByGiaTienDesc(BigDecimal sl);
     List<LoaiPhong>findBySoLuongNguoiOLessThanEqualOrderBySoLuongNguoiODesc(Integer sl);
 
-//    @Query(value = "SELECT lp.ten_loai_phong, lp.huong_nhin, lp.dien_tich, lp.gia_tien, lp.mo_ta, ha.hinh_anh_loai_phong\n" +
-//            "FROM loai_phong lp\n" +
-//            "INNER JOIN hinh_anh ha ON lp.Id_loai_phong = ha.loai_phong_Id_loai_phong;", nativeQuery = true)
-//    List<LoaiPhongDto>findAllAndHinhAnh();
+    @Query(value = "select lp.ten_loai_phong,lp.dien_tich," +
+            "lp.gia_tien,lp.huong_nhin,lp.mo_ta,lp.so_luong_nguoi_o,p.id_phong,ti.id_tien_ich\n" +
+            "from loai_phong lp join phong p on p.loai_phong_Id_loai_phong=lp.Id_loai_phong \n" +
+            "join tien_ich_loai_phong tilp\n" +
+            "on tilp.loai_phong_Id_loai_phong=lp.Id_loai_phong join tien_ich ti on \n" +
+            "ti.id_tien_ich=tilp.tien_ich_id_tien_ich where lp.Id_loai_phong=:id",nativeQuery = true)
+    List<Object[]> detailLoaiPhong(@Param("id") Integer idLoaiPhong);
 }

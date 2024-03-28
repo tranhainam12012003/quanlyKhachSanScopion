@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.teca.scopio.base.model.LoaiPhong;
+import vn.teca.scopio.base.model.dto.LoaiPhongDTOAdd;
 import vn.teca.scopio.base.service.LoaiPhongServices;
 
 import java.math.BigDecimal;
@@ -34,10 +35,12 @@ public class LoaiPhongController {
     }
 //    @GetMapping("/listAllHinhAnh")
 //    public ResponseEntity<?> getAllHinhAnh(){return ResponseEntity.ok(loaiPhongServices.getAllHinhAnh());};
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<?> getone(@PathVariable String id) {
-        return ResponseEntity.ok(loaiPhongServices.findbyId(Integer.parseInt(id)));
-    }
+
+//    @GetMapping("/detail/{id}")
+//    public ResponseEntity<?> getone(@PathVariable String id) {
+//
+//        return ResponseEntity.ok(loaiPhongServices.findbyId(Integer.parseInt(id)));
+//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
@@ -45,13 +48,28 @@ public class LoaiPhongController {
     }
 
     @PostMapping("/sua/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody LoaiPhong loaiPhong) {
-        return ResponseEntity.ok(loaiPhongServices.update(loaiPhong, Integer.parseInt(id)));
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody LoaiPhongDTOAdd loaiPhongDTOAdd) {
+       try {
+           loaiPhongServices.update(loaiPhongDTOAdd,Integer.parseInt(id));
+           return ResponseEntity.ok().body("sua thanh cong");
+       }catch(Exception e){
+           e.printStackTrace();
+           return ResponseEntity.badRequest().body("luu khong thanh cong");
+       }
+
     }
 
     @PostMapping("/luu")
-    public ResponseEntity<?> add(@RequestBody LoaiPhong loaiPhong) {
-        return ResponseEntity.ok(loaiPhongServices.add(loaiPhong));
+    public ResponseEntity<?> add(@RequestBody LoaiPhongDTOAdd loaiPhongDTOAdd) {
+
+
+        try{
+            loaiPhongServices.add(loaiPhongDTOAdd);
+            return ResponseEntity.ok().body("luu thanh cong");
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("luu khong thanh cong");
+        }
 
     }
 
@@ -67,5 +85,10 @@ public class LoaiPhongController {
     @GetMapping("tim-kiem-theo-so-luong/{sl}")
     public ResponseEntity<?>timTheoSoLuong(@PathVariable String sl){
         return ResponseEntity.ok(loaiPhongServices.timTheoSoNguoi(Integer.parseInt(sl)));
+    }
+
+    @GetMapping("detail/{id}")
+    public ResponseEntity<?>detailByIdLoaiPhong(@PathVariable String id){
+        return ResponseEntity.ok(loaiPhongServices.detaiiByIdLoaiPhong(Integer.parseInt(id)));
     }
 }

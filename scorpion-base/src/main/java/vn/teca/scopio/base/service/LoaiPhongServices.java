@@ -4,10 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.LoaiPhong;
+import vn.teca.scopio.base.model.Phong;
 import vn.teca.scopio.base.model.TienIch;
+import vn.teca.scopio.base.model.TienIchLoaiPhong;
+import vn.teca.scopio.base.model.dto.LoaiPhongDTOAdd;
 import vn.teca.scopio.base.model.dto.LoaiPhongDto;
 import vn.teca.scopio.base.repository.HinhAnhRepository;
 import vn.teca.scopio.base.repository.LoaiPhongRepository;
+import vn.teca.scopio.base.repository.PhongRepository;
 import vn.teca.scopio.base.repository.TienIchLoaiPhongRepository;
 import vn.teca.scopio.base.repository.TienIchRepository;
 
@@ -18,7 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@Slf4j
+
 public class LoaiPhongServices {
     @Autowired
     LoaiPhongRepository loaiPhongRepository;
@@ -33,49 +37,104 @@ public class LoaiPhongServices {
 
     @Autowired
     TienIchServices tienIchServices;
+    @Autowired
+    PhongRepository phongRepository;
 
-    public List<LoaiPhong>getall(){
+    public List<LoaiPhong> getall() {
         return loaiPhongRepository.findAll();
     }
-//    public List<LoaiPhongDto>getAllHinhAnh(){return loaiPhongRepository.findAllAndHinhAnh();};
-    public  LoaiPhong delete(Integer id){
-        Optional<LoaiPhong> optional=loaiPhongRepository.findById(id);
-        return optional.map(o->{
+
+    //    public List<LoaiPhongDto>getAllHinhAnh(){return loaiPhongRepository.findAllAndHinhAnh();};
+    public LoaiPhong delete(Integer id) {
+        Optional<LoaiPhong> optional = loaiPhongRepository.findById(id);
+        return optional.map(o -> {
             loaiPhongRepository.delete(o);
             return o;
         }).orElse(null);
     }
-    public  LoaiPhong findbyId(Integer id){
-        Optional<LoaiPhong>optional=loaiPhongRepository.findById(id);
+
+    public LoaiPhong findbyId(Integer id) {
+        Optional<LoaiPhong> optional = loaiPhongRepository.findById(id);
         return optional.isPresent() ? optional.get() : null;
     }
-    public LoaiPhong add(LoaiPhong lp){
-        return loaiPhongRepository.save(lp);
+
+    public LoaiPhongDTOAdd mapToObject(Object[] result) {
+        LoaiPhongDTOAdd loaiPhongDTOAdd = new LoaiPhongDTOAdd();
+        loaiPhongDTOAdd.setTenLoaiPhong((String) result[0]);
+        loaiPhongDTOAdd.setDienTich((String) result[1]);
+        loaiPhongDTOAdd.setGiaTien((BigDecimal) result[2]);
+        loaiPhongDTOAdd.setHuongNhin((String) result[3]);
+        loaiPhongDTOAdd.setMoTa((String) result[4]);
+        loaiPhongDTOAdd.setSoNguoi((Integer) result[5]);
+        Phong phong = phongRepository.findById((Integer) result[6]).get();
+        loaiPhongDTOAdd.setPhongidPhong(phong);
+        TienIch tienIch = tienIchRepository.findById((Integer) result[7]).get();
+        loaiPhongDTOAdd.setTienichidtienich(tienIch);
+        return loaiPhongDTOAdd;
+
     }
-    public LoaiPhong update(LoaiPhong lp,Integer id){
-        Optional<LoaiPhong>optional=loaiPhongRepository.findById(id);
-        return optional.map(o -> {
-            o.setTenLoaiPhong(lp.getTenLoaiPhong());
-            o.setDienTich(lp.getDienTich());
-            o.setHuongNhin(lp.getHuongNhin());
-            o.setGiaTien(lp.getGiaTien());
-            o.setMoTa(lp.getMoTa());
-            o.setTrangThai(lp.getTrangThai());
-            o.setSoLuongNguoiO(lp.getSoLuongNguoiO());
-            return loaiPhongRepository.save(o);
-        }).orElse(null);
+
+    public List<LoaiPhongDTOAdd> detaiiByIdLoaiPhong(Integer id) {
+        List<Object[]> results = loaiPhongRepository.detailLoaiPhong(id);
+        List<LoaiPhongDTOAdd> list = new ArrayList<>();
+        for (Object[] reObjects : results) {
+            list.add(mapToObject(reObjects));
+        }
+        return list;
     }
-    public List<LoaiPhong>timthemten(String name){
+
+    public void add(LoaiPhongDTOAdd loaiPhongDTOAdd) {
+        LoaiPhong loaiPhong = new LoaiPhong();
+        loaiPhong.setTenLoaiPhong(loaiPhongDTOAdd.getTenLoaiPhong());
+        loaiPhong.setHuongNhin(loaiPhongDTOAdd.getHuongNhin());
+        loaiPhong.setSoLuongNguoiO(loaiPhongDTOAdd.getSoNguoi());
+        loaiPhong.setDienTich(loaiPhongDTOAdd.getDienTich());
+        loaiPhong.setGiaTien(loaiPhongDTOAdd.getGiaTien());
+        loaiPhong.setMoTa(loaiPhongDTOAdd.getMoTa());
+        loaiPhongRepository.save(loaiPhong);
+
+        Phong phong = phongRepository.getById(loaiPhongDTOAdd.getPhongidPhong().getId());
+        phong.setLoaiPhongIdLoaiPhong(loaiPhong);
+        phongRepository.save(phong);
+
+        TienIchLoaiPhong tienIchLoaiPhong = new TienIchLoaiPhong();
+        tienIchLoaiPhong.setLoaiPhong(loaiPhong);
+        tienIchLoaiPhong.setTienIchIdTienIch(loaiPhongDTOAdd.getTienichidtienich());
+        tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
+    }
+
+    public void update(LoaiPhongDTOAdd loaiPhongDTOAdd, Integer id) {
+        LoaiPhong loaiPhong= loaiPhongRepository.getById(id);
+        loaiPhong.setTenLoaiPhong(loaiPhongDTOAdd.getTenLoaiPhong());
+        loaiPhong.setDienTich(loaiPhongDTOAdd.getDienTich());
+        loaiPhong.setTenLoaiPhong(loaiPhongDTOAdd.getTenLoaiPhong());
+        loaiPhong.setMoTa(loaiPhongDTOAdd.getMoTa());
+        loaiPhong.setHuongNhin(loaiPhongDTOAdd.getHuongNhin());
+        loaiPhong.setSoLuongNguoiO(loaiPhongDTOAdd.getSoNguoi());
+
+        Phong phong = phongRepository.getById(loaiPhongDTOAdd.getPhongidPhong().getId());
+        phong.setLoaiPhongIdLoaiPhong(loaiPhong);
+        phongRepository.save(phong);
+
+        TienIchLoaiPhong tienIchLoaiPhong= tienIchLoaiPhongRepository.findTienIchLoaiPhongByLoaiPhong_Id(id);
+        tienIchLoaiPhong.setLoaiPhong(loaiPhong);
+        tienIchLoaiPhong.setTienIchIdTienIch(loaiPhongDTOAdd.getTienichidtienich());
+        tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
+    }
+
+    public List<LoaiPhong> timthemten(String name) {
         return loaiPhongRepository.findByTenLoaiPhong(name);
 
     }
-    public List<LoaiPhong>timTheoGia(BigDecimal gia){
+
+    public List<LoaiPhong> timTheoGia(BigDecimal gia) {
         return loaiPhongRepository.findByGiaTienLessThanEqualOrderByGiaTienDesc(gia);
     }
 
-    public List<LoaiPhong>timTheoSoNguoi(Integer sl){
+    public List<LoaiPhong> timTheoSoNguoi(Integer sl) {
         return loaiPhongRepository.findBySoLuongNguoiOLessThanEqualOrderBySoLuongNguoiODesc(sl);
     }
+
     public List<LoaiPhongDto> findAllHinhAnh() {
         List<LoaiPhongDto> result = loaiPhongRepository.findAllHinhAnh();
 //        List<LoaiPhongDto> newList = result;
@@ -86,27 +145,26 @@ public class LoaiPhongServices {
             });
 //            return result;
         }
-       return result;
+        return result;
     }
-    public LoaiPhongDto getMoreInfro(LoaiPhongDto dto){
+
+    public LoaiPhongDto getMoreInfro(LoaiPhongDto dto) {
         // set hinh anh
-        try{
+        try {
             dto.setHinhAnh(hinhAnhRepository.findByLoaiPhongIdLoaiPhong_Id(dto.getId()));
-            }
-            catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-                dto.setHinhAnh(null);
-            }
+            dto.setHinhAnh(null);
+        }
         // set tien ich
-        try{
+        try {
 //            List<TienIch> tienI =
             dto.setTienTienIch(tienIchServices.getTienIchTheoID(dto.getId()));
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             dto.setTienTienIch(null);
         }
-            return dto;
+        return dto;
     }
 
 }
