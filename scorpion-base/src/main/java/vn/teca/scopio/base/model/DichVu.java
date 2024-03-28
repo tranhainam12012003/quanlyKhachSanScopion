@@ -23,7 +23,7 @@ public class DichVu {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "loai_dich_vu_id_loai_dich_vu", nullable = false)
     private LoaiDichVu loaiDichVuIdLoaiDichVu;
 

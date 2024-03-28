@@ -20,7 +20,6 @@ public class LoaiDichVu {
 
     @Size(max = 200)
     @NotNull
-    @Nationalized
     @Column(name = "ten_loai_dich_vu", nullable = false, length = 200)
     private String tenLoaiDichVu;
 

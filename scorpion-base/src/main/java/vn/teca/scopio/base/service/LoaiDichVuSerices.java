@@ -2,9 +2,11 @@ package vn.teca.scopio.base.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.teca.scopio.base.model.DichVu;
 import vn.teca.scopio.base.model.LoaiDichVu;
 import vn.teca.scopio.base.model.TienIch;
 import vn.teca.scopio.base.model.dto.LoaiDichVuDto;
+import vn.teca.scopio.base.repository.DichVuRepository;
 import vn.teca.scopio.base.repository.LoaiDichVuRepository;
 
 import java.math.BigDecimal;
@@ -16,48 +18,68 @@ import java.util.Optional;
 public class LoaiDichVuSerices {
     @Autowired
     private LoaiDichVuRepository loaiDichVuRepository;
+    @Autowired
+    private DichVuRepository dichVuRepository;
 
     public List<LoaiDichVu> getall() {
         return loaiDichVuRepository.findAll();
     }
 
-    public LoaiDichVu add(LoaiDichVu loaiDichVu) {
-        return loaiDichVuRepository.save(loaiDichVu);
+    public void add(LoaiDichVuDto loaiDichVuDto) {
+        LoaiDichVu loaiDichVu = new LoaiDichVu();
+        loaiDichVu.setTenLoaiDichVu(loaiDichVuDto.getTenLoaiDichVu());
+        loaiDichVuRepository.save(loaiDichVu);
+        DichVu dichVu=dichVuRepository.getById(loaiDichVuDto.getDichVu().getId());
+        dichVu.setLoaiDichVuIdLoaiDichVu(loaiDichVu);
+        dichVuRepository.save(dichVu);
+
     }
 
+    public  void update(LoaiDichVuDto loaiDichVuDto,Integer id){
+        LoaiDichVu loaiDichVu = loaiDichVuRepository.getById(id);
+        loaiDichVu.setTenLoaiDichVu(loaiDichVuDto.getTenLoaiDichVu());
+        loaiDichVuRepository.save(loaiDichVu);
+        DichVu dichVu = dichVuRepository.getById(loaiDichVuDto.getDichVu().getId());
+        dichVu.setLoaiDichVuIdLoaiDichVu(loaiDichVu);
+        dichVuRepository.save(dichVu);
+    }
     public LoaiDichVu detail(Integer id) {
         Optional<LoaiDichVu> optional = loaiDichVuRepository.findById(id);
         return optional.isPresent() ? optional.get() : null;
     }
 
-    public LoaiDichVu update(LoaiDichVu loaiDichVu, Integer id) {
+//    public LoaiDichVu update(LoaiDichVu loaiDichVu, Integer id) {
+//        Optional<LoaiDichVu> optional = loaiDichVuRepository.findById(id);
+//        return optional.map(o -> {
+//            o.setTenLoaiDichVu(loaiDichVu.getTenLoaiDichVu());
+//            return loaiDichVuRepository.save(o);
+//        }).orElse(null);
+//    }
+
+    public LoaiDichVu delete(Integer id) {
+
         Optional<LoaiDichVu> optional = loaiDichVuRepository.findById(id);
         return optional.map(o -> {
-            o.setTenLoaiDichVu(loaiDichVu.getTenLoaiDichVu());
-            return loaiDichVuRepository.save(o);
-        }).orElse(null);
-    }
-    public LoaiDichVu delete(Integer id){
-
-        Optional<LoaiDichVu> optional=loaiDichVuRepository.findById(id);
-        return optional.map(o->{
             loaiDichVuRepository.delete(o);
             return o;
         }).orElse(null);
 
     }
-    public List<LoaiDichVu> search(String ten){
+
+    public List<LoaiDichVu> search(String ten) {
         return loaiDichVuRepository.findByTenLoaiDichVu(ten);
     }
+
     private LoaiDichVuDto mapToObject(Object[] result) {
-        LoaiDichVuDto loaiDichVuDto=new LoaiDichVuDto();
+        LoaiDichVuDto loaiDichVuDto = new LoaiDichVuDto();
         loaiDichVuDto.setTenLoaiDichVu((String) result[0]);
         loaiDichVuDto.setTendichVu((String) result[1]);
         loaiDichVuDto.setGia((BigDecimal) result[2]);
         return loaiDichVuDto;
     }
+
     public List<LoaiDichVuDto> getDichVuTheoID(Integer id) {
-        List<Object[]> results =loaiDichVuRepository.findDichVuTheoID(id);
+        List<Object[]> results = loaiDichVuRepository.findDichVuTheoID(id);
         List<LoaiDichVuDto> loaiDichVuDtos = new ArrayList<>();
         for (Object[] result : results) {
             loaiDichVuDtos.add(mapToObject(result));
