@@ -9,7 +9,7 @@ import vn.teca.scopio.base.util.DataConvertUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
