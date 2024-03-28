@@ -12,6 +12,7 @@ import vn.teca.scopio.base.util.DateDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,5 +52,13 @@ public class PhongDat {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "thoi_gian_ra", nullable = false)
     private LocalDateTime thoiGianRa;
+
+    @NotNull
+    @Column(name = "so_tien_phong", nullable = false)
+    private BigDecimal soTienPhong;
+
+    @NotNull
+    @Column(name = "trang_thai", nullable = false)
+    private String trangThai;
 
 }

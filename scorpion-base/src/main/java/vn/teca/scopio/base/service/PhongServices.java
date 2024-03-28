@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class phongServices {
+public class PhongServices {
     @Autowired
     PhongRepository phongRepository;
 
@@ -47,6 +47,10 @@ public class phongServices {
     public Phong detail(Integer id) {
         Optional<Phong> optional = phongRepository.findById(id);
         return optional.orElse(null);
+    }
+
+    public List<Phong> findPhongTrong(Integer id){
+        return phongRepository.findPhongTrong(id);
     }
 
 

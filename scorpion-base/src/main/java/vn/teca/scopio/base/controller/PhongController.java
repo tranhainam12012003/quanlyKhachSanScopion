@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import vn.teca.scopio.base.model.Phong;
-import vn.teca.scopio.base.service.phongServices;
+import vn.teca.scopio.base.service.PhongServices;
 @RestController
 @Controller
-@RequestMapping("admin/phong")
-public class phongController {
+@RequestMapping("/admin/phong")
+public class PhongController {
     @Autowired
-    private phongServices phongServices;
+    private PhongServices phongServices;
     @GetMapping("/hien-thi")
     public ResponseEntity<?> getall(){
         return ResponseEntity.ok(phongServices.getall());
@@ -45,6 +45,11 @@ public class phongController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<?>getone(@PathVariable String id){
         return ResponseEntity.ok(phongServices.detail(Integer.parseInt(id)));
+    }
+    // hien thi phong con trong de gan phong
+    @PostMapping("/searchTrong/{id}") //id o day la id cua loai phong
+    public ResponseEntity<?> searchTrong(@PathVariable String id){
+        return ResponseEntity.ok(phongServices.findPhongTrong(Integer.parseInt(id)));
     }
 
 }
