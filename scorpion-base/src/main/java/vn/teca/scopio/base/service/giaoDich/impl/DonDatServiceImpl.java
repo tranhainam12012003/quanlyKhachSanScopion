@@ -33,6 +33,7 @@ public class DonDatServiceImpl implements DonDatService {
 
     @Override
     public Page<DonDat> findAll(Pageable pageable) {
+        pageable = Pageable.ofSize(15);
         return donDatRepository.findAll(pageable);
     }
 
