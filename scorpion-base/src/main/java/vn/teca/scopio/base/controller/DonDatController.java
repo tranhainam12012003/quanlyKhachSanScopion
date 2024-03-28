@@ -22,7 +22,7 @@ public class DonDatController {
     @Autowired
     DonDatService donDatService;
     @Autowired
-    private LoaiPhongDatRepository loaiPhongDatRepository;
+     LoaiPhongDatRepository loaiPhongDatRepository;
     @Autowired
     LoaiPhongDatService loaiPhongDatService;
 

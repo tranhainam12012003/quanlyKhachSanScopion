@@ -16,6 +16,7 @@ import vn.teca.scopio.base.repository.TienIchLoaiPhongRepository;
 import vn.teca.scopio.base.repository.TienIchRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -146,6 +147,16 @@ public class LoaiPhongServices {
 //            return result;
         }
         return result;
+    }
+    public List<LoaiPhongDto> searchLoaiPhongTrong(LocalDateTime thoiGianVao, LocalDateTime thoiGianRa){
+//        List<LoaiPhongDto> result = loaiPhongRepository.searchLoaiPhongTrong(thoiGianVao,thoiGianRa);
+//        if (result!=null){
+//            result.forEach(p ->{
+//                p = getMoreInfro(p);
+//            });
+//        }
+//        return result;
+        return loaiPhongRepository.searchLoaiPhongTrong(thoiGianVao,thoiGianRa);
     }
 
     public LoaiPhongDto getMoreInfro(LoaiPhongDto dto) {

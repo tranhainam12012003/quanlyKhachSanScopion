@@ -47,6 +47,7 @@ public class LoaiPhongController {
         return ResponseEntity.ok(loaiPhongServices.searchLoaiPhongTrong(vao,ra));
    }
 
+
 //    @PostMapping("tim-loai_phong")
 //    public ResponseEntity<?> searchLoaiPhongTrong(@RequestParam String thoiGianVao,@RequestParam String thoiGianRa){
 //        return ResponseEntity.ok(loaiPhongServices.searchLoaiPhongTrong(LocalDate.parse(thoiGianVao),LocalDate.parse(thoiGianRa)));
