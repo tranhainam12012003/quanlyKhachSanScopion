@@ -38,6 +38,7 @@ public class LoaiPhongDto implements Serializable {
     private String moTa;
     @NotNull
     private Integer soLuongNguoiO;
+    private Integer soLuongTrong;
     private List<HinhAnh> hinhAnh;
     private List<TienIch> tienTienIch;
 }

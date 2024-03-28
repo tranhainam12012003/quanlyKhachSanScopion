@@ -13,6 +13,8 @@ import vn.teca.scopio.base.util.DateDeserializer;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -38,16 +40,16 @@ public class PhongDat {
 
     @NotNull
     @CreatedDate
-    @JsonDeserialize(using = DateDeserializer.class)
+//    @JsonDeserialize(using = DateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "thoi_gian_vao", nullable = false)
-    private Instant thoiGianVao;
+    private LocalDateTime thoiGianVao;
 
     @NotNull
     @LastModifiedDate
-    @JsonDeserialize(using = DateDeserializer.class)
+//    @JsonDeserialize(using = DateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "thoi_gian_ra", nullable = false)
-    private Instant thoiGianRa;
+    private LocalDateTime thoiGianRa;
 
 }
