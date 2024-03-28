@@ -39,7 +39,7 @@ public class LoaiPhongController {
 //       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 //       LocalDateTime vao = LocalDateTime.parse(thoiGianVao, formatter);
 //       LocalDateTime ra = LocalDateTime.parse(thoiGianRa, formatter);
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
        LocalDateTime vao = LocalDateTime.parse(thoiGianVao, formatter);
        LocalDateTime ra = LocalDateTime.parse(thoiGianRa, formatter);
 
