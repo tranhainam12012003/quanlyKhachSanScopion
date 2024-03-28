@@ -24,7 +24,6 @@ import java.util.List;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DonDatDto implements Serializable {
-
     private ThongTinKhachDat thongTinKhachDatIdKhachDat;
     private HinhThucDat hinhThucDatIdHinhThucDat;
     private LocalDateTime thoiGianVao;

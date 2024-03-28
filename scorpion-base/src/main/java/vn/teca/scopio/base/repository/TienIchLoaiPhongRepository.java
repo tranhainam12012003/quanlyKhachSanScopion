@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import vn.teca.scopio.base.model.TienIchLoaiPhong;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface TienIchLoaiPhongRepository extends JpaRepository<TienIchLoaiPhong, Integer> {
-
+    TienIchLoaiPhong findTienIchLoaiPhongByLoaiPhong_Id(Integer id);
 }

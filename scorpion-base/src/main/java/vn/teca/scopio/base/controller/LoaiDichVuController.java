@@ -46,4 +46,8 @@ public class LoaiDichVuController {
     public ResponseEntity<?>timKiem(@PathVariable String ten){
         return ResponseEntity.ok(loaiDichVuSerices.search(ten));
     }
+    @GetMapping("tim-dich-vu/{id}")
+    public ResponseEntity<?>findById(@PathVariable String id){
+        return ResponseEntity.ok(loaiDichVuSerices.getDichVuTheoID(Integer.parseInt(id)));
+    }
 }

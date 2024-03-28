@@ -22,7 +22,7 @@ import java.io.IOException;
 public class HinhAnhController {
     @Autowired
     private  HinhAnhServices hinhAnhServices;
-    //    @GetMapping("/hien-thi")
+        @GetMapping("/hien-thi")
 //    public ResponseEntity<?>getall(){
 //
 //        return ResponseEntity.ok(hinhAnhServices.getAllImagesAsBase64());
