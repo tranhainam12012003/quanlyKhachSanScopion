@@ -3,6 +3,7 @@ package vn.teca.scopio.base.service.giaoDich.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DonDat;
@@ -32,9 +33,21 @@ public class DonDatServiceImpl implements DonDatService {
 
 
     @Override
-    public Page<DonDat> findAll(Pageable pageable) {
-        pageable = Pageable.ofSize(15);
-        return donDatRepository.findAll(pageable);
+    public List<DonDat> findAllDonDat(int page) {
+        Pageable pageable=PageRequest.of(page,15);
+        return donDatRepository.getList(pageable);
+    }
+
+    @Override
+    public List<DonDat> findAllOnline(int page) {
+        Pageable pageable = PageRequest.of(page, 15);
+        return donDatRepository.findAllOnline(pageable);
+    }
+
+    @Override
+    public List<DonDat> findAllOffline(int page) {
+        Pageable pageable = PageRequest.of(page, 15);
+        return donDatRepository.findAllOffline(pageable);
     }
 
     @Override
@@ -73,14 +86,14 @@ public class DonDatServiceImpl implements DonDatService {
 //        loaiPhongDatRepository.save(loaiPhongDat);
 
         List<LoaiPhongDat> loaiPhongDatList = new ArrayList<>();
-         for(LoaiPhongDatDto loaiPhongDatDto : donDatDto.getLoaiPhongDatDto()){
-             LoaiPhongDat loaiPhongDat = new LoaiPhongDat();
-             loaiPhongDat.setDonDatIdDonDat(donDat);
-             loaiPhongDat.setLoaiPhongIdLoaiPhong(loaiPhongDatDto.getLoaiPhongIdLoaiPhong());
-             loaiPhongDat.setSoLuong(loaiPhongDatDto.getSoLuong());
-             loaiPhongDatList.add(loaiPhongDat);
-         }
-         loaiPhongDatRepository.saveAll(loaiPhongDatList);
+        for (LoaiPhongDatDto loaiPhongDatDto : donDatDto.getLoaiPhongDatDto()) {
+            LoaiPhongDat loaiPhongDat = new LoaiPhongDat();
+            loaiPhongDat.setDonDatIdDonDat(donDat);
+            loaiPhongDat.setLoaiPhongIdLoaiPhong(loaiPhongDatDto.getLoaiPhongIdLoaiPhong());
+            loaiPhongDat.setSoLuong(loaiPhongDatDto.getSoLuong());
+            loaiPhongDatList.add(loaiPhongDat);
+        }
+        loaiPhongDatRepository.saveAll(loaiPhongDatList);
 //         donDatDto.setLoaiPhongDatDto(loaiPhongDat);
 
 
@@ -90,11 +103,11 @@ public class DonDatServiceImpl implements DonDatService {
     }
 
     @Override
-    public void update(DonDatDto donDatDto, Integer i){
+    public void update(DonDatDto donDatDto, Integer i) {
         DonDat donDat = new DonDat();
         donDat.setId(donDat.getId());
         Optional<DonDat> optional = donDatRepository.findById(i);
-        optional.map(o ->{
+        optional.map(o -> {
             o.setTrangThai(donDatDto.getTrangThai());
             return donDatRepository.save(o);
         }).orElse(null);
