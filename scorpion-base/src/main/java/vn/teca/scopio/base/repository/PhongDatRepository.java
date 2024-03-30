@@ -11,6 +11,7 @@ import java.util.Objects;
 
 @Repository
 public interface PhongDatRepository extends JpaRepository<PhongDat, Integer> {
+    List<PhongDat> findPhongDatByDonDatIdDonDat(Integer id);
      @Query(value = "\tSELECT \n" +
              "    loai_phong.ten_loai_phong, phong.so_phong,\n" +
              "    COUNT(pd.phong_id_phong) AS so_luong_phong,pd.phong_id_phong \n" +
@@ -43,4 +44,7 @@ public interface PhongDatRepository extends JpaRepository<PhongDat, Integer> {
            "thong_tin_khach_o.phong_dat_id_phong_dat=pd.id_phong_dat join loai_phong on\n" +
            "loai_phong.Id_loai_phong=phong.loai_phong_Id_loai_phong where pd.phong_id_phong=:idPhong\n",nativeQuery = true)
     List<Object[]>getThongTinPhongDatByIdPhong(@Param("idPhong")Integer idPhong);
+
+
+
 }

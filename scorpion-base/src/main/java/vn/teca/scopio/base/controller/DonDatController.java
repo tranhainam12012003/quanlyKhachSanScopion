@@ -50,30 +50,5 @@ public class DonDatController {
         }
     }
 
-    @GetMapping("thong-tin-phong-dat/{id}")
-    public ResponseEntity<?> detailByIdDonDat(@PathVariable String id) {
-        return ResponseEntity.ok(thongTinDatPhongServices.getThongTInPhongDat(Integer.parseInt(id)));
-    }
 
-    @GetMapping("phong-dat-online")
-    public ResponseEntity<?> getAllOnline(@RequestParam(value = "page", defaultValue = "0") int page) {
-//        Pageable pageable=PageRequest.of(page,size);
-        return ResponseEntity.ok(donDatService.findAllOnline(page));
-    }
-
-    @GetMapping("phong-dat-offline")
-    public ResponseEntity<?> getallOffline(@RequestParam(value = "page", defaultValue = "0") int page) {
-//        Pageable pageable=PageRequest.of(page,size);
-        return ResponseEntity.ok(donDatService.findAllOffline(page));
-    }
-
-    @GetMapping("hien-thi-tat-ca")
-    public ResponseEntity<?> getAll(@RequestParam(value = "page", defaultValue = "0") int page) {
-//        Pageable pageable=PageRequest.of(page,size);
-        return ResponseEntity.ok(donDatService.findAllDonDat(page));
-    }
-    @GetMapping("detail-thong-tin-don-dat/{id}")
-    public ResponseEntity<?>detailThongTinDonDat(@PathVariable String id){
-        return ResponseEntity.ok(donDatService.getThongTinDonDat(Integer.parseInt(id)));
-    }
 }

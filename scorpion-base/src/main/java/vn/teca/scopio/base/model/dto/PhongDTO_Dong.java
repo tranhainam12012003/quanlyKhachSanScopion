@@ -2,24 +2,22 @@ package vn.teca.scopio.base.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PhongDatDto {
-    private String tenKhach;
+@Data
+public class PhongDTO_Dong {
     private String tenLoaiPhong;
-    private BigDecimal soTienPhong;
-    private Timestamp thoiGianVao;
-    private Timestamp thoiGianRa;
-    private String soPhong;
-
+    private String tenPhong;
+    private Integer soLuongPhong;
+    private Integer idPhong;
 }
