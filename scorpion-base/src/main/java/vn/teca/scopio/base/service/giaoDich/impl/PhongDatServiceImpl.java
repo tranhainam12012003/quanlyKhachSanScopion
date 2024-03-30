@@ -37,6 +37,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
         phongDat.setSoTienPhong(dto.getSoTienPhong());
         phongDat.setTrangThai(trangThai);
         phongDatRepository.save(phongDat);
+
     }
 
     @Override
@@ -48,6 +49,12 @@ public class PhongDatServiceImpl implements PhongDatServices {
             o.setThoiGianVao(LocalDateTime.now());
             o.setTrangThai("Checkin");
             return phongDatRepository.save(o);
+        }).orElse(null);
+        Integer idDonDat = optional.get().getDonDatIdDonDat().getId();
+        Optional<DonDat> dd = donDatRepository.findById(idDonDat);
+        dd.map(o ->{
+            o.setTrangThai("DANG O");
+            return donDatRepository.save(o);
         }).orElse(null);
     }
     @Override
@@ -63,7 +70,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
         }).orElse(null);
     }
     @Override
-    public void checkout(Integer id, Integer idDonDat){
+    public void checkout(Integer id){
 //        PhongDat phongDat = new PhongDat();
 //        phongDat.setId(id);
         Optional<PhongDat> optional = phongDatRepository.findById(id);
@@ -72,12 +79,12 @@ public class PhongDatServiceImpl implements PhongDatServices {
             o.setTrangThai("Checkout");
             return phongDatRepository.save(o);
         }).orElse(null);
-        checkoutDonDat(idDonDat);
+//        checkoutDonDat(idDonDat);
 
     }
     @Override
     public Integer countCheckout(Integer id){
-        List<PhongDat> phongDat = phongDatRepository.findPhongDatByDonDatIdDonDat(id);
+        List<PhongDat> phongDat = phongDatRepository.findPhongDatByIdDonDat(id);
         int count = 0;
         for (PhongDat pd : phongDat){
             if(pd.getTrangThai().equalsIgnoreCase("Checkout")){
@@ -88,7 +95,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
     }
     @Override
     public void checkoutDonDat(Integer id){
-        LoaiPhongDat optional = loaiPhongDatRepository.findByDonDatIdDonDat(id);
+        LoaiPhongDat optional = loaiPhongDatRepository.findByIdDonDat(id);
         int soLuong = optional.getSoLuong();
         int soLuongChechOut = countCheckout(id);
         if (soLuong == soLuongChechOut){

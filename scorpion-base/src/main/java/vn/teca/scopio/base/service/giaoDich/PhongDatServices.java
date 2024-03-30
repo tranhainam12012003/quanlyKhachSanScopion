@@ -14,7 +14,7 @@ public interface PhongDatServices {
     void save(PhongDatDto dto);
     void checkin(Integer id);
     void update(PhongDatDto dto,Integer id);
-    void checkout(Integer id, Integer idDonDat);
+    void checkout(Integer id);
     Integer countCheckout(Integer id);
     void checkoutDonDat(Integer id);
 //    @Autowired
