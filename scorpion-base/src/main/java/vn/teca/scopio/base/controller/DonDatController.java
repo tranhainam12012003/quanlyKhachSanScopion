@@ -10,7 +10,6 @@ import vn.teca.scopio.base.model.DonDat;
 import vn.teca.scopio.base.model.LoaiPhongDat;
 import vn.teca.scopio.base.model.dto.DonDatDto;
 import vn.teca.scopio.base.repository.LoaiPhongDatRepository;
-import vn.teca.scopio.base.service.ThongTinDatPhongServices;
 import vn.teca.scopio.base.service.giaoDich.DonDatService;
 import vn.teca.scopio.base.service.giaoDich.LoaiPhongDatService;
 
@@ -26,29 +25,26 @@ public class DonDatController {
     LoaiPhongDatRepository loaiPhongDatRepository;
     @Autowired
     LoaiPhongDatService loaiPhongDatService;
-    @Autowired
-    ThongTinDatPhongServices thongTinDatPhongServices;
+
 
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody DonDatDto donDatDto) {
 
-        try {
+        try{
             donDatService.luuDonDat(donDatDto);
             return ResponseEntity.ok().body("luu thanh cong");
-        } catch (Exception e) {
+        } catch (Exception e){
             return ResponseEntity.badRequest().body("loi khi luu");
         }
     }
-
     @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody DonDatDto donDatDto) {
+    public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody DonDatDto donDatDto){
         try {
             donDatService.update(donDatDto, Integer.parseInt(id));
             return ResponseEntity.ok().body("cap nhat thanh cong");
-        } catch (Exception e) {
+        }
+        catch ( Exception e){
             return ResponseEntity.badRequest().body("Khong thuc hien duoc");
         }
     }
-
-
 }

@@ -10,7 +10,7 @@ import vn.teca.scopio.base.service.PhongDatServices_Dong;
 
 @RestController
 @RequestMapping("staff/phong-dat/")
-public class PhongDatController {
+public class PhongDatController_Dong {
     @Autowired
     PhongDatServices_Dong phongDatServices;
     @GetMapping("phong-da-gan/{id}")
