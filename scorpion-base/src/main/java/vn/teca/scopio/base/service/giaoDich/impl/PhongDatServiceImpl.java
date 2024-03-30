@@ -100,10 +100,10 @@ public class PhongDatServiceImpl implements PhongDatServices {
         int soLuongChechOut = countCheckout(id);
         if (soLuong == soLuongChechOut){
             Optional<DonDat> donDat = donDatRepository.findById(id);
-                donDat.map(o->{
-                    o.setTrangThai("Checkout");
-                    return donDatRepository.save(o);
-                }).orElse(null);
+            donDat.map(o->{
+                o.setTrangThai("Checkout");
+                return donDatRepository.save(o);
+            }).orElse(null);
         }
 
     }

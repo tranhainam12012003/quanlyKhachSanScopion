@@ -12,37 +12,37 @@ import vn.teca.scopio.base.service.giaoDich.PhongDatServices;
 @Controller
 @RequestMapping("/phong-dat")
 public class PhongDatController {
-   @Autowired
+    @Autowired
     PhongDatServices phongDatServices;
 
-   @PostMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody PhongDatDto dto){
-       try {
-           phongDatServices.save(dto);
-           return ResponseEntity.ok().body("Thanh Cong");
-       }catch (Exception e){
-           return ResponseEntity.badRequest().body("That bai");
-       }
+        try {
+            phongDatServices.save(dto);
+            return ResponseEntity.ok().body("Thanh Cong");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("That bai");
+        }
 
-   }
+    }
 
-   @PostMapping("/checkin/{id}")
+    @PostMapping("/checkin/{id}")
     public ResponseEntity<?> checkin(@PathVariable String id){
-       phongDatServices.checkin(Integer.parseInt(id));
-       return ResponseEntity.ok().body("checkin thanh cong");
-   }
+        phongDatServices.checkin(Integer.parseInt(id));
+        return ResponseEntity.ok().body("checkin thanh cong");
+    }
 
-   @PostMapping("/update/{id}")
+    @PostMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable String id,@RequestBody PhongDatDto dto){
-       phongDatServices.update(dto,Integer.parseInt(id));
-       return ResponseEntity.ok().body("update thanh cong");
-   }
-   @PostMapping("/checkout/{id}")
+        phongDatServices.update(dto,Integer.parseInt(id));
+        return ResponseEntity.ok().body("update thanh cong");
+    }
+    @PostMapping("/checkout/{id}")
     public ResponseEntity<?> checkout(@PathVariable String id, @RequestBody PhongDatDto dto){
-       Integer idDonDat = dto.getDonDatIdDonDat().getId().intValue();
-       phongDatServices.checkout(Integer.parseInt(id));
-       phongDatServices.checkoutDonDat(idDonDat);
-       return ResponseEntity.ok().body("check out thanh cong");
-   }
+        Integer idDonDat = dto.getDonDatIdDonDat().getId().intValue();
+        phongDatServices.checkout(Integer.parseInt(id));
+        phongDatServices.checkoutDonDat(idDonDat);
+        return ResponseEntity.ok().body("check out thanh cong");
+    }
 
 }
