@@ -29,4 +29,8 @@ public class DichVuDatController {
     public ResponseEntity<?>update(@RequestBody DichVuDat dichVuDat, @PathVariable String id){
         return ResponseEntity.ok(dichVuDatServices.update(dichVuDat,Integer.parseInt(id)));
     }
+    @GetMapping("tong-tien-theo-id-phong/{id}")
+    public ResponseEntity<?>sum(@PathVariable String id){
+        return ResponseEntity.ok(dichVuDatServices.getTonggTienTheoIdPhong(Integer.parseInt(id)));
+    }
 }

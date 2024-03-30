@@ -8,11 +8,14 @@ import vn.teca.scopio.base.model.LoaiPhongDat;
 import vn.teca.scopio.base.model.dto.DonDatDto;
 import vn.teca.scopio.base.model.dto.LoaiPhongDatDto;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DonDatService {
     Page<DonDat> findAll(Pageable pageable);
-
+    List<DonDat> findAllDonDat(int page);
+    List<DonDat> findAllOnline(int page);
+    List<DonDat> findAllOffline(int page);
     DonDat save(DonDat entity);
 
     DonDat findById(Integer integer);

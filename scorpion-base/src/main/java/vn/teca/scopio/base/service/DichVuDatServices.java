@@ -3,8 +3,11 @@ package vn.teca.scopio.base.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DichVuDat;
+import vn.teca.scopio.base.model.dto.LoaiDichVuDto;
 import vn.teca.scopio.base.repository.DichVuDatRepository;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +25,7 @@ public class DichVuDatServices {
         return dichVuDatRepository.save(dichVuDat);
     }
 
+
     public DichVuDat update(DichVuDat dv, Integer id) {
         Optional<DichVuDat> optional = dichVuDatRepository.findById(id);
         return optional.map(o -> {
@@ -35,5 +39,19 @@ public class DichVuDatServices {
     public DichVuDat detail(Integer id) {
         Optional<DichVuDat> optional = dichVuDatRepository.findById(id);
         return optional.isPresent() ? optional.get() : null;
+    }
+    private DichVuDat mapToObject(Object[] result) {
+        DichVuDat dichVuDat=new DichVuDat();
+        dichVuDat.setSoTien((BigDecimal) result[0]);
+        return dichVuDat;
+    }
+
+    public List<DichVuDat> getTonggTienTheoIdPhong(Integer id) {
+        List<Object[]> results = dichVuDatRepository.getPriceWithIdPhong(id);
+        List<DichVuDat> dichVuDats = new ArrayList<>();
+        for (Object[] result : results) {
+            dichVuDats.add(mapToObject(result));
+        }
+        return dichVuDats;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.teca.scopio.base.model.LoaiDichVu;
+import vn.teca.scopio.base.model.dto.LoaiDichVuDto;
 import vn.teca.scopio.base.service.LoaiDichVuSerices;
 
 @RestController
@@ -24,13 +25,29 @@ public class LoaiDichVuController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<?> add(@RequestBody LoaiDichVu loaiDichVu) {
-        return ResponseEntity.ok(loaiDichVuSerices.add(loaiDichVu));
+    public ResponseEntity<?> add(@RequestBody LoaiDichVuDto loaiDichVuDto) {
+        try {
+
+            loaiDichVuSerices.add(loaiDichVuDto);
+            return ResponseEntity.ok().body("add thành công");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.ok().body("add khoong thanh cong");
+        }
     }
 
     @PostMapping("update/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody LoaiDichVu loaiDichVu) {
-        return ResponseEntity.ok(loaiDichVuSerices.update(loaiDichVu, Integer.parseInt(id)));
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody LoaiDichVuDto loaiDichVu) {
+        try {
+            loaiDichVuSerices.update(loaiDichVu, Integer.parseInt(id));
+         return  ResponseEntity.ok().body("sua thanh cong");
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.ok().body("sua khong thanh cong");
+        }
+
+
     }
 
     @DeleteMapping("delete/{id}")

@@ -18,9 +18,14 @@ public class DichVuDat {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "dich_vu_id_dich_vu", nullable = false)
     private DichVu dichVuIdDichVu;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "phong_dat_id_phong_dat", nullable = false)
+    private PhongDat phongDatIdPhongDat;
 
     @NotNull
     @Column(name = "so_luong", nullable = false)

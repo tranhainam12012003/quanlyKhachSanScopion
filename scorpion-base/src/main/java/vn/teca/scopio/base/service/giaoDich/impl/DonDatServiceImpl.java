@@ -3,6 +3,7 @@ package vn.teca.scopio.base.service.giaoDich.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DonDat;
@@ -36,7 +37,23 @@ public class DonDatServiceImpl implements DonDatService {
         pageable = Pageable.ofSize(15);
         return donDatRepository.findAll(pageable);
     }
+    @Override
+    public List<DonDat> findAllDonDat(int page) {
+        Pageable pageable= PageRequest.of(page,15);
+        return donDatRepository.getList(pageable);
+    }
 
+    @Override
+    public List<DonDat> findAllOnline(int page) {
+        Pageable pageable = PageRequest.of(page, 15);
+        return donDatRepository.findAllOnline(pageable);
+    }
+
+    @Override
+    public List<DonDat> findAllOffline(int page) {
+        Pageable pageable = PageRequest.of(page, 15);
+        return donDatRepository.findAllOffline(pageable);
+    }
     @Override
     public DonDat save(DonDat entity) {
         return donDatRepository.save(entity);
@@ -91,15 +108,12 @@ public class DonDatServiceImpl implements DonDatService {
 
     @Override
     public void update(DonDatDto donDatDto, Integer i){
-//        DonDat donDat = new DonDat();
-//        donDat.setId(donDat.getId());
+        DonDat donDat = new DonDat();
+        donDat.setId(donDat.getId());
         Optional<DonDat> optional = donDatRepository.findById(i);
         optional.map(o ->{
             o.setTrangThai(donDatDto.getTrangThai());
             return donDatRepository.save(o);
         }).orElse(null);
     }
-
-
-
 }
