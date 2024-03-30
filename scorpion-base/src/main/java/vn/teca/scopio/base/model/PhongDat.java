@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import vn.teca.scopio.base.config.auditing.AuditingConfig;
 import vn.teca.scopio.base.util.DateDeserializer;
 
 import javax.persistence.*;
@@ -22,6 +24,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+//@EntityListeners(AuditingEntityListener.class)
 @Table(name = "phong_dat")
 public class PhongDat {
     @Id
@@ -40,14 +43,14 @@ public class PhongDat {
     private DonDat donDatIdDonDat;
 
     @NotNull
-    @CreatedDate
+//    @CreatedDate
 //    @JsonDeserialize(using = DateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "thoi_gian_vao", nullable = false)
     private LocalDateTime thoiGianVao;
 
     @NotNull
-    @LastModifiedDate
+//    @LastModifiedDate
 //    @JsonDeserialize(using = DateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
     @Column(name = "thoi_gian_ra", nullable = false)

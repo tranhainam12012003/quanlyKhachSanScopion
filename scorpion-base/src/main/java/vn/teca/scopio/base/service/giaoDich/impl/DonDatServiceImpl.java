@@ -91,12 +91,15 @@ public class DonDatServiceImpl implements DonDatService {
 
     @Override
     public void update(DonDatDto donDatDto, Integer i){
-        DonDat donDat = new DonDat();
-        donDat.setId(donDat.getId());
+//        DonDat donDat = new DonDat();
+//        donDat.setId(donDat.getId());
         Optional<DonDat> optional = donDatRepository.findById(i);
         optional.map(o ->{
             o.setTrangThai(donDatDto.getTrangThai());
             return donDatRepository.save(o);
         }).orElse(null);
     }
+
+
+
 }

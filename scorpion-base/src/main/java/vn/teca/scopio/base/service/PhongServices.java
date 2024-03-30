@@ -3,6 +3,7 @@ package vn.teca.scopio.base.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.Phong;
+import vn.teca.scopio.base.model.dto.PhongDto;
 import vn.teca.scopio.base.repository.PhongRepository;
 
 import java.util.List;
@@ -49,9 +50,21 @@ public class PhongServices {
         return optional.orElse(null);
     }
 
+    // lay ra so phong trong de gan phong
     public List<Phong> findPhongTrong(Integer id){
         return phongRepository.findPhongTrong(id);
     }
 
+    // so do trang thai phong
+
+    // lay ra danh sach phong co trang thai trong
+    public List<PhongDto> getPhongTrong(){
+        return phongRepository.getPhongTrangThaiTrong();
+    }
+
+    // lay ra danh sach phong co trang thai checkin ( dang o)
+    public List<PhongDto> getPhongDangO(){
+        return phongRepository.getPhongCheckin();
+    }
 
 }

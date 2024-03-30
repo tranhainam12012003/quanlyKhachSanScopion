@@ -38,7 +38,7 @@ public class DonDatController {
         }
     }
     @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody DonDatDto donDatDto){
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody DonDatDto donDatDto){
         try {
             donDatService.update(donDatDto, Integer.parseInt(id));
             return ResponseEntity.ok().body("cap nhat thanh cong");

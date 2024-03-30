@@ -12,7 +12,7 @@ import vn.teca.scopio.base.service.TienIchLoaiPhongServices;
 
 @Controller
 @RequestMapping("tien-ich-loai-phong")
-public class tienIchLoaiPhongController {
+public class TienIchLoaiPhongController {
     @Autowired
     public TienIchLoaiPhongServices tienIchLoaiPhongServices;
     @PostMapping("/add")

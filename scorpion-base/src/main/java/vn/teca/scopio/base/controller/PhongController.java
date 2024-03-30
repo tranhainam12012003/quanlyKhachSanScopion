@@ -52,4 +52,18 @@ public class PhongController {
         return ResponseEntity.ok(phongServices.findPhongTrong(Integer.parseInt(id)));
     }
 
+    // So do trang thai phong
+
+    // lay ra danh sach phong trong
+    @GetMapping("/phong-trong")
+    public ResponseEntity<?> layPhongTrong(){
+        return ResponseEntity.ok(phongServices.getPhongTrong());
+    }
+
+    // lay ra danh sach phong checkin/dang o
+    @GetMapping("/phong-dang-o")
+    public ResponseEntity<?> layPhongDangO(){
+        return ResponseEntity.ok(phongServices.getPhongDangO());
+    }
+
 }

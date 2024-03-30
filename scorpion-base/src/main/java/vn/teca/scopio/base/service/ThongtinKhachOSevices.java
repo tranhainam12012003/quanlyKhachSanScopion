@@ -24,4 +24,25 @@ public class ThongtinKhachOSevices {
     public List<ThongTinKhachO> timKiem(String hovaten , java.sql.Date thoiGianVao , Date thoiGianRa,String soGiayTo){
         return thongTinKhachORepository.timkiem(hovaten,thoiGianVao,thoiGianRa,soGiayTo);
     }
+    public ThongTinKhachO add(ThongTinKhachO thongTinKhachO){
+        return thongTinKhachORepository.save(thongTinKhachO);
+    }
+    public ThongTinKhachO update(ThongTinKhachO thongTinKhachO,Integer id){
+        Optional<ThongTinKhachO> optional = thongTinKhachORepository.findById(id);
+        return optional.map(o ->{
+            o.setHoTen(thongTinKhachO.getHoTen());
+            o.setPhongDatIdPhongDat(thongTinKhachO.getPhongDatIdPhongDat());
+            o.setTenGiayTo(thongTinKhachO.getTenGiayTo());
+            o.setSoGiayTo(thongTinKhachO.getSoGiayTo());
+            o.setQuocTich(thongTinKhachO.getQuocTich());
+            return thongTinKhachORepository.save(o);
+        }).orElse(null);
+    }
+    public ThongTinKhachO delete(Integer id){
+        Optional<ThongTinKhachO> optional = thongTinKhachORepository.findById(id);
+        return optional.map(o ->{
+            thongTinKhachORepository.delete(o);
+            return o;
+        }).orElse(null);
+    }
 }

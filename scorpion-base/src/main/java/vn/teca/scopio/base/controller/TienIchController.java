@@ -1,7 +1,6 @@
 package vn.teca.scopio.base.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/tien-ich")
-public class tienIchController {
+public class TienIchController {
     @Autowired
     public TienIchServices tienIchServices;
 

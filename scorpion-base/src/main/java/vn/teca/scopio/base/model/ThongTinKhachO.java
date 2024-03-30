@@ -15,36 +15,36 @@ import javax.validation.constraints.Size;
 public class ThongTinKhachO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_khach_o", nullable = false)
+    @Column(name = "id_khach_o")
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "phong_dat_id_phong_dat", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "phong_dat_id_phong_dat")
     private PhongDat phongDatIdPhongDat;
 
     @Size(max = 200)
     @NotNull
     @Nationalized
-    @Column(name = "ho_ten", nullable = false, length = 200)
+    @Column(name = "ho_ten")
     private String hoTen;
 
     @Size(max = 200)
     @NotNull
     @Nationalized
-    @Column(name = "quoc_tich", nullable = false, length = 200)
+    @Column(name = "quoc_tich")
     private String quocTich;
 
     @Size(max = 20)
     @NotNull
     @Nationalized
-    @Column(name = "ten_giay_to", nullable = false, length = 20)
+    @Column(name = "ten_giay_to")
     private String tenGiayTo;
 
     @Size(max = 200)
     @NotNull
     @Nationalized
-    @Column(name = "so_giay_to", nullable = false, length = 200)
+    @Column(name = "so_giay_to")
     private String soGiayTo;
 
 }
