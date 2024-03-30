@@ -8,6 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DonDat;
 import vn.teca.scopio.base.model.LoaiPhongDat;
+import vn.teca.scopio.base.model.ThongTinKhachDat;
+import vn.teca.scopio.base.model.TienIch;
+import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO;
 import vn.teca.scopio.base.model.dto.DonDatDto;
 import vn.teca.scopio.base.model.dto.LoaiPhongDatDto;
 import vn.teca.scopio.base.model.dto.LoaiPhongDto;
@@ -15,6 +18,11 @@ import vn.teca.scopio.base.repository.DonDatRepository;
 import vn.teca.scopio.base.repository.LoaiPhongDatRepository;
 import vn.teca.scopio.base.service.giaoDich.DonDatService;
 
+import javax.xml.soap.Detail;
+import java.math.BigDecimal;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -112,4 +120,27 @@ public class DonDatServiceImpl implements DonDatService {
             return donDatRepository.save(o);
         }).orElse(null);
     }
+
+    @Override
+    public DetailThongTinDonDatDTO mapToObject(Object[] result) {
+        DetailThongTinDonDatDTO detailThongTinDonDatDTO=new DetailThongTinDonDatDTO();
+        detailThongTinDonDatDTO.setThoiGianVao((Timestamp) result[0]);
+        detailThongTinDonDatDTO.setThoiGianRa((Timestamp) result[1]);
+        detailThongTinDonDatDTO.setTenLoaiPhong((String) result[2]);
+        detailThongTinDonDatDTO.setSoLuongNguoiO((Integer) result[3]);
+        detailThongTinDonDatDTO.setTongTien((BigDecimal) result[4]);
+        detailThongTinDonDatDTO.setTenKhachDat((String) result[5]);
+        return detailThongTinDonDatDTO;
+    }
+
+    @Override
+    public List<DetailThongTinDonDatDTO> getThongTinDonDat(Integer id) {
+        List<Object[]> results = donDatRepository.detailTheoIdDonDat(id);
+        List<DetailThongTinDonDatDTO> detailThongTinDonDatDTOS = new ArrayList<>();
+        for (Object[] result : results) {
+            detailThongTinDonDatDTOS.add(mapToObject(result));
+        }
+        return detailThongTinDonDatDTOS;
+    }
+
 }

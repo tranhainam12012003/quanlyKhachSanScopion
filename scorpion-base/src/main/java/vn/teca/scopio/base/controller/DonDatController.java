@@ -72,4 +72,8 @@ public class DonDatController {
 //        Pageable pageable=PageRequest.of(page,size);
         return ResponseEntity.ok(donDatService.findAllDonDat(page));
     }
+    @GetMapping("detail-thong-tin-don-dat/{id}")
+    public ResponseEntity<?>detailThongTinDonDat(@PathVariable String id){
+        return ResponseEntity.ok(donDatService.getThongTinDonDat(Integer.parseInt(id)));
+    }
 }
