@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "hoa_don_phong")
-public class  HoaDonPhong {
+public class HoaDonPhong {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_hoa_don", nullable = false)
@@ -21,6 +21,11 @@ public class  HoaDonPhong {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "hinh_thuc_thanh_toan_id_hinh_thuc", nullable = false)
     private HinhThucThanhToan hinhThucThanhToanIdHinhThuc;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "phong_dat_id_phong_dat", nullable = false)
+    private PhongDat phongDatIdPhongDat;
 
     @NotNull
     @Column(name = "tien_thanh_toan", nullable = false, precision = 30, scale = 2)
