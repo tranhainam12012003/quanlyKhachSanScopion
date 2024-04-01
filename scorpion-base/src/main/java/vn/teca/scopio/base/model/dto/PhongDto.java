@@ -3,6 +3,8 @@ package vn.teca.scopio.base.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,5 +16,7 @@ public class PhongDto {
     private String tenPhong;
     private String tenLoaiPhong;
     private Integer idPhongDat;
+    private Timestamp thoiGianVao;
+    private Timestamp thoiGianRa;
 
 }

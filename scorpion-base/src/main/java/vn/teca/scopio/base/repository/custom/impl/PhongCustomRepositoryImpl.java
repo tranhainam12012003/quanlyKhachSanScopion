@@ -9,6 +9,7 @@ import vn.teca.scopio.base.util.DataConvertUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class PhongCustomRepositoryImpl implements PhongCustomRepository {
     @Override
     public List<PhongDto> getPhongCheckin(){
         StringBuilder str = new StringBuilder();
-        str.append(" SELECT p.id_phong, p.so_phong, l.ten_loai_phong, pd.id_phong_dat ");
+        str.append(" SELECT p.id_phong, p.so_phong, l.ten_loai_phong, pd.id_phong_dat, pd.thoi_gian_vao, pd.thoi_gian_ra ");
         str.append(" FROM phong p ");
         str.append(" JOIN phong_dat pd ON p.id_phong = pd.phong_id_phong ");
         str.append(" JOIN loai_phong l ON p.loai_phong_Id_loai_phong = l.Id_loai_phong");
@@ -38,6 +39,8 @@ public class PhongCustomRepositoryImpl implements PhongCustomRepository {
                     dto.setTenPhong(DataConvertUtil.safeToString(objects[1]));
                     dto.setTenLoaiPhong(DataConvertUtil.safeToString(objects[2]));
                     dto.setIdPhongDat(DataConvertUtil.safeToInt(objects[3]));
+                    dto.setThoiGianVao((Timestamp) objects[4]);
+                    dto.setThoiGianRa((Timestamp) objects[5]);
                     result.add(dto);
                 });
                 return new ArrayList<>(result);
