@@ -39,12 +39,12 @@ public class HoaDonPhongServiceImpl implements HoaDonPhongService {
 //        }
 //        return result;
         List<HoaDonResponseDto> result = hoaDonPhongRepository.layHoaDonChiTiet(id);
-//        if (result!=null){
-//            result.forEach(p ->{
-//                p.setDichVuDat(dichVuDatRepository.findByIdPhongDat(id));
-//            });
-//        }
-        return result ;
+        if (result!=null){
+            result.forEach(p ->{
+                p = getMoreInfro(p);
+            });
+        }
+        return result;
     }
 
     public HoaDonResponseDto getMoreInfro(HoaDonResponseDto dto) {

@@ -42,7 +42,7 @@ public class DonDatServiceImpl implements DonDatService {
 
     @Override
     public List<DonDat> findAllDonDat(int page) {
-        Pageable pageable=PageRequest.of(page,15);
+        Pageable pageable=PageRequest.of(page,5);
         return donDatRepository.getList(pageable);
     }
 
