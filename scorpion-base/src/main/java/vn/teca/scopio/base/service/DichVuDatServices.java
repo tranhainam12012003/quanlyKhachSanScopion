@@ -3,6 +3,7 @@ package vn.teca.scopio.base.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DichVuDat;
+import vn.teca.scopio.base.model.dto.DichVuDatDto;
 import vn.teca.scopio.base.model.dto.LoaiDichVuDto;
 import vn.teca.scopio.base.repository.DichVuDatRepository;
 
@@ -53,5 +54,8 @@ public class DichVuDatServices {
             dichVuDats.add(mapToObject(result));
         }
         return dichVuDats;
+    }
+    public List<DichVuDatDto> hienThiDichVuDat(Integer id){
+        return dichVuDatRepository.hienThiDichVuDat(id);
     }
 }

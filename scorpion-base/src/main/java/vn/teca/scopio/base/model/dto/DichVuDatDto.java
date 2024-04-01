@@ -16,4 +16,5 @@ public class DichVuDatDto implements Serializable {
     private Integer soLuong;
     private BigDecimal soTien;
 
+
 }
