@@ -5,22 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vn.teca.scopio.base.model.ThongTinKhachDat;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.Instant;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DetailThongTinDonDatDTO {
+public class DetailThongTinDonDatDTO_Dong {
+    private Integer idPhongDat;
     private String tenLoaiPhong;
     private int soLuongNguoiO;
     private BigDecimal tongTien;
-    private String tenKhachDat;
+    private List<KhachoDTO_Dong> khachO;
     private Timestamp thoiGianVao;
     private Timestamp thoiGianRa;
+    private String soPhong;
 }
