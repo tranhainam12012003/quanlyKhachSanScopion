@@ -60,5 +60,30 @@ public class DetailPhongGan_ChuaGanRepoSitory_Impl_Dong implements DetailPhongGa
 
         return listDetail;
     }
+    @Override
+    public List<DetailThongTinDonDatDTO_Dong> detailPhongChuaGan(Integer idDonDat){
+        List<Object[]> detalphongChuaGanResults = entityManager.createNativeQuery("select don_dat.thoi_gian_vao,don_dat.thoi_gian_ra,\n" +
+                        "loai_phong.ten_loai_phong,loai_phong.so_luong_nguoi_o,don_dat.tong_tien\n" +
+                        " from loai_phong_dat join don_dat\n" +
+                        "on loai_phong_dat.don_dat_id_don_dat=don_dat_id_don_dat join loai_phong on\n" +
+                        "loai_phong.Id_loai_phong=loai_phong_dat.loai_phong_Id_loai_phong \n" +
+                        "where don_dat.id_don_dat=:idDonDat")
+                .setParameter("idDonDat",  idDonDat)
+                .getResultList();
+        List<DetailThongTinDonDatDTO_Dong>detailThongTinDonDatDTODongList=new ArrayList<>();
+        for(Object[] reObjects:detalphongChuaGanResults){
+            DetailThongTinDonDatDTO_Dong detailThongTinDonDatDTODong=new DetailThongTinDonDatDTO_Dong();
+            detailThongTinDonDatDTODong.setThoiGianVao((Timestamp) reObjects[0]);
+            detailThongTinDonDatDTODong.setThoiGianRa((Timestamp) reObjects[1]);
+            detailThongTinDonDatDTODong.setTenLoaiPhong((String)reObjects[2]);
+            detailThongTinDonDatDTODong.setSoLuongNguoiO((int)reObjects[3]);
+            detailThongTinDonDatDTODong.setTongTien((BigDecimal) reObjects[4]);
+            detailThongTinDonDatDTODong.setKhachO(null);
+            detailThongTinDonDatDTODong.setSoPhong(null);
+            detailThongTinDonDatDTODong.setIdPhongDat(null);
+            detailThongTinDonDatDTODongList.add(detailThongTinDonDatDTODong);
+        }
+        return detailThongTinDonDatDTODongList;
+    }
 }
 

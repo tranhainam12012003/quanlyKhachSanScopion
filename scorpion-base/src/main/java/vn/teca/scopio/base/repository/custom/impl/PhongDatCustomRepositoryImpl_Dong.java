@@ -24,12 +24,13 @@ public class PhongDatCustomRepositoryImpl_Dong {
                 .setParameter("idDonDat", idDonDat)
                 .getResultList();
 
-        List<Object[]> phongChuaGanResults = entityManager.createNativeQuery("SELECT dd.id_don_dat, lpd.so_luong - COALESCE(count(pd.id_phong_dat), 0) AS so_luong_con_lai\n" +
-                        "FROM loai_phong_dat lpd\n" +
-                        "JOIN don_dat dd ON lpd.don_dat_id_don_dat = dd.id_don_dat join loai_phong \n" +
-                        " on loai_phong.Id_loai_phong=lpd.loai_phong_Id_loai_phong\n" +
-                        "LEFT JOIN phong_dat pd ON dd.id_don_dat = pd.don_dat_id_don_dat\n" +
-                        "GROUP BY  dd.id_don_dat, lpd.so_luong;\n")
+        List<Object[]> phongChuaGanResults = entityManager.createNativeQuery("SELECT dd.id_don_dat, lpd.so_luong - COALESCE(count(pd.id_phong_dat), 0) AS so_luong_con_lai,loai_phong.ten_loai_phong\n" +
+                        "                        FROM loai_phong_dat lpd\n" +
+                        "                        JOIN don_dat dd ON lpd.don_dat_id_don_dat = dd.id_don_dat join loai_phong \n" +
+                        "                        on loai_phong.Id_loai_phong=lpd.loai_phong_Id_loai_phong\n" +
+                        "                        LEFT JOIN phong_dat pd ON dd.id_don_dat = pd.don_dat_id_don_dat where dd.id_don_dat=:idDonDat\n" +
+                        "                        GROUP BY  loai_phong.ten_loai_phong,dd.id_don_dat, lpd.so_luong;")
+                .setParameter("idDonDat",idDonDat)
                 .getResultList();
 
         List<PhongChuaGan_DTO_Dong> phongDTOs = new ArrayList<>();
@@ -38,9 +39,9 @@ public class PhongDatCustomRepositoryImpl_Dong {
         for (Object[] result : phongChuaGanResults) {
             PhongChuaGan_DTO_Dong phongDTO = new PhongChuaGan_DTO_Dong();
             List<PhongDaGanDTO_Dong> listPhongDaGan = new ArrayList<>();
-
             phongDTO.setIdDonDat((Integer) result[0]);
             phongDTO.setSoLuongChuaGan((Integer) result[1]);
+            phongDTO.setTenLoaiPhongChuaGan((String)result[2]);
             for (Object[] reObjects : phongDaGanResults) {
                 PhongDaGanDTO_Dong phongDaGanDTODong=new PhongDaGanDTO_Dong();
                 phongDaGanDTODong.setTenLoaiPhong((String) reObjects[0]);

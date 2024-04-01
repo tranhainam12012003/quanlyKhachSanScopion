@@ -93,4 +93,8 @@ public class PhongDatServices_Dong {
     public List<DetailThongTinDonDatDTO_Dong> detailThongTinPhongDaGan(Integer idPhongDat) {
         return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDaGan(idPhongDat);
     }
+    public List<DetailThongTinDonDatDTO_Dong>detailThongTinPhongChuaGan(Integer idDonDat){
+
+        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongChuaGan(idDonDat);
+    }
 }

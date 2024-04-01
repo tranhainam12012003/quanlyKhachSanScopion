@@ -24,10 +24,13 @@ public class PhongDatController_Dong {
 
     //api load thong tin detail phong da gan
     @GetMapping("detail-thong-tin-phong-da-gan/{id}")
-    public ResponseEntity<?> detailPhongDatById(@PathVariable String id) {
+    public ResponseEntity<?> detailPhongDaGan(@PathVariable String id) {
         return ResponseEntity.ok(phongDatServices.detailThongTinPhongDaGan(Integer.parseInt(id)));
     }
-
+    @GetMapping("detail-thong-tin-phong-chua-gan/{id}")
+    public ResponseEntity<?> detailPhongChuaGan(@PathVariable String id) {
+        return ResponseEntity.ok(phongDatServices.detailThongTinPhongChuaGan(Integer.parseInt(id)));
+    }
     //api load  phong chua gan
     @GetMapping("load-gan-chua-gan/{id}")
     public ResponseEntity<?> get(@PathVariable String id) {

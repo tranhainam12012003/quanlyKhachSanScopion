@@ -12,4 +12,5 @@ import java.util.List;
 public interface DetailPhongGan_ChuaGanRepository_dong {
 
     public List<DetailThongTinDonDatDTO_Dong> detailPhongDaGan(Integer idPhongDat);
+    public List<DetailThongTinDonDatDTO_Dong> detailPhongChuaGan(Integer idPhongDat);
 }

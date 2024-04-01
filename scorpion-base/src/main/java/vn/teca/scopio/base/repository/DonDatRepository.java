@@ -41,12 +41,12 @@ public interface DonDatRepository extends JpaRepository<DonDat, Integer> {
     List<DonDat> findAllOffline(Pageable pageable);
 
 ////dây là detail của loai phòng chưa gaán
-    @Query(value = "select don_dat.thoi_gian_vao,don_dat.thoi_gian_ra,\n" +
-            "loai_phong.ten_loai_phong,loai_phong.so_luong_nguoi_o,don_dat.tong_tien,\n" +
-            "thong_tin_khach_dat.ho_ten  from loai_phong_dat join don_dat\n" +
-            "on loai_phong_dat.don_dat_id_don_dat=don_dat_id_don_dat join loai_phong on\n" +
-            "loai_phong.Id_loai_phong=loai_phong_dat.loai_phong_Id_loai_phong join thong_tin_khach_dat on thong_tin_khach_dat.id_khach_dat=don_dat.thong_tin_khach_dat_id_khach_dat\n" +
-            "where don_dat.id_don_dat=:idDonDat" +
-            "\n",nativeQuery = true)
-    List<Object[]>detailTheoIdDonDat(@Param("idDonDat")Integer id);
+//    @Query(value = "select don_dat.thoi_gian_vao,don_dat.thoi_gian_ra,\n" +
+//            "loai_phong.ten_loai_phong,loai_phong.so_luong_nguoi_o,don_dat.tong_tien,\n" +
+//            "thong_tin_khach_dat.ho_ten  from loai_phong_dat join don_dat\n" +
+//            "on loai_phong_dat.don_dat_id_don_dat=don_dat_id_don_dat join loai_phong on\n" +
+//            "loai_phong.Id_loai_phong=loai_phong_dat.loai_phong_Id_loai_phong join thong_tin_khach_dat on thong_tin_khach_dat.id_khach_dat=don_dat.thong_tin_khach_dat_id_khach_dat\n" +
+//            "where don_dat.id_don_dat=:idDonDat" +
+//            "\n",nativeQuery = true)
+//    List<Object[]>detailTheoIdDonDat(@Param("idDonDat")Integer id);
 }

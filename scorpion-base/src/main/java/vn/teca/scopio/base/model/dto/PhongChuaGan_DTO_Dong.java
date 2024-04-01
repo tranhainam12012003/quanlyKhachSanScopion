@@ -18,6 +18,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class PhongChuaGan_DTO_Dong {
+    private String tenLoaiPhongChuaGan;
     private Integer idDonDat;
     private int soLuongChuaGan;
     private List<PhongDaGanDTO_Dong> phongDaGanDTODongs;
