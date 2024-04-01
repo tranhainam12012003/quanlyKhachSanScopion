@@ -23,7 +23,7 @@ public class TaiKhoanNv {
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "quyen_han_id_quyen_han", nullable = false)
     private QuyenHan quyenHanIdQuyenHan;
 
