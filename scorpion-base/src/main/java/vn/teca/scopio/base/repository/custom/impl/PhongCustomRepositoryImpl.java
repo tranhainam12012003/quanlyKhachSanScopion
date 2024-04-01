@@ -22,9 +22,10 @@ public class PhongCustomRepositoryImpl implements PhongCustomRepository {
     @Override
     public List<PhongDto> getPhongCheckin(){
         StringBuilder str = new StringBuilder();
-        str.append(" SELECT p.id_phong, p.so_phong, pd.id_phong_dat ");
+        str.append(" SELECT p.id_phong, p.so_phong, l.ten_loai_phong, pd.id_phong_dat ");
         str.append(" FROM phong p ");
         str.append(" JOIN phong_dat pd ON p.id_phong = pd.phong_id_phong ");
+        str.append(" JOIN loai_phong l ON p.loai_phong_Id_loai_phong = l.Id_loai_phong");
         str.append(" WHERE pd.trang_thai = 'checkin'; ");
         Query query = entityManager.createNativeQuery(str.toString());
         List<Object[]> list = query.getResultList();
@@ -35,7 +36,8 @@ public class PhongCustomRepositoryImpl implements PhongCustomRepository {
                     PhongDto dto = new PhongDto();
                     dto.setIdPhong(DataConvertUtil.safeToInt(objects[0]));
                     dto.setTenPhong(DataConvertUtil.safeToString(objects[1]));
-                    dto.setIdPhongDat(DataConvertUtil.safeToInt(objects[2]));
+                    dto.setTenLoaiPhong(DataConvertUtil.safeToString(objects[2]));
+                    dto.setIdPhongDat(DataConvertUtil.safeToInt(objects[3]));
                     result.add(dto);
                 });
                 return new ArrayList<>(result);
@@ -50,8 +52,9 @@ public class PhongCustomRepositoryImpl implements PhongCustomRepository {
     @Override
     public List<PhongDto> getPhongTrangThaiTrong(){
         StringBuilder str = new StringBuilder();
-        str.append(" SELECT p.id_phong, p.so_phong ");
+        str.append(" SELECT p.id_phong, p.so_phong,  l.ten_loai_phong ");
         str.append(" FROM phong p ");
+        str.append(" JOIN loai_phong l ON p.loai_phong_Id_loai_phong = l.Id_loai_phong");
         str.append(" WHERE p.id_phong NOT IN ( ");
         str.append(" SELECT pd.phong_id_phong ");
         str.append(" FROM phong_dat pd ");
@@ -66,6 +69,7 @@ public class PhongCustomRepositoryImpl implements PhongCustomRepository {
                     PhongDto dto = new PhongDto();
                     dto.setIdPhong(DataConvertUtil.safeToInt(objects[0]));
                     dto.setTenPhong(DataConvertUtil.safeToString(objects[1]));
+                    dto.setTenLoaiPhong(DataConvertUtil.safeToString(objects[2]));
                     result.add(dto);
                 });
                 return new ArrayList<>(result);

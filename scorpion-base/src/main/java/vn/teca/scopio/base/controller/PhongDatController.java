@@ -18,8 +18,8 @@ public class PhongDatController {
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody PhongDatDto dto){
         try {
-            phongDatServices.save(dto);
-            return ResponseEntity.ok().body("Thanh Cong");
+
+            return ResponseEntity.ok(phongDatServices.save(dto));
         }catch (Exception e){
             return ResponseEntity.badRequest().body("That bai");
         }

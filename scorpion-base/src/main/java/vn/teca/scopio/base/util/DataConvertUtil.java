@@ -8,7 +8,8 @@ import vn.teca.scopio.base.model.HinhAnh;
 import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,12 +42,42 @@ public class DataConvertUtil {
         }
         return (Date) obj1;
     }
-    public static LocalDate safetoLocalDate(Object obj1){
+    public static LocalDateTime safetoLocalDate(Object obj1){
         if (obj1 == null){
             return null;
         }
-        return (LocalDate) obj1;
+        return (LocalDateTime) obj1;
     }
+    public static LocalDateTime safeToLocalDateTime(Object obj1) {
+        if (obj1 instanceof LocalDateTime) {
+            return (LocalDateTime) obj1;
+        }
+        return null; // Trả về null nếu obj1 không phải là LocalDateTime
+    }
+    public static Timestamp safeToTimestamp(Object obj) {
+        if (obj instanceof LocalDateTime) {
+            LocalDateTime localDateTime = (LocalDateTime) obj;
+            Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+            return Timestamp.from(instant);
+        }
+        return null; // Trả về null nếu không thể chuyển đổi thành LocalDateTime
+    }
+//    public static LocalDateTime timestampToLocalDateTime(Object timestamp) {
+//        if (timestamp instanceof Long || timestamp instanceof Integer) {
+//            long timestampLong = ((Number) timestamp).longValue(); // Ép kiểu thành long
+//            Instant instant = Instant.ofEpochMilli(timestampLong);
+//            return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+//        }
+//        return null; // Trả về null nếu timestamp là null
+//    }
+//    public static Long safeToTimestamp(Object obj) {
+//        if (obj instanceof LocalDateTime) {
+//            LocalDateTime localDateTime = (LocalDateTime) obj;
+//            return localDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+//        }
+//        return null; // Trả về null nếu không thể chuyển đổi thành LocalDateTime
+//    }
+
     public static Long safeToLong(Object obj1, Long defaultValue) {
         if (obj1 == null) {
             return defaultValue;
@@ -102,6 +133,9 @@ public class DataConvertUtil {
     }
     public static boolean isNullOrEmpty(final Collection<?> collection) {
         return collection == null || collection.isEmpty();
+    }
+    public static boolean isNullOrEmptyObject(final Object object) {
+        return object == null ;
     }
 
     public static void setParams(Query query, Map<String, Object> params) {

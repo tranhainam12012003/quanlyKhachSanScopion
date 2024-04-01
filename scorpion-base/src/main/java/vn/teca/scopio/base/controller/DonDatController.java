@@ -31,8 +31,8 @@ public class DonDatController {
     public ResponseEntity<?> add(@RequestBody DonDatDto donDatDto) {
 
         try{
-            donDatService.luuDonDat(donDatDto);
-            return ResponseEntity.ok().body("luu thanh cong");
+
+            return ResponseEntity.ok(donDatService.luuDonDat(donDatDto));
         } catch (Exception e){
             return ResponseEntity.badRequest().body("loi khi luu");
         }

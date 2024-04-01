@@ -11,7 +11,7 @@ import java.util.Optional;
 
 //@Service
 public interface PhongDatServices {
-    void save(PhongDatDto dto);
+    PhongDat save(PhongDatDto dto);
     void checkin(Integer id);
     void update(PhongDatDto dto,Integer id);
     void checkout(Integer id);

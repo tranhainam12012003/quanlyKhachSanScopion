@@ -4,11 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import vn.teca.scopio.base.model.HoaDonPhong;
+import vn.teca.scopio.base.repository.custom.HoaDonCustomRepository;
+import vn.teca.scopio.base.repository.custom.HoaDonResponseRepository;
 
 import java.util.List;
 
 @Repository
-public interface HoaDonPhongRepository extends JpaRepository<HoaDonPhong, Integer> {
+public interface HoaDonPhongRepository extends JpaRepository<HoaDonPhong, Integer>, HoaDonCustomRepository, HoaDonResponseRepository {
    @Query(value = "SELECT \n" +
            "    YEAR(phong_dat.thoi_gian_ra) AS năm,\n" +
            "    SUM(hoa_don_phong.tien_thanh_toan) AS 'tổng tiền',\n" +

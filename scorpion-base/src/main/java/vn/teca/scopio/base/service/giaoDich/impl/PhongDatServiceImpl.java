@@ -27,7 +27,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
     @Autowired
     DonDatRepository donDatRepository;
     @Override
-    public void save(PhongDatDto dto){
+    public PhongDat save(PhongDatDto dto){
         String trangThai = "WAIT FOR CHECKIN";
         PhongDat phongDat = new PhongDat();
         phongDat.setPhongIdPhong(dto.getPhongIdPhong());
@@ -36,7 +36,8 @@ public class PhongDatServiceImpl implements PhongDatServices {
         phongDat.setThoiGianRa(dto.getThoiGianRa());
         phongDat.setSoTienPhong(dto.getSoTienPhong());
         phongDat.setTrangThai(trangThai);
-        phongDatRepository.save(phongDat);
+
+        return  phongDatRepository.save(phongDat);
 
     }
 

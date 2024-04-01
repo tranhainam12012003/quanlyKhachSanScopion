@@ -23,7 +23,7 @@ public interface DonDatService {
 
     void deleteById(Integer integer);
 
-    void luuDonDat(DonDatDto donDatDto);
+    DonDat luuDonDat(DonDatDto donDatDto);
 
     void update(DonDatDto donDatDto, Integer i);
     DetailThongTinDonDatDTO mapToObject(Object[] result);

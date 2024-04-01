@@ -75,7 +75,7 @@ public class DonDatServiceImpl implements DonDatService {
     }
 
     @Override
-    public void luuDonDat(DonDatDto donDatDto) {
+    public DonDat luuDonDat(DonDatDto donDatDto) {
         DonDat donDat = new DonDat();
         donDat.setTongTien(donDatDto.getTongTien());
         donDat.setThoiGianVao(donDatDto.getThoiGianVao());
@@ -104,7 +104,7 @@ public class DonDatServiceImpl implements DonDatService {
         loaiPhongDatRepository.saveAll(loaiPhongDatList);
 //         donDatDto.setLoaiPhongDatDto(loaiPhongDat);
 
-
+        return donDat;
 //        LoaiPhongDat loaiPhongDat = modelMapper.map(donDatDto, LoaiPhongDat.class);
 //        loaiPhongDat.setDonDatIdDonDat(donDat);
 //        loaiPhongDatRepository.save(loaiPhongDat);

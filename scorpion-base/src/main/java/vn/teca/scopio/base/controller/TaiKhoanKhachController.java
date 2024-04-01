@@ -44,7 +44,7 @@ public class TaiKhoanKhachController {
     public ResponseEntity<?> add(@RequestBody TaiKhoanKhach taiKhoanKhach) {
         return ResponseEntity.ok(service.add(taiKhoanKhach));
     }
-    @GetMapping("detail/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<?> detail(@PathVariable String id) {
         return ResponseEntity.ok(service.detail(Integer.parseInt(id)));
     }
