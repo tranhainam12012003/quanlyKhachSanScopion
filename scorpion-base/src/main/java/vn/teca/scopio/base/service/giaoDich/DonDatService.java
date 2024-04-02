@@ -1,17 +1,10 @@
 package vn.teca.scopio.base.service.giaoDich;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import vn.teca.scopio.base.exception.ResourceNotFoundException;
 import vn.teca.scopio.base.model.DonDat;
-import vn.teca.scopio.base.model.LoaiPhongDat;
-import vn.teca.scopio.base.model.TienIch;
-import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO;
+import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.DonDatDto;
-import vn.teca.scopio.base.model.dto.LoaiPhongDatDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface DonDatService {
     List<DonDat> findAllDonDat(int page);
@@ -26,8 +19,8 @@ public interface DonDatService {
     DonDat luuDonDat(DonDatDto donDatDto);
 
     void update(DonDatDto donDatDto, Integer i);
-    DetailThongTinDonDatDTO mapToObject(Object[] result);
-    List<DetailThongTinDonDatDTO> getThongTinDonDat(Integer id);
+//    DetailThongTinDonDatDTO_Dong mapToObject(Object[] result);
+//    List<DetailThongTinDonDatDTO_Dong> getThongTinDonDat(Integer id);
 //    DonDatDto createDonDat(DonDatDto donDatDTO);
 //
 //    //    public DonDat add(DonDat donDat,LoaiPhongDat loaiPhongDat){

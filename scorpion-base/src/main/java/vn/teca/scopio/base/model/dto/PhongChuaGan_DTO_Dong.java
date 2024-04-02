@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -15,9 +17,9 @@ import lombok.Setter;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class PhongDTO_Dong {
-    private String tenLoaiPhong;
-    private String tenPhong;
-    private Integer soLuongPhong;
-    private Integer idPhong;
+public class PhongChuaGan_DTO_Dong {
+    private String tenLoaiPhongChuaGan;
+    private Integer idDonDat;
+    private int soLuongChuaGan;
+    private List<PhongDaGanDTO_Dong> phongDaGanDTODongs;
 }
