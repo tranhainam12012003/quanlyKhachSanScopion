@@ -3,6 +3,7 @@ package vn.teca.scopio.base.service.giaoDich.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.HoaDonPhong;
+import vn.teca.scopio.base.model.dto.DichVuDatDto;
 import vn.teca.scopio.base.model.dto.HoaDonRequestDto;
 import vn.teca.scopio.base.model.dto.HoaDonResponseDto;
 import vn.teca.scopio.base.model.dto.LoaiPhongDto;
@@ -50,7 +51,8 @@ public class HoaDonPhongServiceImpl implements HoaDonPhongService {
     public HoaDonResponseDto getMoreInfro(HoaDonResponseDto dto) {
         // set dich vu dat
         try {
-            dto.setDichVuDat(dichVuDatRepository.findByIdPhongDat(dto.getIdPhongDat()));
+            dto.setDichVuDat(dichVuDatRepository.hienThiDichVuDat(dto.getIdPhongDat()));
+
         } catch (Exception e) {
             e.printStackTrace();
             dto.setDichVuDat(null);
