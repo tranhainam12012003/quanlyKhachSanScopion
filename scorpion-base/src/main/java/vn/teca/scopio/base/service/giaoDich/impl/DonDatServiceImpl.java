@@ -35,7 +35,7 @@ public class DonDatServiceImpl implements DonDatService {
 
     @Override
     public List<DonDat> findAllDonDat(int page) {
-        Pageable pageable=PageRequest.of(page,5);
+        Pageable pageable=PageRequest.of(page,15);
         return donDatRepository.getList(pageable);
     }
 

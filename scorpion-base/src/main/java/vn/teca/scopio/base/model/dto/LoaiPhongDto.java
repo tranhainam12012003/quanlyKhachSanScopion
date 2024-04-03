@@ -39,6 +39,6 @@ public class LoaiPhongDto implements Serializable {
     @NotNull
     private Integer soLuongNguoiO;
     private Integer soLuongTrong;
-    private List<HinhAnh> hinhAnh;
-    private List<TienIch> tienTienIch;
+    private List<HinhAnhDto> hinhAnh;
+    private List<TienIchDto> tienTienIch;
 }

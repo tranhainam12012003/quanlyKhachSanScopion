@@ -14,6 +14,7 @@ import java.util.Optional;
 public class ThongTinKhachDatServices {
     @Autowired
     ThongTinKhachDatRepository thongTinKhachDatRepository;
+
     public ThongTinKhachDat detail(Integer id) {
         Optional<ThongTinKhachDat> optional = thongTinKhachDatRepository.findById(id);
         return optional.orElse(null);

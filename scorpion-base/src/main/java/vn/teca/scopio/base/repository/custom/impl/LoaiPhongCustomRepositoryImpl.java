@@ -1,7 +1,7 @@
 package vn.teca.scopio.base.repository.custom.impl;
 
 import org.springframework.stereotype.Repository;
-import vn.teca.scopio.base.model.HinhAnh;
+import vn.teca.scopio.base.model.dto.HinhAnhDto;
 import vn.teca.scopio.base.model.dto.LoaiPhongDto;
 import vn.teca.scopio.base.repository.custom.LoaiPhongCustomRepository;
 import vn.teca.scopio.base.util.DataConvertUtil;
@@ -10,8 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.transaction.annotation.Transactional;
-import javax.xml.crypto.Data;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +29,9 @@ public class LoaiPhongCustomRepositoryImpl implements LoaiPhongCustomRepository 
         str.append("SELECT lp.Id_loai_phong, lp.ten_loai_phong, lp.huong_nhin, lp.dien_tich, lp.gia_tien, lp.mo_ta,lp.so_luong_nguoi_o ");
 //        str.append("ha.hinh_anh_loai_phong,ti.ten_tien_ich ");
         str.append("FROM loai_phong lp ");
-        str.append("INNER JOIN hinh_anh ha ON lp.Id_loai_phong = ha.loai_phong_Id_loai_phong ");
-        str.append("INNER JOIN tien_ich_loai_phong tilp ON lp.Id_loai_phong = tilp.loai_phong_Id_loai_phong ");
-        str.append("INNER JOIN tien_ich ti ON tilp.tien_ich_id_tien_ich = ti.id_tien_ich;");
+//        str.append("INNER JOIN hinh_anh ha ON lp.Id_loai_phong = ha.loai_phong_Id_loai_phong ");
+//        str.append("INNER JOIN tien_ich_loai_phong tilp ON lp.Id_loai_phong = tilp.loai_phong_Id_loai_phong ");
+//        str.append("INNER JOIN tien_ich ti ON tilp.tien_ich_id_tien_ich = ti.id_tien_ich;");
         Query query = entityManager.createNativeQuery(str.toString());
         List<Object[]> lst = query.getResultList();
         List<LoaiPhongDto> result = new ArrayList<>();
@@ -127,4 +126,32 @@ public class LoaiPhongCustomRepositoryImpl implements LoaiPhongCustomRepository 
         }
         return new ArrayList<>(results);
     }
+
+//    @Override
+//    public List<HinhAnhDto> findByIdLoaiPhong(Integer id){
+//        StringBuilder str = new StringBuilder();
+//        str.append(" SELECT ha.hinh_anh_loai_phong FROM hinh_anh ha ");
+//        str.append(" JOIN loai_phong lp ON ha.loai_phong_Id_loai_phong = lp.Id_loai_phong ");
+//        str.append(" WHERE lp.Id_loai_phong = :idLoaiPhong ");
+//        Query query = entityManager.createNativeQuery(str.toString());
+//        query.setParameter("idLoaiPhong",id);
+//        List<Object[]> lst = query.getResultList();
+//        List<HinhAnhDto> result = new ArrayList<>();
+//        try{
+//            if(!DataConvertUtil.isNullOrEmpty(lst)){
+//                lst.forEach(objects -> {
+//                    HinhAnhDto dto = new HinhAnhDto();
+//                    dto.setHinhAnhLoaiPhong((byte[]) objects[0]);
+//                    result.add(dto);
+//                });
+//                return new ArrayList<>(result);
+//
+//            }
+//
+//        } catch (Exception e){
+//            e.printStackTrace();
+//
+//        }
+//        return new ArrayList<>(result);
+//    }
 }

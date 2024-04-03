@@ -162,7 +162,7 @@ public class LoaiPhongServices {
     public LoaiPhongDto getMoreInfro(LoaiPhongDto dto) {
         // set hinh anh
         try {
-            dto.setHinhAnh(hinhAnhRepository.findByLoaiPhongIdLoaiPhong_Id(dto.getId()));
+            dto.setHinhAnh(hinhAnhRepository.findByIdLoaiPhong(dto.getId()));
         } catch (Exception e) {
             e.printStackTrace();
             dto.setHinhAnh(null);
@@ -170,7 +170,7 @@ public class LoaiPhongServices {
         // set tien ich
         try {
 //            List<TienIch> tienI =
-            dto.setTienTienIch(tienIchServices.getTienIchTheoID(dto.getId()));
+            dto.setTienTienIch(tienIchRepository.findByIdLoaiPhong(dto.getId()));
         } catch (Exception e) {
             e.printStackTrace();
             dto.setTienTienIch(null);
