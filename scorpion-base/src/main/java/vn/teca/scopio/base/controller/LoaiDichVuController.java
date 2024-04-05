@@ -25,10 +25,10 @@ public class LoaiDichVuController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<?> add(@RequestBody LoaiDichVuDto loaiDichVuDto) {
+    public ResponseEntity<?> add(@RequestBody LoaiDichVu LoaiDichVu) {
         try {
 
-            loaiDichVuSerices.add(loaiDichVuDto);
+            loaiDichVuSerices.add(LoaiDichVu);
             return ResponseEntity.ok().body("add thành công");
         }catch (Exception e){
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class LoaiDichVuController {
     }
 
     @PostMapping("update/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody LoaiDichVuDto loaiDichVu) {
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody LoaiDichVu loaiDichVu) {
         try {
             loaiDichVuSerices.update(loaiDichVu, Integer.parseInt(id));
          return  ResponseEntity.ok().body("sua thanh cong");

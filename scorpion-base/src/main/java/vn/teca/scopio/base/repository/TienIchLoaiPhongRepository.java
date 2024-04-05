@@ -13,4 +13,7 @@ import java.util.List;
 @Repository
 public interface TienIchLoaiPhongRepository extends JpaRepository<TienIchLoaiPhong, Integer> {
     TienIchLoaiPhong findTienIchLoaiPhongByLoaiPhong_Id(Integer id);
+    @Modifying
+    @Query(value = " delete from tien_ich_loai_phong where loai_phong_Id_loai_phong=:idLoaiPhong",nativeQuery = true)
+    void deleteTienIchLoaiPhong(@Param("idLoaiPhong") Integer idLoaiPhong);
 }

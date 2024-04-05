@@ -13,7 +13,8 @@ import java.util.List;
 
 @Repository
 public interface LoaiPhongRepository extends JpaRepository<LoaiPhong, Integer>, LoaiPhongCustomRepository {
-    List<LoaiPhong> findByTenLoaiPhong(String tenLoaiPhong);
+    @Query(value = " select * from loai_phong where loai_phong.ten_loai_phong like CONCAT('%', :tenLoaiPhong, '%')",nativeQuery = true)
+    List<LoaiPhong>timKiemTheoTenLoaiPhong(@Param("tenLoaiPhong") String tenLoaiPhong);
     List<LoaiPhong>findByGiaTienLessThanEqualOrderByGiaTienDesc(BigDecimal sl);
     List<LoaiPhong>findBySoLuongNguoiOLessThanEqualOrderBySoLuongNguoiODesc(Integer sl);
 

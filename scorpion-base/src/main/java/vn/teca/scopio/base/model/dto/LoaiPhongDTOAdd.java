@@ -11,6 +11,8 @@ import vn.teca.scopio.base.model.Phong;
 import vn.teca.scopio.base.model.TienIch;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -25,7 +27,7 @@ public class LoaiPhongDTOAdd {
     private String dienTich;
     private BigDecimal giaTien;
     private String moTa;
-    private Phong phongidPhong;
-    private TienIch tienichidtienich;
+    private List<Phong> phongidPhong;
+    private List<TienIch> tienichidtienich;
 
 }

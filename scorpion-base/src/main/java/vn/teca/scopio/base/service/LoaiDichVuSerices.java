@@ -8,6 +8,7 @@ import vn.teca.scopio.base.model.TienIch;
 import vn.teca.scopio.base.model.dto.LoaiDichVuDto;
 import vn.teca.scopio.base.repository.DichVuRepository;
 import vn.teca.scopio.base.repository.LoaiDichVuRepository;
+import vn.teca.scopio.base.repository.custom.impl.DichVuCustomRepository_dong;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,29 +21,25 @@ public class LoaiDichVuSerices {
     private LoaiDichVuRepository loaiDichVuRepository;
     @Autowired
     private DichVuRepository dichVuRepository;
+    @Autowired
+    private DichVuCustomRepository_dong dichVuCustomRepositoryDong;
 
     public List<LoaiDichVu> getall() {
         return loaiDichVuRepository.findAll();
     }
 
-    public void add(LoaiDichVuDto loaiDichVuDto) {
-        LoaiDichVu loaiDichVu = new LoaiDichVu();
-        loaiDichVu.setTenLoaiDichVu(loaiDichVuDto.getTenLoaiDichVu());
-        loaiDichVuRepository.save(loaiDichVu);
-        DichVu dichVu=dichVuRepository.getById(loaiDichVuDto.getDichVu().getId());
-        dichVu.setLoaiDichVuIdLoaiDichVu(loaiDichVu);
-        dichVuRepository.save(dichVu);
-
+    public LoaiDichVu add(LoaiDichVu loaiDichVu) {
+        return loaiDichVuRepository.save(loaiDichVu);
     }
 
-    public  void update(LoaiDichVuDto loaiDichVuDto,Integer id){
-        LoaiDichVu loaiDichVu = loaiDichVuRepository.getById(id);
-        loaiDichVu.setTenLoaiDichVu(loaiDichVuDto.getTenLoaiDichVu());
-        loaiDichVuRepository.save(loaiDichVu);
-        DichVu dichVu = dichVuRepository.getById(loaiDichVuDto.getDichVu().getId());
-        dichVu.setLoaiDichVuIdLoaiDichVu(loaiDichVu);
-        dichVuRepository.save(dichVu);
+    public LoaiDichVu update(LoaiDichVu loaiDichVu, Integer id) {
+        Optional<LoaiDichVu> optional = loaiDichVuRepository.findById(id);
+        return optional.map(o -> {
+            o.setTenLoaiDichVu(loaiDichVu.getTenLoaiDichVu());
+            return loaiDichVuRepository.save(o);
+        }).orElse(null);
     }
+
     public LoaiDichVu detail(Integer id) {
         Optional<LoaiDichVu> optional = loaiDichVuRepository.findById(id);
         return optional.isPresent() ? optional.get() : null;
@@ -70,20 +67,15 @@ public class LoaiDichVuSerices {
         return loaiDichVuRepository.findByTenLoaiDichVu(ten);
     }
 
-    private LoaiDichVuDto mapToObject(Object[] result) {
-        LoaiDichVuDto loaiDichVuDto = new LoaiDichVuDto();
-        loaiDichVuDto.setTenLoaiDichVu((String) result[0]);
-        loaiDichVuDto.setTendichVu((String) result[1]);
-        loaiDichVuDto.setGia((BigDecimal) result[2]);
-        return loaiDichVuDto;
-    }
+//    private LoaiDichVuDto mapToObject(Object[] result) {
+//        LoaiDichVuDto loaiDichVuDto = new LoaiDichVuDto();
+//        loaiDichVuDto.setTenLoaiDichVu((String) result[0]);
+//        loaiDichVuDto.setTendichVu((String) result[1]);
+//        loaiDichVuDto.setGia((BigDecimal) result[2]);
+//        return loaiDichVuDto;
+//    }
 
     public List<LoaiDichVuDto> getDichVuTheoID(Integer id) {
-        List<Object[]> results = loaiDichVuRepository.findDichVuTheoID(id);
-        List<LoaiDichVuDto> loaiDichVuDtos = new ArrayList<>();
-        for (Object[] result : results) {
-            loaiDichVuDtos.add(mapToObject(result));
-        }
-        return loaiDichVuDtos;
+        return dichVuCustomRepositoryDong.detailLoaiDichVu(id);
     }
 }

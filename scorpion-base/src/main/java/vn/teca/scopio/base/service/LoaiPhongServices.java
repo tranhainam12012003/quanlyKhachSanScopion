@@ -17,6 +17,7 @@ import vn.teca.scopio.base.repository.TienIchLoaiPhongRepository;
 import vn.teca.scopio.base.repository.TienIchRepository;
 import vn.teca.scopio.base.repository.custom.impl.DetailLoaiPhongCustomRepoSitory_dong;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -63,23 +64,24 @@ public class LoaiPhongServices {
         return optional.isPresent() ? optional.get() : null;
     }
 
-    public LoaiPhongDTOAdd mapToObject(Object[] result) {
-        LoaiPhongDTOAdd loaiPhongDTOAdd = new LoaiPhongDTOAdd();
-        loaiPhongDTOAdd.setTenLoaiPhong((String) result[0]);
-        loaiPhongDTOAdd.setDienTich((String) result[1]);
-        loaiPhongDTOAdd.setGiaTien((BigDecimal) result[2]);
-        loaiPhongDTOAdd.setHuongNhin((String) result[3]);
-        loaiPhongDTOAdd.setMoTa((String) result[4]);
-        loaiPhongDTOAdd.setSoNguoi((Integer) result[5]);
-        Phong phong = phongRepository.findById((Integer) result[6]).get();
-        loaiPhongDTOAdd.setPhongidPhong(phong);
-        TienIch tienIch = tienIchRepository.findById((Integer) result[7]).get();
-        loaiPhongDTOAdd.setTienichidtienich(tienIch);
-        return loaiPhongDTOAdd;
-
-    }
+//    public LoaiPhongDTOAdd mapToObject(Object[] result) {
+//        LoaiPhongDTOAdd loaiPhongDTOAdd = new LoaiPhongDTOAdd();
+//        loaiPhongDTOAdd.setTenLoaiPhong((String) result[0]);
+//        loaiPhongDTOAdd.setDienTich((String) result[1]);
+//        loaiPhongDTOAdd.setGiaTien((BigDecimal) result[2]);
+//        loaiPhongDTOAdd.setHuongNhin((String) result[3]);
+//        loaiPhongDTOAdd.setMoTa((String) result[4]);
+//        loaiPhongDTOAdd.setSoNguoi((Integer) result[5]);
+//        Phong phong = phongRepository.findById((Integer) result[6]).get();
+//        loaiPhongDTOAdd.setPhongidPhong(phong);
+//        TienIch tienIch = tienIchRepository.findById((Integer) result[7]).get();
+//        loaiPhongDTOAdd.setTienichidtienich(tienIch);
+//        return loaiPhongDTOAdd;
+//
+//    }
 
     public List<LoaiPhongDtoDetail_dong> detaiiByIdLoaiPhong(Integer id) {
+
         return detailLoaiPhongCustomRepoSitoryDong.detailLoaiPhong(id);
     }
 
@@ -93,37 +95,95 @@ public class LoaiPhongServices {
         loaiPhong.setMoTa(loaiPhongDTOAdd.getMoTa());
         loaiPhongRepository.save(loaiPhong);
 
-        Phong phong = phongRepository.getById(loaiPhongDTOAdd.getPhongidPhong().getId());
-        phong.setLoaiPhongIdLoaiPhong(loaiPhong);
-        phongRepository.save(phong);
 
-        TienIchLoaiPhong tienIchLoaiPhong = new TienIchLoaiPhong();
-        tienIchLoaiPhong.setLoaiPhong(loaiPhong);
-        tienIchLoaiPhong.setTienIchIdTienIch(loaiPhongDTOAdd.getTienichidtienich());
-        tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
+//        List<Phong> list = loaiPhongDTOAdd.getPhongidPhong();
+//        for (Phong phong : list) {
+//            // Lấy ID của phòng từ đối tượng phòng
+//            Integer idPhong = phong.getId();
+//
+//            // Lấy thông tin phòng từ Repository bằng ID
+//            Phong existingPhong = phongRepository.getById(idPhong);
+//
+//            // Kiểm tra xem phòng có tồn tại hay không
+//            if (existingPhong != null) {
+//                existingPhong.setLoaiPhongIdLoaiPhong(loaiPhong); // Cập nhật thông tin loại phòng cho phòng
+//
+//                phongRepository.save(existingPhong); // Lưu phòng đã cập nhật vào cơ sở dữ liệu
+//            } else {
+//                // Xử lý khi không tìm thấy phòng
+//                // Ví dụ: ghi log hoặc thông báo lỗi
+//                System.out.println("Không tìm thấy phòng với ID: " + idPhong);
+//            }
+//
+//        }
+        // Lấy danh sách tiện ích từ DTO
+        // Lấy danh sách tiện ích từ DTO
+        List<TienIch> listTienIch = loaiPhongDTOAdd.getTienichidtienich();
+
+// Lặp qua từng tiện ích
+        for (TienIch tienIch : listTienIch) {
+            // Tạo một đối tượng mới cho mỗi tiện ích loại phòng
+            TienIchLoaiPhong tienIchLoaiPhong = new TienIchLoaiPhong();
+            tienIchLoaiPhong.setLoaiPhong(loaiPhong);
+            tienIchLoaiPhong.setTienIchIdTienIch(tienIch);
+
+            // Lưu đối tượng mới vào cơ sở dữ liệu
+            tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
+        }
+
+
     }
-
+    @Transactional
     public void update(LoaiPhongDTOAdd loaiPhongDTOAdd, Integer id) {
-        LoaiPhong loaiPhong= loaiPhongRepository.getById(id);
+        // Cập nhật thông tin loại phòng
+        LoaiPhong loaiPhong = loaiPhongRepository.getById(id);
         loaiPhong.setTenLoaiPhong(loaiPhongDTOAdd.getTenLoaiPhong());
         loaiPhong.setDienTich(loaiPhongDTOAdd.getDienTich());
-        loaiPhong.setTenLoaiPhong(loaiPhongDTOAdd.getTenLoaiPhong());
         loaiPhong.setMoTa(loaiPhongDTOAdd.getMoTa());
         loaiPhong.setHuongNhin(loaiPhongDTOAdd.getHuongNhin());
         loaiPhong.setSoLuongNguoiO(loaiPhongDTOAdd.getSoNguoi());
+        loaiPhongRepository.save(loaiPhong);
 
-        Phong phong = phongRepository.getById(loaiPhongDTOAdd.getPhongidPhong().getId());
-        phong.setLoaiPhongIdLoaiPhong(loaiPhong);
-        phongRepository.save(phong);
+//        phongRepository.deleteLoaiPhong(id);
+//        // Cập nhật thông tin loại phòng cho từng phòng
+//        List<Phong> list = loaiPhongDTOAdd.getPhongidPhong();
+//        for (Phong phong : list) {
+//            // Lấy ID của phòng từ đối tượng phòng
+//            Integer idPhong = phong.getId();
+//
+//            // Lấy thông tin phòng từ Repository bằng ID
+//            Phong existingPhong = phongRepository.getById(idPhong);
+//
+//            // Kiểm tra xem phòng có tồn tại hay không
+//            if (existingPhong != null) {
+//                existingPhong.setLoaiPhongIdLoaiPhong(loaiPhong); // Cập nhật thông tin loại phòng cho phòng
+//
+//                phongRepository.save(existingPhong); // Lưu phòng đã cập nhật vào cơ sở dữ liệu
+//            } else {
+//                // Xử lý khi không tìm thấy phòng
+//                // Ví dụ: ghi log hoặc thông báo lỗi
+//                System.out.println("Không tìm thấy phòng với ID: " + idPhong);
+//            }
+//
+//        }
 
-        TienIchLoaiPhong tienIchLoaiPhong= tienIchLoaiPhongRepository.findTienIchLoaiPhongByLoaiPhong_Id(id);
-        tienIchLoaiPhong.setLoaiPhong(loaiPhong);
-        tienIchLoaiPhong.setTienIchIdTienIch(loaiPhongDTOAdd.getTienichidtienich());
-        tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
+        // Thêm mới hoặc cập nhật danh sách tiện ích cho loại phòng
+        tienIchLoaiPhongRepository.deleteTienIchLoaiPhong(id);
+
+// Lặp qua danh sách tiện ích từ DTO và thêm mới các bản ghi tiện ích loại phòng
+        List<TienIch> listTienIch = loaiPhongDTOAdd.getTienichidtienich();
+        for (TienIch tienIch : listTienIch) {
+            // Tạo mới đối tượng TienIchLoaiPhong cho mỗi tiện ích
+            TienIchLoaiPhong tienIchLoaiPhong = new TienIchLoaiPhong();
+            tienIchLoaiPhong.setLoaiPhong(loaiPhong); // Sử dụng ID của loại phòng cần cập nhật
+            tienIchLoaiPhong.setTienIchIdTienIch(tienIch); // Sử dụng ID của tiện ích từ DTO
+
+            tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
+        }
     }
 
     public List<LoaiPhong> timthemten(String name) {
-        return loaiPhongRepository.findByTenLoaiPhong(name);
+        return loaiPhongRepository.timKiemTheoTenLoaiPhong(name);
 
     }
 
