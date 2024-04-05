@@ -9,11 +9,13 @@ import vn.teca.scopio.base.model.TienIch;
 import vn.teca.scopio.base.model.TienIchLoaiPhong;
 import vn.teca.scopio.base.model.dto.LoaiPhongDTOAdd;
 import vn.teca.scopio.base.model.dto.LoaiPhongDto;
+import vn.teca.scopio.base.model.dto.LoaiPhongDtoDetail_dong;
 import vn.teca.scopio.base.repository.HinhAnhRepository;
 import vn.teca.scopio.base.repository.LoaiPhongRepository;
 import vn.teca.scopio.base.repository.PhongRepository;
 import vn.teca.scopio.base.repository.TienIchLoaiPhongRepository;
 import vn.teca.scopio.base.repository.TienIchRepository;
+import vn.teca.scopio.base.repository.custom.impl.DetailLoaiPhongCustomRepoSitory_dong;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -41,6 +43,8 @@ public class LoaiPhongServices {
     @Autowired
     PhongRepository phongRepository;
 
+    @Autowired
+    DetailLoaiPhongCustomRepoSitory_dong detailLoaiPhongCustomRepoSitoryDong;
     public List<LoaiPhong> getall() {
         return loaiPhongRepository.findAll();
     }
@@ -75,13 +79,8 @@ public class LoaiPhongServices {
 
     }
 
-    public List<LoaiPhongDTOAdd> detaiiByIdLoaiPhong(Integer id) {
-        List<Object[]> results = loaiPhongRepository.detailLoaiPhong(id);
-        List<LoaiPhongDTOAdd> list = new ArrayList<>();
-        for (Object[] reObjects : results) {
-            list.add(mapToObject(reObjects));
-        }
-        return list;
+    public List<LoaiPhongDtoDetail_dong> detaiiByIdLoaiPhong(Integer id) {
+        return detailLoaiPhongCustomRepoSitoryDong.detailLoaiPhong(id);
     }
 
     public void add(LoaiPhongDTOAdd loaiPhongDTOAdd) {
