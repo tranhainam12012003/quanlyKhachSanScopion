@@ -34,12 +34,15 @@ public class LoaiPhongController {
 
 
     // tim kiem so luong con trong cua loai phong
-   @PostMapping("/search")
-   public ResponseEntity<?> searchLoaiPhongTrong(@RequestParam String thoiGianVao, @RequestParam String thoiGianRa){
+   @GetMapping("/search")
+   public ResponseEntity<?> searchLoaiPhongTrong(@RequestParam(required = false) String thoiGianVao, @RequestParam(required = false) String thoiGianRa){
 //       String str = "1986-04-08 12:30";
 //       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 //       LocalDateTime vao = LocalDateTime.parse(thoiGianVao, formatter);
 //       LocalDateTime ra = LocalDateTime.parse(thoiGianRa, formatter);
+       if(thoiGianVao == null || thoiGianRa == null){
+           return ResponseEntity.ok(loaiPhongServices.findAllHinhAnh());
+       }
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
        LocalDateTime vao = LocalDateTime.parse(thoiGianVao, formatter);
        LocalDateTime ra = LocalDateTime.parse(thoiGianRa, formatter);
