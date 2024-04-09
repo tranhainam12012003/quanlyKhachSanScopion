@@ -39,6 +39,8 @@ public class thongTinKhachOController {
     @PostMapping("/khach-hang-o/add")
     public ResponseEntity<?> add(@RequestBody ThongTinKhachO thongTinKhachO) {
         return ResponseEntity.ok(thongtinKhachOSevices.add(thongTinKhachO));
+
+
     }
 
 
