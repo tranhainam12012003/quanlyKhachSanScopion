@@ -64,7 +64,7 @@ public class LoaiDichVuSerices {
     }
 
     public List<LoaiDichVu> search(String ten) {
-        return loaiDichVuRepository.findByTenLoaiDichVu(ten);
+        return loaiDichVuRepository.findByTenLoaiDichVuContaining(ten);
     }
 
 //    private LoaiDichVuDto mapToObject(Object[] result) {

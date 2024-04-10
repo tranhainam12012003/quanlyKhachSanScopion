@@ -39,7 +39,7 @@ public class DichVuServices {
     }
 
     public List<DichVu> timkiem(String ten) {
-        return dichVuRepository.findByTenDichVu(ten);
+        return dichVuRepository.findByTenDichVuContaining(ten);
     }
 
     public List<DichVu> timkiemTheoId(Integer id) {

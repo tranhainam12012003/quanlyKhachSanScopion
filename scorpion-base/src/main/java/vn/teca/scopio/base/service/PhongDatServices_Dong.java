@@ -5,15 +5,10 @@ import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.PhongDat;
 import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.PhongChuaGan_DTO_Dong;
-import vn.teca.scopio.base.model.dto.PhongDatDto_Dong;
 import vn.teca.scopio.base.repository.PhongDatRepository;
 import vn.teca.scopio.base.repository.custom.impl.DetailPhongGan_ChuaGanRepoSitory_Impl_Dong;
 import vn.teca.scopio.base.repository.custom.impl.PhongDatCustomRepositoryImpl_Dong;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

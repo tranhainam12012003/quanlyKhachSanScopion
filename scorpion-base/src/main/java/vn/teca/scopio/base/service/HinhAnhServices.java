@@ -7,7 +7,6 @@ import org.springframework.util.Base64Utils;
 import vn.teca.scopio.base.model.HinhAnh;
 import vn.teca.scopio.base.model.LoaiPhong;
 import vn.teca.scopio.base.repository.HinhAnhRepository;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

@@ -10,10 +10,14 @@ import java.util.List;
 
 @Repository
 public interface PhongDatRepository extends JpaRepository<PhongDat, Integer> {
-    @Query(value = "SELECT * FROM phong_dat pd join don_dat dd ON pd.don_dat_id_don_dat = dd.id_don_dat " +
-            "WHERE dd.id_don_dat = :idDonDat ",nativeQuery = true)
+    @Query(value = "SELECT * FROM phong_dat  " +
+            "WHERE don_dat_id_don_dat = :idDonDat ",nativeQuery = true)
     List<PhongDat> findPhongDatByIdDonDat(@Param("idDonDat") Integer idDonDat);
     List<PhongDat> findPhongDatByDonDatIdDonDat(Integer id);
+
+    @Query(value = "SELECT * FROM phong_dat \n" +
+            "WHERE loai_phong_dat_id_loai_phong_dat = :idLoaiPhongDat ",nativeQuery = true)
+    List<PhongDat> findPhongDatByIdLoaiPhongDat(@Param("idLoaiPhongDat") Integer idLoaiPhongDat);
 
     //get phong dat theo id phong(detail cua phong da gan)
     @Query(value = "select dich_vu_dat.so_tien, thong_tin_khach_o.id_khach_o, loai_phong.ten_loai_phong\n" +

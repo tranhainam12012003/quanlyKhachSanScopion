@@ -6,6 +6,6 @@ import vn.teca.scopio.base.model.DichVu;
 import java.util.List;
 
 public interface DichVuRepository extends JpaRepository<DichVu, Integer> {
-    List<DichVu>findByTenDichVu(String ten);
+    List<DichVu>findByTenDichVuContaining(String ten);
     List<DichVu>findByLoaiDichVuIdLoaiDichVu(Integer id);
 }
