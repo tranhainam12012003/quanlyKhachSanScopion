@@ -55,10 +55,10 @@ public class LoaiDichVuController {
         return ResponseEntity.ok(loaiDichVuSerices.delete(Integer.parseInt(id)));
     }
 
-    @GetMapping("detail/{id}")
-    public ResponseEntity<?> detail(@PathVariable String id) {
-        return ResponseEntity.ok(loaiDichVuSerices.detail(Integer.parseInt(id)));
-    }
+//    @GetMapping("detail/{id}")
+//    public ResponseEntity<?> detail(@PathVariable String id) {
+//        return ResponseEntity.ok(loaiDichVuSerices.detail(Integer.parseInt(id)));
+//    }
     @GetMapping("tim-kiem/{ten}")
     public ResponseEntity<?>timKiem(@PathVariable String ten){
         return ResponseEntity.ok(loaiDichVuSerices.search(ten));
