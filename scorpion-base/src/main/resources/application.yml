@@ -39,9 +39,9 @@ spring:
 #    pool-name: report-HikariCP
   # jpa
   jpa:
-    show-sql: false
+    show-sql: true
     properties:
-      hibernate.format_sql: false
+      hibernate.format_sql: true
 
 # eureka
 #eureka:

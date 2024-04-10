@@ -1,30 +1,20 @@
 package vn.teca.scopio.base.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import vn.teca.scopio.base.config.auditing.AuditingConfig;
-import vn.teca.scopio.base.util.DateDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-//@EntityListeners(AuditingEntityListener.class)
 @Table(name = "phong_dat")
 public class PhongDat {
     @Id
@@ -32,9 +22,9 @@ public class PhongDat {
     @Column(name = "id_phong_dat", nullable = false)
     private Integer id;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "phong_id_phong", nullable = false)
+    @Null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "phong_id_phong")
     private Phong phongIdPhong;
 
     @NotNull
@@ -43,25 +33,23 @@ public class PhongDat {
     private DonDat donDatIdDonDat;
 
     @NotNull
-//    @CreatedDate
-//    @JsonDeserialize(using = DateDeserializer.class)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "loai_phong_dat_id_loai_phong_dat", nullable = false)
+    private LoaiPhongDat loaiPhongDatIdLoaiPhongDat;
+
+    @Column(name = "thoi_gian_vao")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
-    @Column(name = "thoi_gian_vao", nullable = false)
     private LocalDateTime thoiGianVao;
 
-    @NotNull
-//    @LastModifiedDate
-//    @JsonDeserialize(using = DateDeserializer.class)
+    @Column(name = "thoi_gian_ra")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")
-    @Column(name = "thoi_gian_ra", nullable = false)
     private LocalDateTime thoiGianRa;
 
-    @NotNull
-    @Column(name = "so_tien_phong", nullable = false)
+    @Column(name = "so_tien_phong", precision = 30, scale = 2)
     private BigDecimal soTienPhong;
 
-    @NotNull
-    @Column(name = "trang_thai", nullable = false)
+    @Size(max = 50)
+    @Column(name = "trang_thai", length = 50)
     private String trangThai;
 
 }
