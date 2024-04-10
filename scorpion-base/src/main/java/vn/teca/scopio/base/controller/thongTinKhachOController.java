@@ -3,11 +3,8 @@ package vn.teca.scopio.base.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import vn.teca.scopio.base.model.ThongTinKhachO;
 import vn.teca.scopio.base.service.ThongtinKhachOSevices;
 
 import java.sql.Date;
@@ -31,4 +28,21 @@ public class thongTinKhachOController {
     public ResponseEntity<?> timKiem(@RequestParam("hovaten") String hoVaTen , @RequestParam("thoiGIanVao")Date thoiGianVao,@RequestParam("thoiGIanRa")Date thoiGianRa,@RequestParam("soGiayTo") String soGiayTo){
         return ResponseEntity.ok(thongtinKhachOSevices.timKiem(hoVaTen,thoiGianVao,thoiGianRa,soGiayTo));
     }
+    @PostMapping("/khach-hang-o/update/{id}")
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody ThongTinKhachO thongTinKhachO) {
+        return ResponseEntity.ok(thongtinKhachOSevices.update(thongTinKhachO, Integer.parseInt(id)));
+    }
+    @GetMapping("/khach-hang-o/detail/{id}")
+    public ResponseEntity<?> detail(@PathVariable String id) {
+        return ResponseEntity.ok(thongtinKhachOSevices.detail(Integer.parseInt(id)));
+    }
+    @PostMapping("/khach-hang-o/add")
+    public ResponseEntity<?> add(@RequestBody ThongTinKhachO thongTinKhachO) {
+        return ResponseEntity.ok(thongtinKhachOSevices.add(thongTinKhachO));
+    }
+
+
+
+
+
 }

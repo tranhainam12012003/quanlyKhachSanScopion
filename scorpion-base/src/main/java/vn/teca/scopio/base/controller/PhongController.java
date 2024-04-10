@@ -39,8 +39,11 @@ public class PhongController {
 
     }
     @GetMapping("/loc")
-    public ResponseEntity<?>locLoaiPhong(@RequestParam("id") int id){
-        return ResponseEntity.ok(phongServices.locLoaiPhong(id));
+    public ResponseEntity<?>locLoaiPhong(@RequestParam(required = false) String id){
+        if(id == null){
+            return ResponseEntity.ok(phongServices.getall());
+        }
+        return ResponseEntity.ok(phongServices.locLoaiPhong(Integer.parseInt(id)));
     }
     @GetMapping("/detail/{id}")
     public ResponseEntity<?>getone(@PathVariable String id){
