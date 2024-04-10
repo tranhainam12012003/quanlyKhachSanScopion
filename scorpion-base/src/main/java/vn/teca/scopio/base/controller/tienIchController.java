@@ -39,4 +39,8 @@ public class tienIchController {
        List<TienIch> tienIchList = tienIchServices.getTienIchTheoID(Integer.parseInt(id));
         return ResponseEntity.ok(tienIchList);
     }
+    @GetMapping("tim-theo-ten/{ten}")
+    public  ResponseEntity<?>timTheoTen(@PathVariable("ten")String ten){
+        return ResponseEntity.ok(tienIchServices.getTienIchTheoTen(ten));
+    }
 }

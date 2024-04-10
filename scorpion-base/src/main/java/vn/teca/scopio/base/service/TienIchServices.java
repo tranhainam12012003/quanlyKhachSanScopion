@@ -40,4 +40,7 @@ public class TienIchServices {
         }
         return tienIchList;
     }
+    public List<TienIch>getTienIchTheoTen(String ten){
+        return tienIchRepositpry.findTienIchByTenTienIchContaining(ten);
+    }
 }

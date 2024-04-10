@@ -20,5 +20,6 @@ public interface TienIchRepository extends JpaRepository<TienIch, Integer> {
             "WHERE tilp.loai_phong_Id_loai_phong = :id ",nativeQuery = true)
     List<TienIchDto> findByIdLoaiPhong(@Param("id") Integer id);
 
+    List<TienIch>findTienIchByTenTienIchContaining(String ten);
 }
 
