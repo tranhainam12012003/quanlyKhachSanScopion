@@ -85,11 +85,13 @@ public class PhongDatServices_Dong {
         return phongDatCustomRepositoryImplDong.getPhongDaGanVaChuaGan(id);
     }
 
-    public List<DetailThongTinDonDatDTO_Dong> detailThongTinPhongDaGan(Integer idPhongDat) {
-        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDaGan(idPhongDat);
-    }
-    public List<DetailThongTinDonDatDTO_Dong>detailThongTinPhongChuaGan(Integer idDonDat){
-
-        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongChuaGan(idDonDat);
-    }
+//    public List<DetailThongTinDonDatDTO_Dong> detailThongTinPhongDaGan(Integer idPhongDat) {
+//        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDaGan(idPhongDat);
+//    }
+//    public List<DetailThongTinDonDatDTO_Dong>detailThongTinPhongChuaGan(Integer idDonDat){
+//
+//        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongChuaGan(idDonDat);
+//    }
+    public List<DetailThongTinDonDatDTO_Dong>getThongTinPhongDat(Integer id){
+        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(id);    }
 }

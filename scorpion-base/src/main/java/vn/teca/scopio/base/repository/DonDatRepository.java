@@ -14,12 +14,12 @@ import java.util.List;
 public interface DonDatRepository extends JpaRepository<DonDat, Integer> {
     @Query(value = "select * from don_dat dd join " +
             "hinh_thuc_dat htd on " +
-            "dd.hinh_thuc_dat_id_hinh_thuc_dat=htd.id_hinh_thuc_dat", countQuery = "select count(*)  from don_dat dd join hinh_thuc_dat htd on " +
+            "dd.hinh_thuc_dat_id_hinh_thuc_dat=htd.id_hinh_thuc_dat order by dd.id_don_dat desc", countQuery = "select count(*)  from don_dat dd join hinh_thuc_dat htd on " +
             "dd.hinh_thuc_dat_id_hinh_thuc_dat=htd.id_hinh_thuc_dat",
             nativeQuery = true)
     List<DonDat> getList(Pageable pageable);
 ///detail thong tin danh sach dat phong
-    @Query(value = "select lp.ten_loai_phong,lpd.so_luong,dd.thoi_gian_vao,dd.thoi_gian_ra,\n" +
+    @Query(value = "select  DISTINCT lp.ten_loai_phong,lpd.so_luong,dd.thoi_gian_vao,dd.thoi_gian_ra,\n" +
             "dd.tong_tien,ttkd.ho_ten,ttkd.ngay_sinh,ttkd.so_dien_thoai,ttkd.email,ttkd.quoc_tich,ttkd.gioi_tinh,ttkd.dia_chi \n" +
             "from don_dat dd join loai_phong_dat lpd on dd.id_don_dat=lpd.don_dat_id_don_dat join thong_tin_khach_dat ttkd on\n" +
             "ttkd.id_khach_dat=dd.thong_tin_khach_dat_id_khach_dat join loai_phong lp \n" +
@@ -28,14 +28,14 @@ public interface DonDatRepository extends JpaRepository<DonDat, Integer> {
 // get danh dat phong online
     @Query(value = "select * from don_dat dd join hinh_thuc_dat htd " +
             "on dd.hinh_thuc_dat_id_hinh_thuc_dat=htd.id_hinh_thuc_dat " +
-            "where htd.ten_hinh_thuc='online'", countQuery = "select count(*) from don_dat dd join hinh_thuc_dat htd " +
+            "where htd.ten_hinh_thuc='online' order by dd.id_don_dat desc", countQuery = "select count(*) from don_dat dd join hinh_thuc_dat htd " +
             "on dd.hinh_thuc_dat_id_hinh_thuc_dat=htd.id_hinh_thuc_dat " +
             "where htd.ten_hinh_thuc='online'", nativeQuery = true)
     List<DonDat> findAllOnline(Pageable pageable);
 ///get offline
     @Query(value = "select * from don_dat dd join hinh_thuc_dat htd " +
             "on dd.hinh_thuc_dat_id_hinh_thuc_dat=htd.id_hinh_thuc_dat " +
-            "where htd.ten_hinh_thuc='offline'", countQuery = "select count(*) from don_dat dd join hinh_thuc_dat htd " +
+            "where htd.ten_hinh_thuc='offline' order by dd.id_don_dat desc", countQuery = "select count(*) from don_dat dd join hinh_thuc_dat htd " +
             "on dd.hinh_thuc_dat_id_hinh_thuc_dat=htd.id_hinh_thuc_dat " +
             "where htd.ten_hinh_thuc='offline'", nativeQuery = true)
     List<DonDat> findAllOffline(Pageable pageable);
