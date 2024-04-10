@@ -25,4 +25,10 @@ public interface LoaiPhongRepository extends JpaRepository<LoaiPhong, Integer>, 
             "on tilp.loai_phong_Id_loai_phong=lp.Id_loai_phong join tien_ich ti on \n" +
             "ti.id_tien_ich=tilp.tien_ich_id_tien_ich where lp.Id_loai_phong=:id",nativeQuery = true)
     List<Object[]> detailLoaiPhong(@Param("id") Integer idLoaiPhong);
+
+    @Query(value = "SELECT lp.*\n" +
+            "FROM loai_phong_dat lpd\n" +
+            "JOIN loai_phong lp ON lpd.loai_phong_Id_loai_phong = lp.Id_loai_phong\n" +
+            "WHERE lpd.id_loai_phong_dat = :idLpDat ;\n", nativeQuery = true)
+    LoaiPhong getLoaiPhongByIdLoaiPhongDat(@Param("idLpDat") Integer id);
 }

@@ -13,5 +13,5 @@ public interface LoaiPhongDatRepository extends JpaRepository<LoaiPhongDat, Inte
 
     @Query(value = "SELECT * FROM loai_phong_dat lpd join don_dat dd ON lpd.don_dat_id_don_dat = dd.id_don_dat " +
             "WHERE dd.id_don_dat = :idDonDat  ", nativeQuery = true)
-    LoaiPhongDat findByIdDonDat(@Param("idDonDat") Integer idDonDat);
+    List<LoaiPhongDat> findByIdDonDat(@Param("idDonDat") Integer idDonDat);
 }
