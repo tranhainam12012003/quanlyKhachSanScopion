@@ -26,7 +26,7 @@ spring:
     allow-bean-definition-overriding: true
   # datasource
   datasource:
-    url: jdbc:sqlserver://localhost:1433;database=SCORPIO
+    url: jdbc:sqlserver://localhost:1433;database=SCORPIO2
     username: sa
     password: 123456
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
