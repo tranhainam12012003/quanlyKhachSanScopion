@@ -92,6 +92,6 @@ public class PhongDatServices_Dong {
 //
 //        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongChuaGan(idDonDat);
 //    }
-    public List<DetailThongTinDonDatDTO_Dong>getThongTinPhongDat(Integer id){
+    public DetailThongTinDonDatDTO_Dong getThongTinPhongDat(Integer id){
         return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(id);    }
 }

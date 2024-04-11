@@ -28,34 +28,33 @@ public class DetailPhongGan_ChuaGanRepoSitory_Impl_Dong implements DetailPhongGa
     private EntityManager entityManager;
 
     @Override
-    public List<DetailThongTinDonDatDTO_Dong> detailPhongDat(Integer id) {
-        List<Object[]> detailPhongDat = entityManager.createNativeQuery("select pd.id_phong_dat,pd.don_dat_id_don_dat,pd.phong_id_phong,pd.loai_phong_dat_id_loai_phong_dat,pd.so_tien_phong,\n" +
+    public DetailThongTinDonDatDTO_Dong detailPhongDat(Integer id) {
+        Object[] detailPhongDat = (Object[]) entityManager.createNativeQuery("select pd.id_phong_dat,pd.don_dat_id_don_dat,pd.phong_id_phong,pd.loai_phong_dat_id_loai_phong_dat,pd.so_tien_phong,\n" +
                 "pd.thoi_gian_vao,pd.thoi_gian_ra,pd.trang_thai,lp.ten_loai_phong,phong.so_phong ,lp.gia_tien as 'tiền loại phòng'\n" +
                 "from phong_dat pd left join loai_phong_dat lpd\n" +
                 "on pd.loai_phong_dat_id_loai_phong_dat=lpd.id_loai_phong_dat\n" +
                 "join loai_phong lp on lp.Id_loai_phong=lpd.loai_phong_Id_loai_phong  join phong on phong.id_phong=pd.phong_id_phong\n" +
-                "where pd.id_phong_dat=:idPhongDat").setParameter("idPhongDat", id).getResultList();
+                "where pd.id_phong_dat=:idPhongDat").setParameter("idPhongDat", id).getSingleResult();
 
 
         List<Object[]> getKhachO = entityManager.createNativeQuery("\n" +
                 "select thong_tin_khach_o.id_khach_o,thong_tin_khach_o.ho_ten from thong_tin_khach_o left join phong_dat\n" +
                 "on  thong_tin_khach_o.phong_dat_id_phong_dat=phong_dat.id_phong_dat\n" +
                 "where thong_tin_khach_o.phong_dat_id_phong_dat=:idPhongDat").setParameter("idPhongDat", id).getResultList();
-        List<DetailThongTinDonDatDTO_Dong> list = new ArrayList<>();
-        for (Object[] reObjects : detailPhongDat) {
+
             List<KhachoDTO_Dong>khachoDTODongList=new ArrayList<>();
             DetailThongTinDonDatDTO_Dong detailThongTinDonDatDTODong = new DetailThongTinDonDatDTO_Dong();
-            detailThongTinDonDatDTODong.setIdPhongDat((Integer) reObjects[0]);
-            detailThongTinDonDatDTODong.setIdDonDat((Integer) reObjects[1]);
-            detailThongTinDonDatDTODong.setIdPhong((Integer) reObjects[2]);
-            detailThongTinDonDatDTODong.setIdLoaiPhongDat((Integer) reObjects[3]);
-            detailThongTinDonDatDTODong.setSoTienPhong((BigDecimal) reObjects[4]);
-            detailThongTinDonDatDTODong.setThoiGianVao((Timestamp) reObjects[5]);
-            detailThongTinDonDatDTODong.setThoiGianRa((Timestamp) reObjects[6]);
-            detailThongTinDonDatDTODong.setTrangThai((String) reObjects[7]);
-            detailThongTinDonDatDTODong.setTenLoaiPhong((String) reObjects[8]);
-            detailThongTinDonDatDTODong.setTenPhong((String) reObjects[9]);
-            detailThongTinDonDatDTODong.setTienLoaiPhong((BigDecimal) reObjects[10]);
+            detailThongTinDonDatDTODong.setIdPhongDat((Integer) detailPhongDat[0]);
+            detailThongTinDonDatDTODong.setIdDonDat((Integer) detailPhongDat[1]);
+            detailThongTinDonDatDTODong.setIdPhong((Integer) detailPhongDat[2]);
+            detailThongTinDonDatDTODong.setIdLoaiPhongDat((Integer) detailPhongDat[3]);
+            detailThongTinDonDatDTODong.setSoTienPhong((BigDecimal) detailPhongDat[4]);
+            detailThongTinDonDatDTODong.setThoiGianVao((Timestamp) detailPhongDat[5]);
+            detailThongTinDonDatDTODong.setThoiGianRa((Timestamp) detailPhongDat[6]);
+            detailThongTinDonDatDTODong.setTrangThai((String) detailPhongDat[7]);
+            detailThongTinDonDatDTODong.setTenLoaiPhong((String) detailPhongDat[8]);
+            detailThongTinDonDatDTODong.setTenPhong((String) detailPhongDat[9]);
+            detailThongTinDonDatDTODong.setTienLoaiPhong((BigDecimal) detailPhongDat[10]);
             for (Object[] reObjectsKhachO:getKhachO){
                 KhachoDTO_Dong khachoDTODong=new KhachoDTO_Dong();
                 khachoDTODong.setIdKhachO((Integer) reObjectsKhachO[0]);
@@ -64,9 +63,9 @@ public class DetailPhongGan_ChuaGanRepoSitory_Impl_Dong implements DetailPhongGa
 
             }
             detailThongTinDonDatDTODong.setKhachO(khachoDTODongList);
-            list.add(detailThongTinDonDatDTODong);
-        }
-        return list;
+
+
+        return detailThongTinDonDatDTODong;
     }
 
 //    @Override

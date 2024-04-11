@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface DetailPhongGan_ChuaGanRepository_dong {
-    public List<DetailThongTinDonDatDTO_Dong> detailPhongDat(Integer id);
+    public DetailThongTinDonDatDTO_Dong detailPhongDat(Integer id);
 //    public List<DetailThongTinDonDatDTO_Dong> detailPhongDaGan(Integer idPhongDat);
 //    public List<DetailThongTinDonDatDTO_Dong> detailPhongChuaGan(Integer idPhongDat);
 }
