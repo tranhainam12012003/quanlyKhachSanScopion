@@ -13,7 +13,7 @@ public interface PhongDatServices {
     List<LoadDonDatDto> getDonDatToChekIn(Integer idDonDat);
 
     void checkin(Integer id);
-    void update(PhongDatDto dto,Integer id);
+    void update(PhongDatDto dto);
     void checkout(Integer id);
     Integer countCheckout(Integer id);
     void checkoutDonDat(Integer id);

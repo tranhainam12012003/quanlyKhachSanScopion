@@ -6,16 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Null;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class LoadDonDatDto {
     private Integer idDonDat;
     private Integer idLoaiPhong;
     private String tenLoaiPhong;
     private Integer idPhongDat;
+    @Null
     private Integer idPhong;
     private String tenPhong;
 

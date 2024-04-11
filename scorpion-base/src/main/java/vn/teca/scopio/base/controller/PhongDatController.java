@@ -37,15 +37,15 @@ public class PhongDatController {
         return ResponseEntity.ok().body("checkin thanh cong");
     }
 
-    @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable String id,@RequestBody PhongDatDto dto){
-        phongDatServices.update(dto,Integer.parseInt(id));
+    @PostMapping("/update")
+    public ResponseEntity<?> update(@RequestBody PhongDatDto dto){
+        phongDatServices.update(dto);
         return ResponseEntity.ok().body("update thanh cong");
     }
-    @PostMapping("/checkout/{id}")
-    public ResponseEntity<?> checkout(@PathVariable String id, @RequestBody PhongDatDto dto){
-        Integer idDonDat = dto.getDonDatIdDonDat().getId().intValue();
-        phongDatServices.checkout(Integer.parseInt(id));
+    @PostMapping("/checkout")
+    public ResponseEntity<?> checkout(@RequestBody PhongDatDto dto){
+        Integer idDonDat = dto.getDonDatIdDonDat();
+        phongDatServices.checkout(dto.getIdPhongDat());
         phongDatServices.checkoutDonDat(idDonDat);
         return ResponseEntity.ok().body("check out thanh cong");
     }

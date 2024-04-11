@@ -24,7 +24,7 @@ import java.util.Set;
 public class Phong {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_phong", nullable = false)
+    @Column(name = "id_phong")
     private Integer id;
 
     @NotNull

@@ -2,21 +2,16 @@ package vn.teca.scopio.base.service.giaoDich.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vn.teca.scopio.base.model.DonDat;
-import vn.teca.scopio.base.model.LoaiPhong;
-import vn.teca.scopio.base.model.LoaiPhongDat;
-import vn.teca.scopio.base.model.PhongDat;
+import vn.teca.scopio.base.model.*;
 import vn.teca.scopio.base.model.dto.LoadDonDatDto;
 import vn.teca.scopio.base.model.dto.PhongDatDto;
-import vn.teca.scopio.base.repository.DonDatRepository;
-import vn.teca.scopio.base.repository.LoaiPhongDatRepository;
-import vn.teca.scopio.base.repository.LoaiPhongRepository;
-import vn.teca.scopio.base.repository.PhongDatRepository;
+import vn.teca.scopio.base.repository.*;
 import vn.teca.scopio.base.service.giaoDich.PhongDatServices;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,14 +26,16 @@ public class PhongDatServiceImpl implements PhongDatServices {
     DonDatRepository donDatRepository;
     @Autowired
     private LoaiPhongRepository loaiPhongRepository;
+    @Autowired
+    private PhongRepository phongRepository;
 
     @Override
     public PhongDat save(PhongDatDto dto) {
         String trangThai = "WAIT FOR CHECKIN";
         PhongDat phongDat = new PhongDat();
         phongDat.setPhongIdPhong(dto.getPhongIdPhong());
-        phongDat.setDonDatIdDonDat(dto.getDonDatIdDonDat());
-        phongDat.setLoaiPhongDatIdLoaiPhongDat(dto.getLoaiPhongDat());
+//        phongDat.setDonDatIdDonDat(dto.getDonDatIdDonDat());
+//        phongDat.setLoaiPhongDatIdLoaiPhongDat(dto.getLoaiPhongDat());
         phongDat.setThoiGianVao(dto.getThoiGianVao());
         phongDat.setThoiGianRa(dto.getThoiGianRa());
         phongDat.setSoTienPhong(dto.getSoTienPhong());
@@ -53,9 +50,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
         // B1 lay thong tin don dat
         DonDat donDat = donDatRepository.findById(idDonDat).orElse(null);
         List<LoaiPhongDat> lpd = loaiPhongDatRepository.findByIdDonDat(idDonDat);
-
         List<LoadDonDatDto> result = new ArrayList<>();
-
         for (LoaiPhongDat loaiPhongDat : lpd) {
             // B2 khoi tao ra so luong phong dat theo so luong cua loai phong dat cho check in
             // lay danh sach phong dat theo loai phong dat
@@ -64,60 +59,35 @@ public class PhongDatServiceImpl implements PhongDatServices {
             if (phongDat.isEmpty()) {
 //                phongDat = new ArrayList<>();
                 // khoi tao phong dat chua gan phong
-
                 for (int i = 1; i <= loaiPhongDat.getSoLuong(); i++) {
                     PhongDat item = new PhongDat();
                     item.setLoaiPhongDatIdLoaiPhongDat(loaiPhongDat);
                     item.setDonDatIdDonDat(donDat);
+                    item.setTrangThai("Processing");
                     phongDat.add(item);
 
                 }
                 phongDatRepository.saveAll(phongDat);
-
-//                item.setId(idDonDat);
-//                PhongDat pdd = phongDat.get(i);
-//                item.setPhongIdPhong(pdd.getPhongIdPhong());
-//                item.set
             }
-
         }
-
-
-//                phongDatRepository.save(phongDat);
-
-
         // lay phong dat theo don dat
         List<PhongDat> phongDat1 = phongDatRepository.findPhongDatByIdDonDat(idDonDat);
         for (PhongDat pd : phongDat1) {
+
             LoadDonDatDto dto = new LoadDonDatDto();
             dto.setIdDonDat(idDonDat);
             dto.setIdLoaiPhong(pd.getLoaiPhongDatIdLoaiPhongDat().getId());
-//                dto.setTenLoaiPhong(loaiPhong.getTenLoaiPhong());
+            dto.setTenLoaiPhong(pd.getLoaiPhongDatIdLoaiPhongDat().getLoaiPhongIdLoaiPhong().getTenLoaiPhong());
             dto.setIdPhongDat(pd.getId());
             // Cần lấy thông tin của phòng từ PhongDat và thiết lập cho LoadDonDatDto
-//             dto.setIdPhong(pd.getPhongIdPhong().getId());
-//             dto.setTenPhong(pd.getPhongIdPhong().getSoPho ng());
+//            Phong phong = phongRepository.findById(pd.getPhongIdPhong().getId()).orElse(null);
+//            dto.setIdPhong(phong.getId());
+//            dto.setTenPhong(phong.getSoPhong());
+            dto.setIdPhong(Objects.nonNull(pd.getPhongIdPhong()) ? pd.getPhongIdPhong().getId() : null);
+            dto.setTenPhong(Objects.nonNull(pd.getPhongIdPhong()) ? pd.getPhongIdPhong().getSoPhong() : null);
             result.add(dto);
         }
-
-
         return result;
-//        phongDat = phongDatRepository.findPhongDatByIdDonDat(idDonDat);
-//        LoaiPhong loaiPhong = loaiPhongRepository.getLoaiPhongByIdLoaiPhongDat(lpd.getId());
-//            // Lặp qua danh sách phòng đặt để tạo danh sách kết quả
-//            for (PhongDat pd : phongDat) {
-//                LoadDonDatDto dto = new LoadDonDatDto();
-//                dto.setIdDonDat(pd.getDonDatIdDonDat().getId());
-//                dto.setIdLoaiPhong(loaiPhong.getId());
-//                dto.setTenLoaiPhong(loaiPhong.getTenLoaiPhong());
-//                dto.setIdPhongDat(pd.getId());
-////                dto.setIdPhong(pd.getPhongIdPhong().getId());
-////                dto.setTenPhong(pd.getPhongIdPhong().getSoPhong());
-//                result.add(dto);
-//            }
-//            phongDat = phongDatRepository.findPhongDatByIdDonDat(idDonDat);
-
-
     }
 
 
@@ -140,14 +110,14 @@ public class PhongDatServiceImpl implements PhongDatServices {
     }
 
     @Override
-    public void update(PhongDatDto dto, Integer id) {
+    public void update(PhongDatDto dto) {
 //        PhongDat phongDat = new PhongDat();
 //        phongDat.setId(id);
-        Optional<PhongDat> optional = phongDatRepository.findById(id);
+        Optional<PhongDat> optional = phongDatRepository.findById(dto.getIdPhongDat());
         optional.map(o -> {
             o.setThoiGianRa(dto.getThoiGianRa());
             o.setSoTienPhong(dto.getSoTienPhong());
-            o.setTrangThai("Checkin");
+//            o.setTrangThai("Checkin");
             return phongDatRepository.save(o);
         }).orElse(null);
     }

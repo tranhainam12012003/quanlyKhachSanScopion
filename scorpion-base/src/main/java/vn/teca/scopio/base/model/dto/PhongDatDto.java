@@ -16,9 +16,10 @@ import java.time.LocalDateTime;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class  PhongDatDto {
+    private Integer idPhongDat;
     private Phong phongIdPhong;
-    private DonDat donDatIdDonDat;
-    private LoaiPhongDat loaiPhongDat;
+    private Integer donDatIdDonDat;
+//    private LoaiPhongDat loaiPhongDat;
     private LocalDateTime thoiGianVao;
     private LocalDateTime thoiGianRa;
     private BigDecimal soTienPhong;

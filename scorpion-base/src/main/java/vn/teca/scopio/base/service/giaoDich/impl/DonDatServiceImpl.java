@@ -69,6 +69,7 @@ public class DonDatServiceImpl implements DonDatService {
 
     @Override
     public DonDat luuDonDat(DonDatDto donDatDto) {
+
         DonDat donDat = new DonDat();
         donDat.setTongTien(donDatDto.getTongTien());
         donDat.setThoiGianVao(donDatDto.getThoiGianVao());
