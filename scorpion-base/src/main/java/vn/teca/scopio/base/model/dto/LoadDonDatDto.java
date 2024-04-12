@@ -18,7 +18,7 @@ public class LoadDonDatDto {
     private Integer idLoaiPhong;
     private String tenLoaiPhong;
     private Integer idPhongDat;
-    @Null
+
     private Integer idPhong;
     private String tenPhong;
 

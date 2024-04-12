@@ -50,7 +50,7 @@ public class PhongController {
         return ResponseEntity.ok(phongServices.detail(Integer.parseInt(id)));
     }
     // hien thi phong con trong de gan phong
-    @PostMapping("/searchTrong/{id}") //id o day la id cua loai phong
+    @GetMapping("/searchTrong/{id}") //id o day la id cua loai phong
     public ResponseEntity<?> searchTrong(@PathVariable String id){
         return ResponseEntity.ok(phongServices.findPhongTrong(Integer.parseInt(id)));
     }

@@ -23,20 +23,19 @@ public class PhongDat {
     @Column(name = "id_phong_dat", nullable = false)
     private Integer id;
 
-    @Null
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne
     @JoinColumn(name = "phong_id_phong")
     private Phong phongIdPhong;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "don_dat_id_don_dat", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "don_dat_id_don_dat")
     private DonDat donDatIdDonDat;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "loai_phong_dat_id_loai_phong_dat", nullable = false)
-    private LoaiPhongDat loaiPhongDatIdLoaiPhongDat;
+//    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "loai_phong_dat_id_loai_phong_dat")
+    private Integer loaiPhongDatIdLoaiPhongDat;
 
     @Column(name = "thoi_gian_vao")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss", timezone = "Asia/Ho_Chi_Minh")

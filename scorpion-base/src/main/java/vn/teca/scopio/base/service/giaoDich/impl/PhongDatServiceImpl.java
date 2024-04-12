@@ -2,6 +2,7 @@ package vn.teca.scopio.base.service.giaoDich.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import vn.teca.scopio.base.model.*;
 import vn.teca.scopio.base.model.dto.LoadDonDatDto;
 import vn.teca.scopio.base.model.dto.PhongDatDto;
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 @Service
 public class PhongDatServiceImpl implements PhongDatServices {
     @Autowired
@@ -32,16 +32,43 @@ public class PhongDatServiceImpl implements PhongDatServices {
     @Override
     public PhongDat save(PhongDatDto dto) {
         String trangThai = "WAIT FOR CHECKIN";
-        PhongDat phongDat = new PhongDat();
-        phongDat.setPhongIdPhong(dto.getPhongIdPhong());
-//        phongDat.setDonDatIdDonDat(dto.getDonDatIdDonDat());
-//        phongDat.setLoaiPhongDatIdLoaiPhongDat(dto.getLoaiPhongDat());
-        phongDat.setThoiGianVao(dto.getThoiGianVao());
-        phongDat.setThoiGianRa(dto.getThoiGianRa());
-        phongDat.setSoTienPhong(dto.getSoTienPhong());
-        phongDat.setTrangThai(trangThai);
+        Optional<PhongDat> phongDatOptional = phongDatRepository.findById(dto.getIdPhongDat());
+//        PhongDat phongDat = phongDatRepository.findById(dto.getIdPhongDat()).orElse(null);
+//        if (phongDatOptional.isPresent()) {
 
-        return phongDatRepository.save(phongDat);
+                PhongDat o = phongDatOptional.get();
+                o.setPhongIdPhong(dto.getPhongIdPhong());
+
+                o.setThoiGianVao(dto.getThoiGianVao());
+                o.setThoiGianRa(dto.getThoiGianRa());
+                o.setSoTienPhong(dto.getSoTienPhong());
+                o.setTrangThai(trangThai);
+                return  phongDatRepository.save(o);
+
+//        return  null;
+//        try {
+////            phongDat.setPhongIdPhong(dto.getPhongIdPhong());
+////            phongDat.setThoiGianVao(dto.getThoiGianVao());
+////            phongDat.setThoiGianRa(dto.getThoiGianRa());
+////            phongDat.setSoTienPhong(dto.getSoTienPhong());
+////            phongDat.setTrangThai(trangThai);
+////            return phongDatRepository.save(phongDat);
+//            PhongDat a = optional.map(o -> {
+//                o.setPhongIdPhong(dto.getPhongIdPhong());
+//
+//                o.setThoiGianVao(dto.getThoiGianVao());
+//                o.setThoiGianRa(dto.getThoiGianRa());
+//                o.setSoTienPhong(dto.getSoTienPhong());
+//                o.setTrangThai(trangThai);
+//                return o;
+//            }).orElse(null);
+//            return phongDatRepository.save(a);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return null;
+//        }
+
+
 
     }
 
@@ -61,7 +88,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
                 // khoi tao phong dat chua gan phong
                 for (int i = 1; i <= loaiPhongDat.getSoLuong(); i++) {
                     PhongDat item = new PhongDat();
-                    item.setLoaiPhongDatIdLoaiPhongDat(loaiPhongDat);
+                    item.setLoaiPhongDatIdLoaiPhongDat(loaiPhongDat.getId());
                     item.setDonDatIdDonDat(donDat);
                     item.setTrangThai("Processing");
                     phongDat.add(item);
@@ -73,11 +100,12 @@ public class PhongDatServiceImpl implements PhongDatServices {
         // lay phong dat theo don dat
         List<PhongDat> phongDat1 = phongDatRepository.findPhongDatByIdDonDat(idDonDat);
         for (PhongDat pd : phongDat1) {
-
+            LoaiPhongDat loaiPhongDat = loaiPhongDatRepository.findById(pd.getLoaiPhongDatIdLoaiPhongDat()).orElse(null);
+//            LoaiPhong lp = loaiPhongRepository.findById(loaiPhongDat.getLoaiPhongIdLoaiPhong())
             LoadDonDatDto dto = new LoadDonDatDto();
             dto.setIdDonDat(idDonDat);
-            dto.setIdLoaiPhong(pd.getLoaiPhongDatIdLoaiPhongDat().getId());
-            dto.setTenLoaiPhong(pd.getLoaiPhongDatIdLoaiPhongDat().getLoaiPhongIdLoaiPhong().getTenLoaiPhong());
+            dto.setIdLoaiPhong(pd.getLoaiPhongDatIdLoaiPhongDat());
+            dto.setTenLoaiPhong(loaiPhongDat.getLoaiPhongIdLoaiPhong().getTenLoaiPhong());
             dto.setIdPhongDat(pd.getId());
             // Cần lấy thông tin của phòng từ PhongDat và thiết lập cho LoadDonDatDto
 //            Phong phong = phongRepository.findById(pd.getPhongIdPhong().getId()).orElse(null);
@@ -127,12 +155,13 @@ public class PhongDatServiceImpl implements PhongDatServices {
 //        PhongDat phongDat = new PhongDat();
 //        phongDat.setId(id);
         Optional<PhongDat> optional = phongDatRepository.findById(id);
+//        PhongDat pd = phongDatRepository.findById(id).orElse(null);
         optional.map(o -> {
             o.setThoiGianRa(LocalDateTime.now());
             o.setTrangThai("Checkout");
             return phongDatRepository.save(o);
         }).orElse(null);
-//        checkoutDonDat(idDonDat);
+//        checkoutDonDat(optional.get().getDonDatIdDonDat().getId());
 
     }
 
@@ -141,7 +170,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
         List<PhongDat> phongDat = phongDatRepository.findPhongDatByIdDonDat(id);
         int count = 0;
         for (PhongDat pd : phongDat) {
-            if (pd.getTrangThai().equalsIgnoreCase("Checkout")) {
+            if (pd != null && pd.getTrangThai() != null && pd.getTrangThai().equalsIgnoreCase("Checkout")) {
                 count++;
             }
         }
