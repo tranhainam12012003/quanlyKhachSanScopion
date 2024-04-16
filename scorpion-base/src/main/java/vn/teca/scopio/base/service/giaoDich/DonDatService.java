@@ -19,6 +19,8 @@ public interface DonDatService {
     DonDat luuDonDat(DonDatDto donDatDto);
 
     void update(DonDatDto donDatDto, Integer i);
+
+    List<DonDat> getListTheoKhach(Integer id);
 //    DetailThongTinDonDatDTO_Dong mapToObject(Object[] result);
 //    List<DetailThongTinDonDatDTO_Dong> getThongTinDonDat(Integer id);
 //    DonDatDto createDonDat(DonDatDto donDatDTO);

@@ -64,7 +64,7 @@ public class LoaiPhongCustomRepositoryImpl implements LoaiPhongCustomRepository 
         str.append(" SELECT DISTINCT lpd.loai_phong_Id_loai_phong ");
         str.append(" FROM loai_phong_dat lpd ");
         str.append(" INNER JOIN don_dat dd ON lpd.don_dat_id_don_dat = dd.id_don_dat ");
-        str.append(" WHERE dd.trang_thai = 'THANG CONG' AND dd.trang_thai = 'DANG O' ");
+        str.append(" WHERE dd.trang_thai = 'THANH CONG' AND dd.trang_thai = 'DANG O' ");
         str.append(" AND ( ");
         str.append(" (dd.thoi_gian_vao BETWEEN :thoiGianVao AND :thoiGianRa) ");
         str.append(" OR (dd.thoi_gian_ra BETWEEN :thoiGianVao AND :thoiGianRa) ");
@@ -81,7 +81,7 @@ public class LoaiPhongCustomRepositoryImpl implements LoaiPhongCustomRepository 
         str.append(" SELECT lpd.loai_phong_Id_loai_phong, SUM(lpd.so_luong) AS SoLuongPhongDat ");
         str.append(" FROM loai_phong_dat lpd ");
         str.append(" INNER JOIN don_dat dd ON lpd.don_dat_id_don_dat = dd.id_don_dat ");
-        str.append(" WHERE dd.trang_thai = 'THANG CONG' ");
+        str.append(" WHERE dd.trang_thai = 'THANH CONG' ");
         str.append(" AND ( ");
         str.append(" (dd.thoi_gian_vao BETWEEN :thoiGianVao AND :thoiGianRa) ");
         str.append(" OR (dd.thoi_gian_ra BETWEEN :thoiGianVao AND :thoiGianRa) ");

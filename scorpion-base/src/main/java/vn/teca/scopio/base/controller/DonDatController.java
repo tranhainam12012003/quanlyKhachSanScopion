@@ -38,7 +38,7 @@ public class DonDatController {
         }
     }
     @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") String id, @RequestBody DonDatDto donDatDto){
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody DonDatDto donDatDto){
         try {
             donDatService.update(donDatDto, Integer.parseInt(id));
             return ResponseEntity.ok().body("cap nhat thanh cong");
@@ -46,5 +46,10 @@ public class DonDatController {
         catch ( Exception e){
             return ResponseEntity.badRequest().body("Khong thuc hien duoc");
         }
+    }
+
+    @GetMapping("/theo-khach/{id}") // id cua khach
+    public ResponseEntity<?> getListTheoKhach(@PathVariable String id){
+        return ResponseEntity.ok(donDatService.getListTheoKhach(Integer.parseInt(id)));
     }
 }

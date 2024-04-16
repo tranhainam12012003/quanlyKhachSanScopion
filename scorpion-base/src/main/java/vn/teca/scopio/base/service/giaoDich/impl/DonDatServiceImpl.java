@@ -140,6 +140,9 @@ public class DonDatServiceImpl implements DonDatService {
 //        }
 //        return detailThongTinDonDatDTOS;
 //    }
-
+    @Override
+    public List<DonDat> getListTheoKhach(Integer id){
+        return donDatRepository.findByIdKhachDat(id);
+    }
 
 }
