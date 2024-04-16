@@ -33,7 +33,7 @@ public class DetailPhongGan_ChuaGanRepoSitory_Impl_Dong implements DetailPhongGa
                 "pd.thoi_gian_vao,pd.thoi_gian_ra,pd.trang_thai,lp.ten_loai_phong,phong.so_phong ,lp.gia_tien as 'tiền loại phòng'\n" +
                 "from phong_dat pd left join loai_phong_dat lpd\n" +
                 "on pd.loai_phong_dat_id_loai_phong_dat=lpd.id_loai_phong_dat\n" +
-                "join loai_phong lp on lp.Id_loai_phong=lpd.loai_phong_Id_loai_phong  join phong on phong.id_phong=pd.phong_id_phong\n" +
+                "left join loai_phong lp on lp.Id_loai_phong=lpd.loai_phong_Id_loai_phong  left join phong on phong.id_phong=pd.phong_id_phong\n" +
                 "where pd.id_phong_dat=:idPhongDat").setParameter("idPhongDat", id).getSingleResult();
 
 
