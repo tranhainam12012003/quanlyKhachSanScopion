@@ -26,7 +26,7 @@ public class DonDatController_Dong {
     ThongTinDatPhongServices thongTinDatPhongServices;
     @GetMapping("thong-tin-phong-dat/{id}")
     public ResponseEntity<?> detailByIdDonDat(@PathVariable String id) {
-        return ResponseEntity.ok(thongTinDatPhongServices.getThongTInPhongDat(Integer.parseInt(id)));
+        return ResponseEntity.ok(thongTinDatPhongServices.detailTheoDonDat(Integer.parseInt(id)));
     }
 
     @GetMapping("phong-dat-online")

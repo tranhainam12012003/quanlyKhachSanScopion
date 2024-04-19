@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,8 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 
 public class DTOThongTinLoaiPhong {
-    private String loaiPhong;
-    private Integer soLuong;
+    private List<LoaiPhongDatDto_Dong>loaiphongDat;
     private Timestamp thoiGianVao;
     private Timestamp thoiGianRa;
     private BigDecimal tienPhong;
