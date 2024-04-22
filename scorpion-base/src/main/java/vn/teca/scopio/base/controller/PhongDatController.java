@@ -20,6 +20,7 @@ public class PhongDatController {
     public ResponseEntity<?> getDonDatToCheckin(@PathVariable String id){
         return ResponseEntity.ok(phongDatServices.getDonDatToChekIn(Integer.parseInt(id)));
     }
+
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody PhongDatDto dto){
         try {

@@ -2,13 +2,18 @@ package vn.teca.scopio.base.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.teca.scopio.base.model.DonDat;
 import vn.teca.scopio.base.model.PhongDat;
 import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.PhongChuaGan_DTO_Dong;
+import vn.teca.scopio.base.repository.DonDatRepository;
 import vn.teca.scopio.base.repository.PhongDatRepository;
 import vn.teca.scopio.base.repository.custom.impl.DetailPhongGan_ChuaGanRepoSitory_Impl_Dong;
 import vn.teca.scopio.base.repository.custom.impl.PhongDatCustomRepositoryImpl_Dong;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +25,8 @@ public class PhongDatServices_Dong {
     PhongDatCustomRepositoryImpl_Dong phongDatCustomRepositoryImplDong;
     @Autowired
     DetailPhongGan_ChuaGanRepoSitory_Impl_Dong detailPhongGanChuaGanRepoSitoryImplDong;
+    @Autowired
+    private DonDatRepository donDatRepository;
 
     public List<PhongDat> getall() {
         return phongDatRepository.findAll();
@@ -85,13 +92,20 @@ public class PhongDatServices_Dong {
         return phongDatCustomRepositoryImplDong.getPhongDaGanVaChuaGan(id);
     }
 
-//    public List<DetailThongTinDonDatDTO_Dong> detailThongTinPhongDaGan(Integer idPhongDat) {
+    //    public List<DetailThongTinDonDatDTO_Dong> detailThongTinPhongDaGan(Integer idPhongDat) {
 //        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDaGan(idPhongDat);
 //    }
 //    public List<DetailThongTinDonDatDTO_Dong>detailThongTinPhongChuaGan(Integer idDonDat){
 //
 //        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongChuaGan(idDonDat);
 //    }
-    public DetailThongTinDonDatDTO_Dong getThongTinPhongDat(Integer id){
-        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(id);    }
+    public DetailThongTinDonDatDTO_Dong getThongTinPhongDat(Integer id) {
+        DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(id);
+        DonDat donDat = donDatRepository.findById(detail.getIdDonDat()).orElse(null);
+        if (detail.getThoiGianVao() == null) {
+            detail.setThoiGianVao(Timestamp.valueOf(donDat.getThoiGianVao()));
+            detail.setThoiGianRa(Timestamp.valueOf(donDat.getThoiGianRa()));
+        }
+        return detail;
+    }
 }

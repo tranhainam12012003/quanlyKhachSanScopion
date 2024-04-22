@@ -18,8 +18,6 @@ import java.time.LocalDateTime;
 public class  PhongDatDto {
     private Integer idPhongDat;
     private Phong phongIdPhong;
-//    private Integer donDatIdDonDat;
-//    private LoaiPhongDat loaiPhongDat;
     private LocalDateTime thoiGianVao;
     private LocalDateTime thoiGianRa;
     private BigDecimal soTienPhong;
