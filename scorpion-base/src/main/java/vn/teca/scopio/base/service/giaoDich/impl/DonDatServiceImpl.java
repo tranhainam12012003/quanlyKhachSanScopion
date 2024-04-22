@@ -7,15 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DonDat;
 import vn.teca.scopio.base.model.LoaiPhongDat;
-import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.DonDatDto;
 import vn.teca.scopio.base.model.dto.LoaiPhongDatDto;
 import vn.teca.scopio.base.repository.DonDatRepository;
 import vn.teca.scopio.base.repository.LoaiPhongDatRepository;
 import vn.teca.scopio.base.service.giaoDich.DonDatService;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +58,16 @@ public class DonDatServiceImpl implements DonDatService {
         Optional<DonDat> optional = donDatRepository.findById(integer);
         return optional.isPresent() ? optional.get() : null;
     }
+    @Override
+    public List<DonDat> findBySDT(String sdt, int page){
+        Pageable pageable = PageRequest.of(page,15);
+        return donDatRepository.findDonDatByThongTinKhachDatIdKhachDat_SoDienThoai(sdt,pageable);
+
+    }
+
+//    public DonDat Page<DonDat> findAll(Example<S> example, Pageable pageable) {
+//        return donDatRepository.findAll(example, pageable);
+//    }
 
     @Override
     public void deleteById(Integer integer) {

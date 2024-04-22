@@ -14,6 +14,8 @@ public interface DonDatService {
 
     DonDat findById(Integer integer);
 
+    List<DonDat> findBySDT(String sdt, int page);
+
     void deleteById(Integer integer);
 
     DonDat luuDonDat(DonDatDto donDatDto);

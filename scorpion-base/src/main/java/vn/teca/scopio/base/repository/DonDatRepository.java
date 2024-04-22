@@ -51,4 +51,6 @@ public interface DonDatRepository extends JpaRepository<DonDat, Integer> {
 //    List<Object[]>detailTheoIdDonDat(@Param("idDonDat")Integer id);
     @Query(value = "select * from don_dat where thong_tin_khach_dat_id_khach_dat = :idKhachDat ",nativeQuery = true)
     List<DonDat> findByIdKhachDat(@Param("idKhachDat") Integer idKhachDat);
+
+    List<DonDat> findDonDatByThongTinKhachDatIdKhachDat_SoDienThoai(String sdt,Pageable pageable);
 }
