@@ -30,7 +30,7 @@ public class DetailPhongGan_ChuaGanRepoSitory_Impl_Dong implements DetailPhongGa
     @Override
     public DetailThongTinDonDatDTO_Dong detailPhongDat(Integer id) {
         Object[] detailPhongDat = (Object[]) entityManager.createNativeQuery("select pd.id_phong_dat,pd.don_dat_id_don_dat,pd.phong_id_phong,pd.loai_phong_dat_id_loai_phong_dat,pd.so_tien_phong,\n" +
-                "pd.thoi_gian_vao,pd.thoi_gian_ra,pd.trang_thai,lp.ten_loai_phong,phong.so_phong ,lp.gia_tien as 'tiền loại phòng'\n" +
+                "pd.thoi_gian_vao,pd.thoi_gian_ra,pd.trang_thai,lp.ten_loai_phong,phong.so_phong ,lp.gia_tien as 'tiền loại phòng',lp.Id_loai_phong\n" +
                 "from phong_dat pd left join loai_phong_dat lpd\n" +
                 "on pd.loai_phong_dat_id_loai_phong_dat=lpd.id_loai_phong_dat\n" +
                 "left join loai_phong lp on lp.Id_loai_phong=lpd.loai_phong_Id_loai_phong  left join phong on phong.id_phong=pd.phong_id_phong\n" +
@@ -55,6 +55,7 @@ public class DetailPhongGan_ChuaGanRepoSitory_Impl_Dong implements DetailPhongGa
             detailThongTinDonDatDTODong.setTenLoaiPhong((String) detailPhongDat[8]);
             detailThongTinDonDatDTODong.setTenPhong((String) detailPhongDat[9]);
             detailThongTinDonDatDTODong.setTienLoaiPhong((BigDecimal) detailPhongDat[10]);
+            detailThongTinDonDatDTODong.setIdLoaiPhong((Integer) detailPhongDat[11]);
             for (Object[] reObjectsKhachO:getKhachO){
                 KhachoDTO_Dong khachoDTODong=new KhachoDTO_Dong();
                 khachoDTODong.setIdKhachO((Integer) reObjectsKhachO[0]);
