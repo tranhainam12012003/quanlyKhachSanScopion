@@ -21,6 +21,7 @@ public class LoadDonDatDto {
 
     private Integer idPhong;
     private String tenPhong;
+    private String trangThai;
 
 
 }

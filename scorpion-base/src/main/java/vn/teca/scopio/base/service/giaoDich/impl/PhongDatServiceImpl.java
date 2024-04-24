@@ -95,6 +95,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
 
             dto.setIdPhong(Objects.nonNull(pd.getPhongIdPhong()) ? pd.getPhongIdPhong().getId() : null);
             dto.setTenPhong(Objects.nonNull(pd.getPhongIdPhong()) ? pd.getPhongIdPhong().getSoPhong() : null);
+            dto.setTrangThai(pd.getTrangThai());
             result.add(dto);
         }
         return result;
@@ -144,10 +145,16 @@ public class PhongDatServiceImpl implements PhongDatServices {
 
     @Override
     public void checkout(Integer id) {
-//        PhongDat phongDat = new PhongDat();
-//        phongDat.setId(id);
+
         Optional<PhongDat> optional = phongDatRepository.findById(id);
+        DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(id);
+
 //        PhongDat pd = phongDatRepository.findById(id).orElse(null);
+        LocalDateTime thoiGianRa = optional.get().getThoiGianRa();
+        LocalDateTime thoiGianCheckIn = LocalDateTime.now();
+        BigDecimal giaTheoGio = BigDecimal.valueOf(Double.parseDouble(detail.getTienLoaiPhong().toString())/10);
+        BigDecimal tienPhong;
+
         optional.map(o -> {
             o.setThoiGianRa(LocalDateTime.now());
             o.setTrangThai("Checkout");
