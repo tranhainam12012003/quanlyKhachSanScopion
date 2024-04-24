@@ -24,7 +24,7 @@ public interface PhongRepository extends JpaRepository<Phong, Integer>, PhongCus
             "SELECT pd.phong_id_phong\n" +
             "FROM phong_dat pd\n" +
             "INNER JOIN phong p ON pd.phong_id_phong = p.id_phong\n" +
-            "WHERE p.loai_phong_Id_loai_phong = @IdLoaiPhong AND pd.trang_thai = 'checkin';\n" +
+            "WHERE p.loai_phong_Id_loai_phong = @IdLoaiPhong AND (pd.trang_thai = 'checkin' OR pd.trang_thai = 'WAIT FOR CHECKIN');\n" +
             "SELECT p.id_phong,p.loai_phong_Id_loai_phong,p.so_phong,p.so_tang,p.trang_thai\n" +
             "FROM phong p\n" +
             "LEFT JOIN #PhongCoCheckin pc ON p.id_phong = pc.id_phong\n" +
