@@ -27,7 +27,7 @@ public class Phong {
     @Column(name = "id_phong")
     private Integer id;
 
-    @NotNull
+//    @NotNull
     @ManyToOne
     @JoinColumn(name = "loai_phong_Id_loai_phong", nullable = false)
     private LoaiPhong loaiPhongIdLoaiPhong;

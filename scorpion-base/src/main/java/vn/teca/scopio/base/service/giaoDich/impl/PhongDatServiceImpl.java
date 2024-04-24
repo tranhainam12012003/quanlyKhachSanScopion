@@ -4,12 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.teca.scopio.base.model.*;
+import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.LoadDonDatDto;
 import vn.teca.scopio.base.model.dto.PhongDatDto;
 import vn.teca.scopio.base.repository.*;
+import vn.teca.scopio.base.repository.custom.impl.DetailPhongGan_ChuaGanRepoSitory_Impl_Dong;
 import vn.teca.scopio.base.service.giaoDich.PhongDatServices;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,46 +34,24 @@ public class PhongDatServiceImpl implements PhongDatServices {
     private LoaiPhongRepository loaiPhongRepository;
     @Autowired
     private PhongRepository phongRepository;
-
+    @Autowired
+    DetailPhongGan_ChuaGanRepoSitory_Impl_Dong detailPhongGanChuaGanRepoSitoryImplDong;
     @Override
     public PhongDat save(PhongDatDto dto) {
         String trangThai = "WAIT FOR CHECKIN";
         Optional<PhongDat> phongDatOptional = phongDatRepository.findById(dto.getIdPhongDat());
+        DonDat donDat = donDatRepository.findById(phongDatOptional.get().getDonDatIdDonDat().getId()).orElse(null);
 //        PhongDat phongDat = phongDatRepository.findById(dto.getIdPhongDat()).orElse(null);
 //        if (phongDatOptional.isPresent()) {
 
                 PhongDat o = phongDatOptional.get();
                 o.setPhongIdPhong(dto.getPhongIdPhong());
 
-                o.setThoiGianVao(dto.getThoiGianVao());
-                o.setThoiGianRa(dto.getThoiGianRa());
-                o.setSoTienPhong(dto.getSoTienPhong());
+                o.setThoiGianVao(donDat.getThoiGianVao());
+                o.setThoiGianRa(donDat.getThoiGianRa());
+//                o.setSoTienPhong(dto.getSoTienPhong());
                 o.setTrangThai(trangThai);
                 return  phongDatRepository.save(o);
-
-//        return  null;
-//        try {
-////            phongDat.setPhongIdPhong(dto.getPhongIdPhong());
-////            phongDat.setThoiGianVao(dto.getThoiGianVao());
-////            phongDat.setThoiGianRa(dto.getThoiGianRa());
-////            phongDat.setSoTienPhong(dto.getSoTienPhong());
-////            phongDat.setTrangThai(trangThai);
-////            return phongDatRepository.save(phongDat);
-//            PhongDat a = optional.map(o -> {
-//                o.setPhongIdPhong(dto.getPhongIdPhong());
-//
-//                o.setThoiGianVao(dto.getThoiGianVao());
-//                o.setThoiGianRa(dto.getThoiGianRa());
-//                o.setSoTienPhong(dto.getSoTienPhong());
-//                o.setTrangThai(trangThai);
-//                return o;
-//            }).orElse(null);
-//            return phongDatRepository.save(a);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return null;
-//        }
-
 
 
     }
@@ -108,9 +92,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
             dto.setTenLoaiPhong(loaiPhongDat.getLoaiPhongIdLoaiPhong().getTenLoaiPhong());
             dto.setIdPhongDat(pd.getId());
             // Cần lấy thông tin của phòng từ PhongDat và thiết lập cho LoadDonDatDto
-//            Phong phong = phongRepository.findById(pd.getPhongIdPhong().getId()).orElse(null);
-//            dto.setIdPhong(phong.getId());
-//            dto.setTenPhong(phong.getSoPhong());
+
             dto.setIdPhong(Objects.nonNull(pd.getPhongIdPhong()) ? pd.getPhongIdPhong().getId() : null);
             dto.setTenPhong(Objects.nonNull(pd.getPhongIdPhong()) ? pd.getPhongIdPhong().getSoPhong() : null);
             result.add(dto);
@@ -142,9 +124,19 @@ public class PhongDatServiceImpl implements PhongDatServices {
 //        PhongDat phongDat = new PhongDat();
 //        phongDat.setId(id);
         Optional<PhongDat> optional = phongDatRepository.findById(dto.getIdPhongDat());
+        DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(dto.getIdPhongDat());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+
+        LocalDate thoiGianVao = LocalDate.parse(dto.getThoiGianVao().toString(), formatter);
+        LocalDate thoiGianRa = LocalDate.parse(dto.getThoiGianRa().toString(), formatter);
+        long soNgayChenhLech = ChronoUnit.DAYS.between(thoiGianVao, thoiGianRa);
+
+        BigDecimal giaTien = detail.getTienLoaiPhong().multiply(BigDecimal.valueOf(soNgayChenhLech));
+//        detail.setSoTienPhong(giaTien);
         optional.map(o -> {
             o.setThoiGianRa(dto.getThoiGianRa());
-            o.setSoTienPhong(dto.getSoTienPhong());
+            o.setSoTienPhong(giaTien);
 //            o.setTrangThai("Checkin");
             return phongDatRepository.save(o);
         }).orElse(null);

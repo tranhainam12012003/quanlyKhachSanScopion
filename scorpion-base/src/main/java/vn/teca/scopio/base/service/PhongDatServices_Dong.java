@@ -11,9 +11,13 @@ import vn.teca.scopio.base.repository.PhongDatRepository;
 import vn.teca.scopio.base.repository.custom.impl.DetailPhongGan_ChuaGanRepoSitory_Impl_Dong;
 import vn.teca.scopio.base.repository.custom.impl.PhongDatCustomRepositoryImpl_Dong;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,6 +109,20 @@ public class PhongDatServices_Dong {
         if (detail.getThoiGianVao() == null) {
             detail.setThoiGianVao(Timestamp.valueOf(donDat.getThoiGianVao()));
             detail.setThoiGianRa(Timestamp.valueOf(donDat.getThoiGianRa()));
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+
+            LocalDate thoiGianVao = LocalDate.parse(donDat.getThoiGianVao().toString(), formatter);
+            LocalDate thoiGianRa = LocalDate.parse(donDat.getThoiGianRa().toString(), formatter);
+            long soNgayChenhLech = ChronoUnit.DAYS.between(thoiGianVao, thoiGianRa);
+
+            BigDecimal giaTien = detail.getTienLoaiPhong().multiply(BigDecimal.valueOf(soNgayChenhLech));
+            detail.setSoTienPhong(giaTien);
+            Optional<PhongDat> phongDat = phongDatRepository.findById(id);
+            phongDat.map(o ->{
+                o.setSoTienPhong(giaTien);
+                return phongDatRepository.save(o);
+            }).orElse(null);
         }
         return detail;
     }
