@@ -16,10 +16,10 @@ public class DichVuDatController {
     public ResponseEntity<?>getall(){
         return ResponseEntity.ok(dichVuDatServices.getall());
     }
-    @PostMapping("add")
-    public ResponseEntity<?>add(@RequestBody DichVuDat dichVuDat){
-        return ResponseEntity.ok(dichVuDatServices.add(dichVuDat));
-    }
+//    @PostMapping("add")
+//    public ResponseEntity<?>add(@RequestBody DichVuDat dichVuDat){
+//        return ResponseEntity.ok(dichVuDatServices.add(dichVuDat));
+//    }
     @PostMapping("update/{id}")
     public ResponseEntity<?>update(@RequestBody DichVuDat dichVuDat, @PathVariable String id){
         return ResponseEntity.ok(dichVuDatServices.update(dichVuDat,Integer.parseInt(id)));
