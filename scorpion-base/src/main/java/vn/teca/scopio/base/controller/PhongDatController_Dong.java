@@ -38,6 +38,10 @@ public class PhongDatController_Dong {
     }
     @GetMapping("detail-id-phong-dat/{id}")
     public ResponseEntity<?>detailPhongDat(@PathVariable String id){
+        return ResponseEntity.ok(phongDatServices.getThongTinDonDat(Integer.parseInt(id)));
+    }
+    @GetMapping("chi-tiet-tung-phong/{id}")
+    public ResponseEntity<?>detailTungPhong(@PathVariable String id){
         return ResponseEntity.ok(phongDatServices.getThongTinPhongDat(Integer.parseInt(id)));
     }
 }

@@ -130,7 +130,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
 //        PhongDat phongDat = new PhongDat();
 //        phongDat.setId(id);
         Optional<PhongDat> optional = phongDatRepository.findById(dto.getIdPhongDat());
-        DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(dto.getIdPhongDat());
+        DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailDonDat(dto.getIdPhongDat());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
@@ -152,7 +152,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
     public void checkout(Integer id) {
 
         Optional<PhongDat> optional = phongDatRepository.findById(id);
-        DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(id);
+        DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailDonDat(id);
 
 //        PhongDat pd = phongDatRepository.findById(id).orElse(null);
         LocalDateTime thoiGianRa = optional.get().getThoiGianRa();
