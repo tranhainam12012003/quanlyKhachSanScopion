@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DonDat;
 import vn.teca.scopio.base.model.PhongDat;
 import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
+import vn.teca.scopio.base.model.dto.DetailThongTinPhongDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.PhongChuaGan_DTO_Dong;
 import vn.teca.scopio.base.repository.DonDatRepository;
 import vn.teca.scopio.base.repository.PhongDatRepository;
@@ -103,8 +104,8 @@ public class PhongDatServices_Dong {
 //
 //        return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongChuaGan(idDonDat);
 //    }
-    public DetailThongTinDonDatDTO_Dong getThongTinPhongDat(Integer id) {
-        DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(id);
+    public DetailThongTinDonDatDTO_Dong getThongTinDonDat(Integer id) {
+        DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailDonDat(id);
         DonDat donDat = donDatRepository.findById(detail.getIdDonDat()).orElse(null);
         if (detail.getThoiGianVao() == null) {
             detail.setThoiGianVao(Timestamp.valueOf(donDat.getThoiGianVao()));
@@ -125,5 +126,8 @@ public class PhongDatServices_Dong {
             }).orElse(null);
         }
         return detail;
+    }
+    public DetailThongTinPhongDatDTO_Dong getThongTinPhongDat(Integer id) {
+       return detailPhongGanChuaGanRepoSitoryImplDong.detailPhongDat(id);
     }
 }
