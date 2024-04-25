@@ -10,6 +10,8 @@ import java.util.List;
 public interface PhongDatServices {
     PhongDat save(PhongDatDto dto);
 
+    PhongDat doiPhong(PhongDatDto dto);
+
     List<LoadDonDatDto> getDonDatToChekIn(Integer idDonDat);
 
     void checkin(Integer id);

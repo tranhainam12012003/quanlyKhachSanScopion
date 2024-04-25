@@ -2,7 +2,6 @@ package vn.teca.scopio.base.service.giaoDich.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import vn.teca.scopio.base.model.*;
 import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.LoadDonDatDto;
@@ -53,6 +52,26 @@ public class PhongDatServiceImpl implements PhongDatServices {
         o.setThoiGianRa(donDat.getThoiGianRa());
 //                o.setSoTienPhong(dto.getSoTienPhong());
         o.setTrangThai(trangThai);
+        return phongDatRepository.save(o);
+
+
+    }
+
+    @Override
+    public PhongDat doiPhong(PhongDatDto dto) {
+//        String trangThai = "WAIT FOR CHECKIN";
+        Optional<PhongDat> phongDatOptional = phongDatRepository.findById(dto.getIdPhongDat());
+//        DonDat donDat = donDatRepository.findById(phongDatOptional.get().getDonDatIdDonDat().getId()).orElse(null);
+//        PhongDat phongDat = phongDatRepository.findById(dto.getIdPhongDat()).orElse(null);
+//        if (phongDatOptional.isPresent()) {
+
+        PhongDat o = phongDatOptional.get();
+        o.setPhongIdPhong(dto.getPhongIdPhong());
+
+//        o.setThoiGianVao(donDat.getThoiGianVao());
+//        o.setThoiGianRa(donDat.getThoiGianRa());
+////                o.setSoTienPhong(dto.getSoTienPhong());
+//        o.setTrangThai(trangThai);
         return phongDatRepository.save(o);
 
 

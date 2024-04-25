@@ -33,6 +33,18 @@ public class PhongDatController {
 
     }
 
+    @PostMapping("/doi-phong")
+    public ResponseEntity<?> doiPhong(@RequestBody PhongDatDto dto){
+        try {
+
+            return ResponseEntity.ok(phongDatServices.doiPhong(dto));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("That bai");
+        }
+
+    }
+
     @PostMapping("/checkin")
     public ResponseEntity<?> checkin(@RequestParam String id){
         phongDatServices.checkin(Integer.parseInt(id));
