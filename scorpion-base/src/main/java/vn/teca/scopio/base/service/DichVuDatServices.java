@@ -22,8 +22,8 @@ public class DichVuDatServices {
 
     }
 
-    public DichVuDat add(DichVuDat dichVuDat) {
-        return dichVuDatRepository.save(dichVuDat);
+    public List<DichVuDat> add(List<DichVuDat> dichVuDat) {
+        return dichVuDatRepository.saveAll(dichVuDat);
     }
 
 

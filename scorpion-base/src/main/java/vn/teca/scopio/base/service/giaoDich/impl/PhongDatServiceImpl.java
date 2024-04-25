@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 @Service
 public class PhongDatServiceImpl implements PhongDatServices {
     @Autowired
@@ -36,6 +37,7 @@ public class PhongDatServiceImpl implements PhongDatServices {
     private PhongRepository phongRepository;
     @Autowired
     DetailPhongGan_ChuaGanRepoSitory_Impl_Dong detailPhongGanChuaGanRepoSitoryImplDong;
+
     @Override
     public PhongDat save(PhongDatDto dto) {
         String trangThai = "WAIT FOR CHECKIN";
@@ -44,14 +46,14 @@ public class PhongDatServiceImpl implements PhongDatServices {
 //        PhongDat phongDat = phongDatRepository.findById(dto.getIdPhongDat()).orElse(null);
 //        if (phongDatOptional.isPresent()) {
 
-                PhongDat o = phongDatOptional.get();
-                o.setPhongIdPhong(dto.getPhongIdPhong());
+        PhongDat o = phongDatOptional.get();
+        o.setPhongIdPhong(dto.getPhongIdPhong());
 
-                o.setThoiGianVao(donDat.getThoiGianVao());
-                o.setThoiGianRa(donDat.getThoiGianRa());
+        o.setThoiGianVao(donDat.getThoiGianVao());
+        o.setThoiGianRa(donDat.getThoiGianRa());
 //                o.setSoTienPhong(dto.getSoTienPhong());
-                o.setTrangThai(trangThai);
-                return  phongDatRepository.save(o);
+        o.setTrangThai(trangThai);
+        return phongDatRepository.save(o);
 
 
     }
@@ -106,14 +108,17 @@ public class PhongDatServiceImpl implements PhongDatServices {
     public void checkin(Integer id) {
 //        PhongDat phongDat = new PhongDat();
 //        phongDat.setId(id);
+
         Optional<PhongDat> optional = phongDatRepository.findById(id);
+        Integer idDonDat = optional.get().getDonDatIdDonDat().getId();
+        Optional<DonDat> dd = donDatRepository.findById(idDonDat);
         optional.map(o -> {
             o.setThoiGianVao(LocalDateTime.now());
+//            o.setThoiGianRa(dd.get().getThoiGianRa());
             o.setTrangThai("Checkin");
             return phongDatRepository.save(o);
         }).orElse(null);
-        Integer idDonDat = optional.get().getDonDatIdDonDat().getId();
-        Optional<DonDat> dd = donDatRepository.findById(idDonDat);
+
         dd.map(o -> {
             o.setTrangThai("DANG O");
             return donDatRepository.save(o);
@@ -152,14 +157,32 @@ public class PhongDatServiceImpl implements PhongDatServices {
 //        PhongDat pd = phongDatRepository.findById(id).orElse(null);
         LocalDateTime thoiGianRa = optional.get().getThoiGianRa();
         LocalDateTime thoiGianCheckIn = LocalDateTime.now();
-        BigDecimal giaTheoGio = BigDecimal.valueOf(Double.parseDouble(detail.getTienLoaiPhong().toString())/10);
+        BigDecimal giaTheoGio = BigDecimal.valueOf(Double.parseDouble(detail.getTienLoaiPhong().toString()) / 10);
+        long phutChenhLech = ChronoUnit.MINUTES.between(thoiGianRa, thoiGianCheckIn);
         BigDecimal tienPhong;
+        if (phutChenhLech <= 15) {
 
-        optional.map(o -> {
-            o.setThoiGianRa(LocalDateTime.now());
-            o.setTrangThai("Checkout");
-            return phongDatRepository.save(o);
-        }).orElse(null);
+            optional.map(o -> {
+                o.setThoiGianRa(thoiGianCheckIn);
+                o.setTrangThai("Checkout");
+                return phongDatRepository.save(o);
+            }).orElse(null);
+        }
+        else {
+            int soGio = (int) (phutChenhLech / 60);
+            if (phutChenhLech % 60 != 0) {
+                soGio++;
+            }
+            tienPhong = giaTheoGio.multiply(BigDecimal.valueOf(soGio)).add(optional.get().getSoTienPhong());
+            optional.map(o -> {
+                o.setThoiGianRa(LocalDateTime.now());
+                o.setTrangThai("Checkout");
+                o.setSoTienPhong(tienPhong);
+                return phongDatRepository.save(o);
+            }).orElse(null);
+        }
+
+
 //        checkoutDonDat(optional.get().getDonDatIdDonDat().getId());
 
     }
