@@ -7,6 +7,7 @@ import vn.teca.scopio.base.model.LoaiPhongDat;
 import vn.teca.scopio.base.model.Phong;
 import vn.teca.scopio.base.model.PhongDat;
 import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
+import vn.teca.scopio.base.model.dto.DichVuDatDTO_dong;
 import vn.teca.scopio.base.model.dto.KhachoDTO_Dong;
 import vn.teca.scopio.base.model.dto.PhongChuaGan_DTO_Dong;
 import vn.teca.scopio.base.model.dto.PhongDaGanDTO_Dong;
@@ -42,30 +43,49 @@ public class DetailPhongGan_ChuaGanRepoSitory_Impl_Dong implements DetailPhongGa
                 "on  thong_tin_khach_o.phong_dat_id_phong_dat=phong_dat.id_phong_dat\n" +
                 "where thong_tin_khach_o.phong_dat_id_phong_dat=:idPhongDat").setParameter("idPhongDat", id).getResultList();
 
-            List<KhachoDTO_Dong>khachoDTODongList=new ArrayList<>();
-            DetailThongTinDonDatDTO_Dong detailThongTinDonDatDTODong = new DetailThongTinDonDatDTO_Dong();
-            detailThongTinDonDatDTODong.setIdPhongDat((Integer) detailPhongDat[0]);
-            detailThongTinDonDatDTODong.setIdDonDat((Integer) detailPhongDat[1]);
-            detailThongTinDonDatDTODong.setIdPhong((Integer) detailPhongDat[2]);
-            detailThongTinDonDatDTODong.setIdLoaiPhongDat((Integer) detailPhongDat[3]);
-            detailThongTinDonDatDTODong.setSoTienPhong((BigDecimal) detailPhongDat[4]);
-            detailThongTinDonDatDTODong.setThoiGianVao((Timestamp) detailPhongDat[5]);
-            detailThongTinDonDatDTODong.setThoiGianRa((Timestamp) detailPhongDat[6]);
-            detailThongTinDonDatDTODong.setTrangThai((String) detailPhongDat[7]);
-            detailThongTinDonDatDTODong.setTenLoaiPhong((String) detailPhongDat[8]);
-            detailThongTinDonDatDTODong.setTenPhong((String) detailPhongDat[9]);
-            detailThongTinDonDatDTODong.setTienLoaiPhong((BigDecimal) detailPhongDat[10]);
-            detailThongTinDonDatDTODong.setIdLoaiPhong((Integer) detailPhongDat[11]);
-            for (Object[] reObjectsKhachO:getKhachO){
-                KhachoDTO_Dong khachoDTODong=new KhachoDTO_Dong();
-                khachoDTODong.setIdKhachO((Integer) reObjectsKhachO[0]);
-                khachoDTODong.setTenKhachO((String) reObjectsKhachO[1]);
-                khachoDTODongList.add(khachoDTODong);
+        List<Object[]> getDichVuDat = entityManager.createNativeQuery("select dich_vu_dat.id_dich_vu_dat,dich_vu.ten_dich_vu,dich_vu_dat.so_luong,dich_vu_dat.so_tien from dich_vu_dat left join \n" +
+                "phong_dat on dich_vu_dat.phong_dat_id_phong_dat=phong_dat.id_phong_dat\n" +
+                "left join dich_vu on dich_vu.id_dich_vu=dich_vu_dat.dich_vu_id_dich_vu\n" +
+                "where phong_dat.id_phong_dat=:idPhongDat").setParameter("idPhongDat", id).getResultList();
+        List<DichVuDatDTO_dong> dichVuDatDTOList = new ArrayList<>();
+        List<KhachoDTO_Dong> khachoDTODongList = new ArrayList<>();
+        DetailThongTinDonDatDTO_Dong detailThongTinDonDatDTODong = new DetailThongTinDonDatDTO_Dong();
+        detailThongTinDonDatDTODong.setIdPhongDat((Integer) detailPhongDat[0]);
+        detailThongTinDonDatDTODong.setIdDonDat((Integer) detailPhongDat[1]);
+        detailThongTinDonDatDTODong.setIdPhong((Integer) detailPhongDat[2]);
+        detailThongTinDonDatDTODong.setIdLoaiPhongDat((Integer) detailPhongDat[3]);
+        detailThongTinDonDatDTODong.setSoTienPhong((BigDecimal) detailPhongDat[4]);
+        detailThongTinDonDatDTODong.setThoiGianVao((Timestamp) detailPhongDat[5]);
+        detailThongTinDonDatDTODong.setThoiGianRa((Timestamp) detailPhongDat[6]);
+        detailThongTinDonDatDTODong.setTrangThai((String) detailPhongDat[7]);
+        detailThongTinDonDatDTODong.setTenLoaiPhong((String) detailPhongDat[8]);
+        detailThongTinDonDatDTODong.setTenPhong((String) detailPhongDat[9]);
+        detailThongTinDonDatDTODong.setTienLoaiPhong((BigDecimal) detailPhongDat[10]);
+        detailThongTinDonDatDTODong.setIdLoaiPhong((Integer) detailPhongDat[11]);
+        for (Object[] reObjectsKhachO : getKhachO) {
+            KhachoDTO_Dong khachoDTODong = new KhachoDTO_Dong();
+            khachoDTODong.setIdKhachO((Integer) reObjectsKhachO[0]);
+            khachoDTODong.setTenKhachO((String) reObjectsKhachO[1]);
+            khachoDTODongList.add(khachoDTODong);
 
-            }
-            detailThongTinDonDatDTODong.setKhachO(khachoDTODongList);
+        }
+        detailThongTinDonDatDTODong.setKhachO(khachoDTODongList);
+        for (Object[] reObjectsDichVuDat : getDichVuDat) {
+            DichVuDatDTO_dong dichVuDatDTODong = new DichVuDatDTO_dong();
+            dichVuDatDTODong.setIdDichVuDat((Integer) reObjectsDichVuDat[0]);
+            dichVuDatDTODong.setTenDichVuDat((String) reObjectsDichVuDat[1]);
+            dichVuDatDTODong.setSoLuong((Integer) reObjectsDichVuDat[2]);
+            dichVuDatDTODong.setGiaDichVu((BigDecimal) reObjectsDichVuDat[3]);
+            dichVuDatDTOList.add(dichVuDatDTODong);
+        }
+        detailThongTinDonDatDTODong.setDichVuDat(dichVuDatDTOList);
+        BigDecimal tongTienDichVu = BigDecimal.ZERO;
+        for (DichVuDatDTO_dong dichVu : dichVuDatDTOList) {
+            BigDecimal giaDichVu = dichVu.getGiaDichVu();
+            tongTienDichVu = tongTienDichVu.add(giaDichVu);
+        }
 
-
+        detailThongTinDonDatDTODong.setTongTienDichVu(tongTienDichVu);
         return detailThongTinDonDatDTODong;
     }
 

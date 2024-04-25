@@ -30,4 +30,6 @@ public class DetailThongTinDonDatDTO_Dong {
     private String tenPhong;
     private Integer idLoaiPhong;
    private List<KhachoDTO_Dong>khachO;
+   private List<DichVuDatDTO_dong>dichVuDat;
+   private BigDecimal tongTienDichVu;
 }
