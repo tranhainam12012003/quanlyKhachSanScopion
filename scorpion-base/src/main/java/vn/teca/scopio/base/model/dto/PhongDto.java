@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 public class PhongDto {
     private Integer idPhong;
     private String tenPhong;
+    private Integer idLoaiPhong;
     private String tenLoaiPhong;
     private Integer idPhongDat;
     private Timestamp thoiGianVao;

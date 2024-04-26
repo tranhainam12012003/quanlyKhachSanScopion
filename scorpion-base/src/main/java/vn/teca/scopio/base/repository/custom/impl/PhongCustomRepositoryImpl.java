@@ -23,7 +23,8 @@ public class PhongCustomRepositoryImpl implements PhongCustomRepository {
     @Override
     public List<PhongDto> getPhongCheckin(){
         StringBuilder str = new StringBuilder();
-        str.append(" SELECT p.id_phong, p.so_phong, l.ten_loai_phong, pd.id_phong_dat, pd.thoi_gian_vao, pd.thoi_gian_ra ");
+        str.append(" SELECT p.id_phong, p.so_phong,p.loai_phong_Id_loai_phong, l.ten_loai_phong,  ");
+        str.append(" pd.id_phong_dat, pd.thoi_gian_vao, pd.thoi_gian_ra ");
         str.append(" FROM phong p ");
         str.append(" JOIN phong_dat pd ON p.id_phong = pd.phong_id_phong ");
         str.append(" JOIN loai_phong l ON p.loai_phong_Id_loai_phong = l.Id_loai_phong");
@@ -37,10 +38,11 @@ public class PhongCustomRepositoryImpl implements PhongCustomRepository {
                     PhongDto dto = new PhongDto();
                     dto.setIdPhong(DataConvertUtil.safeToInt(objects[0]));
                     dto.setTenPhong(DataConvertUtil.safeToString(objects[1]));
-                    dto.setTenLoaiPhong(DataConvertUtil.safeToString(objects[2]));
-                    dto.setIdPhongDat(DataConvertUtil.safeToInt(objects[3]));
-                    dto.setThoiGianVao((Timestamp) objects[4]);
-                    dto.setThoiGianRa((Timestamp) objects[5]);
+                    dto.setIdLoaiPhong(DataConvertUtil.safeToInt(objects[2]));
+                    dto.setTenLoaiPhong(DataConvertUtil.safeToString(objects[3]));
+                    dto.setIdPhongDat(DataConvertUtil.safeToInt(objects[4]));
+                    dto.setThoiGianVao((Timestamp) objects[5]);
+                    dto.setThoiGianRa((Timestamp) objects[6]);
                     result.add(dto);
                 });
                 return new ArrayList<>(result);
