@@ -40,6 +40,10 @@ public class thongTinKhachOController {
     public ResponseEntity<?> add(@RequestBody ThongTinKhachO thongTinKhachO) {
         return ResponseEntity.ok(thongtinKhachOSevices.add(thongTinKhachO));
     }
+    @DeleteMapping("/khach-hang-o/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable String id) {
+        return ResponseEntity.ok(thongtinKhachOSevices.delete(Integer.parseInt(id)));
+    }
 
 
 
