@@ -18,8 +18,9 @@ public class ThongtinKhachOSevices {
         return thongTinKhachORepository.findAll();
     }
     public ThongTinKhachO detail(Integer id) {
-        Optional<ThongTinKhachO> optional = thongTinKhachORepository.findById(id);
-        return optional.orElse(null);
+//        Optional<ThongTinKhachO> optional = thongTinKhachORepository.findById(id);
+        ThongTinKhachO detail = thongTinKhachORepository.findById(id).orElse(null);
+        return detail;
     }
     public List<ThongTinKhachO> timKiem(String hovaten , java.sql.Date thoiGianVao , Date thoiGianRa,String soGiayTo){
         return thongTinKhachORepository.timkiem(hovaten,thoiGianVao,thoiGianRa,soGiayTo);

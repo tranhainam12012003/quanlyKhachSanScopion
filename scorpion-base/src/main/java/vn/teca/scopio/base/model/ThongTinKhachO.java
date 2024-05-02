@@ -18,10 +18,11 @@ public class ThongTinKhachO {
     @Column(name = "id_khach_o")
     private Integer id;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "phong_dat_id_phong_dat")
-    private PhongDat phongDatIdPhongDat;
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "phong_dat_id_phong_dat")
+    @Column(name = "phong_dat_id_phong_dat")
+    private Integer phongDatIdPhongDat;
 
     @Size(max = 200)
     @NotNull
