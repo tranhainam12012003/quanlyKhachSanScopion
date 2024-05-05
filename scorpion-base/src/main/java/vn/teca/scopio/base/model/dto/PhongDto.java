@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PhongDto {
+    private Integer idDonDat;
     private Integer idPhong;
     private String tenPhong;
     private Integer idLoaiPhong;
