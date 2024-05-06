@@ -36,22 +36,7 @@ public class HoaDonPhongServiceImpl implements HoaDonPhongService {
         if (result != null) {
 
             result.forEach(p -> {
-//                if (p.getHinhThucDat().equalsIgnoreCase("Online")) {
-//                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-//                    LocalDateTime thoiGianVao = LocalDateTime.parse(p.getThoiGianVao().toString(), formatter);
-//                    LocalDateTime thoiGianRa = LocalDateTime.parse(p.getThoiGianRa().toString(), formatter);
-//
-//                    long soNgayChenhLech = ChronoUnit.DAYS.between(thoiGianVao, thoiGianRa);
-//
-//                    BigDecimal giaTien = p.getTienLoaiPhong().multiply(BigDecimal.valueOf(soNgayChenhLech));
-//                    BigDecimal tienPhaiTra = (p.getTienPhong().add(p.getTienDichVu())).subtract(p.getTienDaThanhToan());
-//                    p.setTienDaThanhToan(giaTien);
-//                    p.setTienPhaiTra(tienPhaiTra);
-//                }
-//                else {
-//                    BigDecimal tienPhaiTra = (p.getTienPhong().add(p.getTienDichVu()));
-//                    p.setTienPhaiTra(tienPhaiTra);
-//                }
+
                 p = getMoreInfroRe(p);
             });
         }

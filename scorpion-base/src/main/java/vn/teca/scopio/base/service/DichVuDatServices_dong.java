@@ -35,10 +35,10 @@ public class DichVuDatServices_dong {
         dichVuDatRepository.deleteById(idDichvuDat);
    }
     public void update(DichVuDatAdd_dong dichVuDat) {
-        Integer idDichVuDat = dichVuDat.getIdDichVuDat(); // Lấy idDichVuDat từ DichVuDatAdd_dong
+//        Integer idDichVuDat = dichVuDat.getIdDichVuDat(); // Lấy idDichVuDat từ DichVuDatAdd_dong
 
         // Tìm đối tượng DichVuDat cần cập nhật trong cơ sở dữ liệu
-        Optional<DichVuDat> optionalDichVuDat = dichVuDatRepository.findById(idDichVuDat);
+        Optional<DichVuDat> optionalDichVuDat = dichVuDatRepository.findById(dichVuDat.getIdDichVuDat());
         if (optionalDichVuDat.isPresent()) {
             DichVuDat dichVuDat1 = optionalDichVuDat.get();
 
@@ -50,7 +50,7 @@ public class DichVuDatServices_dong {
         } else {
             // Xử lý khi không tìm thấy DichVuDat với idDichVuDat tương ứng
             // có thể throw một Exception hoặc xử lý theo cách khác tùy vào yêu cầu của bạn
-            System.out.println("Không tìm thấy DichVuDat với idDichVuDat: " + idDichVuDat);
+            System.out.println("Không tìm thấy DichVuDat với idDichVuDat: " + dichVuDat.getIdDichVuDat());
         }
     }
 

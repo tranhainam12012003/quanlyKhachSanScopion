@@ -46,9 +46,9 @@ public class DichVuDatController_add_update_delete_dong {
         }
     }
 
-    @PostMapping("/sua/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody DichVuDatAdd_dong dichVuDatAddDong) {
-        dichVuDatAddDong.setIdDichVuDat(Integer.parseInt(id));
+    @PostMapping("/sua")
+    public ResponseEntity<?> update( @RequestBody DichVuDatAdd_dong dichVuDatAddDong) {
+//        dichVuDatAddDong.setIdDichVuDat(Integer.parseInt(id));
         try {
             dichVuDatServicesDong.update(dichVuDatAddDong);
             return ResponseEntity.ok().body("sua thanh cong");
