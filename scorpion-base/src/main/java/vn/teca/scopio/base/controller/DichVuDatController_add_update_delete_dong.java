@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.teca.scopio.base.model.DichVuDat;
 import vn.teca.scopio.base.model.dto.DichVuDatAdd_dong;
+import vn.teca.scopio.base.model.dto.DichVuDatDTO_dong;
 import vn.teca.scopio.base.model.dto.LoaiPhongDTOAdd;
 import vn.teca.scopio.base.service.DichVuDatServices;
 import vn.teca.scopio.base.service.DichVuDatServices_dong;
@@ -39,16 +40,16 @@ public class DichVuDatController_add_update_delete_dong {
         }
     }
 
-//    @GetMapping("/detail/{idDichVuDat}")
-//    public ResponseEntity<?> detail(@PathVariable String idDichVuDat) {
-//        try {
-//            int id = Integer.parseInt(idDichVuDat);
-//            return ResponseEntity.ok(dichVuDatServicesDong.detail(id));
-//        } catch (NumberFormatException e) {
-//            // Xử lý khi id không hợp lệ
-//            return ResponseEntity.badRequest().body("ID không hợp lệ");
-//        }
-//    }
+    @GetMapping("/detail/{idDichVuDat}")
+    public ResponseEntity<?> detail(@PathVariable String idDichVuDat) {
+        try {
+            int id = Integer.parseInt(idDichVuDat);
+            return ResponseEntity.ok(dichVuDatServicesDong.detail(id));
+        } catch (NumberFormatException e) {
+            // Xử lý khi id không hợp lệ
+            return ResponseEntity.badRequest().body("ID không hợp lệ");
+        }
+    }
 
 
     @DeleteMapping("delete/{idDichVuDat}")
@@ -63,10 +64,10 @@ public class DichVuDatController_add_update_delete_dong {
     }
 
     @PostMapping("/sua")
-    public ResponseEntity<?> update( @RequestBody DichVuDat dichVuDat) {
+    public ResponseEntity<?> update( @RequestBody DichVuDatDTO_dong dichVuDat) {
 //        dichVuDatAddDong.setIdDichVuDat(Integer.parseInt(id));
         try {
-            dichVuDatServices.update(dichVuDat);
+            dichVuDatServicesDong.update(dichVuDat);
             return ResponseEntity.ok().body("sua thanh cong");
         } catch (Exception e) {
             e.printStackTrace();

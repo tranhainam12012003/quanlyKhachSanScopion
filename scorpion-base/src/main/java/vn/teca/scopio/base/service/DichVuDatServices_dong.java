@@ -10,6 +10,7 @@ import vn.teca.scopio.base.model.dto.DichVuDatDTO_dong;
 import vn.teca.scopio.base.model.dto.DichVuDto_dong;
 import vn.teca.scopio.base.repository.DichVuDatRepository;
 import vn.teca.scopio.base.repository.DichVuRepository;
+import vn.teca.scopio.base.repository.custom.DichvuDatDto_dongImpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ public class DichVuDatServices_dong {
     DichVuDatRepository dichVuDatRepository;
     @Autowired
     DichVuRepository dichVuRepository;
-
+@Autowired
+    DichvuDatDto_dongImpl dichvuDatDtoDong;
     public void luu(DichVuDatAdd_dong dichVuDat) {
         PhongDat phongDat = new PhongDat();
         phongDat.setId(dichVuDat.getIdPhongDat());
@@ -47,17 +49,17 @@ public class DichVuDatServices_dong {
         dichVuDatRepository.deleteById(idDichvuDat);
     }
 
-    public DichVuDat detail(Integer id) {
-        return dichVuDatRepository.getDichVuDatDetail(id);
-
+    public DichVuDatDTO_dong detail(Integer id) {
+        return dichvuDatDtoDong.detail(id);
     }
 
-    public DichVuDat update(DichVuDat dv) {
-        Optional<DichVuDat> optional = dichVuDatRepository.findById(dv.getId());
+    public DichVuDat update(DichVuDatDTO_dong dv) {
+        Optional<DichVuDat> optional = dichVuDatRepository.findById(dv.getIdDichVuDat());
         return optional.map(o -> {
-//            o.setDichVuIdDichVu(dv.getDichVuIdDichVu());
             o.setSoLuong(dv.getSoLuong());
-            o.setSoTien(dv.getSoTien());
+            BigDecimal giaTien = dichVuRepository.getById(o.getDichVuIdDichVu().getId()).getGiaTien();
+            BigDecimal soTien = giaTien.multiply(BigDecimal.valueOf(dv.getSoLuong()));
+            o.setSoTien(soTien);
             return dichVuDatRepository.save(o);
         }).orElse(null);
     }
