@@ -23,4 +23,12 @@ public interface DichVuDatRepository extends JpaRepository<DichVuDat, Integer> ,
             "JOIN dich_vu dv ON dv.id_dich_vu = dvd.dich_vu_id_dich_vu\n" +
             "WHERE dvd.phong_dat_id_phong_dat = :idPhong ;",nativeQuery = true)
     List<DichVuDatDto> findByIdPhongDat(@Param("idPhong") Integer id);
+
+
+    @Query(value = "SELECT dich_vu_dat.id_dich_vu_dat, dich_vu.ten_dich_vu, dich_vu_dat.so_luong, dich_vu_dat.so_tien " +
+            "FROM dich_vu_dat " +
+            "INNER JOIN dich_vu ON dich_vu.id_dich_vu = dich_vu_dat.dich_vu_id_dich_vu " +
+            "WHERE dich_vu_dat.id_dich_vu_dat = :idDichVuDat", nativeQuery = true)
+    DichVuDat getDichVuDatDetail(@Param("idDichVuDat") Integer idDichVuDat);
+
 }

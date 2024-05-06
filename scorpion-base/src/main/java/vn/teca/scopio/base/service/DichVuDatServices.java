@@ -27,10 +27,10 @@ public class DichVuDatServices {
     }
 
 
-    public DichVuDat update(DichVuDat dv, Integer id) {
-        Optional<DichVuDat> optional = dichVuDatRepository.findById(id);
+    public DichVuDat update(DichVuDat dv) {
+        Optional<DichVuDat> optional = dichVuDatRepository.findById(dv.getId());
         return optional.map(o -> {
-            o.setDichVuIdDichVu(dv.getDichVuIdDichVu());
+//            o.setDichVuIdDichVu(dv.getDichVuIdDichVu());
             o.setSoLuong(dv.getSoLuong());
             o.setSoTien(dv.getSoTien());
             return dichVuDatRepository.save(o);
