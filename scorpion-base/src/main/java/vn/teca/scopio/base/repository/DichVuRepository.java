@@ -8,4 +8,5 @@ import java.util.List;
 public interface DichVuRepository extends JpaRepository<DichVu, Integer> {
     List<DichVu>findByTenDichVuContaining(String ten);
     List<DichVu>findByLoaiDichVuIdLoaiDichVu(Integer id);
+    List<DichVu>findDichVuByLoaiDichVuIdLoaiDichVu_Id(Integer idLoaiDichVu);
 }

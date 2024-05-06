@@ -45,4 +45,7 @@ public class DichVuServices {
     public List<DichVu> timkiemTheoId(Integer id) {
         return dichVuRepository.findByLoaiDichVuIdLoaiDichVu(id);
     }
+    public List<DichVu>timKiemTheoTenLoaiDichVu(Integer id){
+        return dichVuRepository.findDichVuByLoaiDichVuIdLoaiDichVu_Id(id);
+    }
 }
