@@ -23,7 +23,7 @@ public class HoaDonPhong {
     private HinhThucThanhToan hinhThucThanhToanIdHinhThuc;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "phong_dat_id_phong_dat")
     private PhongDat phongDatIdPhongDat;
 

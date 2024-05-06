@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,5 +18,10 @@ public class HoaDonRequestDto {
     private BigDecimal tienDichVu;
 
     private BigDecimal tienDaThanhToan;
+    private BigDecimal tienPhaiTra;
 
+    private BigDecimal tienLoaiPhong;
+    private Timestamp thoiGianVao;
+    private Timestamp thoiGianRa;
+    private String hinhThucDat;
 }
