@@ -40,7 +40,8 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
             doanhThuDtoDong.setNam((Integer) result[0]);
             doanhThuDtoDong.setDoanhThuOnline((BigDecimal) result[1]);
             doanhThuDtoDong.setDoanhThuOffline((BigDecimal) result[2]);
-
+            BigDecimal tongDoanhThu = doanhThuDtoDong.getDoanhThuOnline().add(doanhThuDtoDong.getDoanhThuOffline());
+            doanhThuDtoDong.setTongDoanhThu(tongDoanhThu);
             listDoanhThu.add(doanhThuDtoDong);
         }
 
@@ -72,7 +73,8 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
             doanhThuDtoDong.setThang((Integer) result[1]);
             doanhThuDtoDong.setDoanhThuOnline((BigDecimal) result[2]);
             doanhThuDtoDong.setDoanhThuOffline((BigDecimal) result[3]);
-
+            BigDecimal tongDoanhThu = doanhThuDtoDong.getDoanhThuOnline().add(doanhThuDtoDong.getDoanhThuOffline());
+            doanhThuDtoDong.setTongDoanhThu(tongDoanhThu);
             listDoanhThu.add(doanhThuDtoDong);
         }
 
@@ -110,7 +112,8 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
             doanhThuDtoDong.setThang((Integer) result[2]);
             doanhThuDtoDong.setDoanhThuOnline((BigDecimal) result[3]);
             doanhThuDtoDong.setDoanhThuOffline((BigDecimal) result[4]);
-
+            BigDecimal tongDoanhThu = doanhThuDtoDong.getDoanhThuOnline().add(doanhThuDtoDong.getDoanhThuOffline());
+            doanhThuDtoDong.setTongDoanhThu(tongDoanhThu);
             listDoanhThu.add(doanhThuDtoDong);
         }
 

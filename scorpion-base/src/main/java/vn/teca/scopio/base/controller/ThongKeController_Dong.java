@@ -3,6 +3,7 @@ package vn.teca.scopio.base.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.teca.scopio.base.service.ThongKeServices_dong;
@@ -42,5 +43,9 @@ public class ThongKeController_Dong {
     @GetMapping("so-luong-phong-bieu-do")
     public ResponseEntity<?> getSoLuongPhongBieuDo() {
         return ResponseEntity.ok(thongKeServicesDong.getSoLuongPhongBieuDo());
+    }
+    @GetMapping("thong-ke-doanh-thu/{id}")//id o day la 1-tuan,2-thang,3-nam
+    public ResponseEntity<?>getDoanhThu(@PathVariable String id){
+        return ResponseEntity.ok(thongKeServicesDong.getDoanhThu(Integer.parseInt(id)));
     }
 }

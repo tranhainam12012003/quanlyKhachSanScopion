@@ -54,7 +54,7 @@ public class DichVuDatController_add_update_delete_dong {
             return ResponseEntity.ok().body("sua thanh cong");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("luu khong thanh cong");
+            return ResponseEntity.badRequest().body("sua khong thanh cong");
         }
 
     }

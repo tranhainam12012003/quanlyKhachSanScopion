@@ -33,4 +33,15 @@ public class ThongKeServices_dong {
     public List<DoanhThuDto_dong> getDoanhThuTheoTuan() {
         return thongKeRepositoryImplDong.getDoanhThuTheoTuan();
     }
+
+    public List<DoanhThuDto_dong>getDoanhThu(Integer id){
+        if (id==1){
+            return thongKeRepositoryImplDong.getDoanhThuTheoTuan();
+        } else if (id==2) {
+            return thongKeRepositoryImplDong.getDoanhThuTheoThang();
+        } else if (id==3) {
+            return thongKeRepositoryImplDong.getDoanhThuTheoNam();
+        }
+        return null;
+    }
 }
