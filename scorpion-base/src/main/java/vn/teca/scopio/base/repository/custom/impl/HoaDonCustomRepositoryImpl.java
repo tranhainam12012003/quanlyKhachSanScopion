@@ -24,6 +24,7 @@ public class HoaDonCustomRepositoryImpl implements HoaDonCustomRepository {
                 StringBuilder str = new StringBuilder();
                 str.append(" SELECT pd.id_phong_dat,pd.so_tien_phong, ");
                 str.append(" SUM(dvd.so_tien) AS tong_tien_dich_vu_dat, ");
+                str.append(" pd.thoi_gian_vao as vao ,pd.thoi_gian_ra as ra, ");
                 str.append(" dd.thoi_gian_vao,dd.thoi_gian_ra, ");
                 str.append(" ht.ten_hinh_thuc,lp.gia_tien ");
                 str.append(" FROM phong_dat pd ");
@@ -33,7 +34,8 @@ public class HoaDonCustomRepositoryImpl implements HoaDonCustomRepository {
                 str.append(" INNER JOIN loai_phong_dat lpd ON pd.loai_phong_dat_id_loai_phong_dat = lpd.id_loai_phong_dat ");
                 str.append(" INNER JOIN loai_phong lp ON lpd.loai_phong_Id_loai_phong = lp.Id_loai_phong ");
                 str.append(" WHERE id_phong_dat = :id_phong_dat ");
-                str.append(" GROUP BY pd.id_phong_dat, pd.so_tien_phong, dd.thoi_gian_vao,dd.thoi_gian_ra, ");
+                str.append(" GROUP BY pd.id_phong_dat, pd.so_tien_phong, pd.thoi_gian_vao,pd.thoi_gian_ra, ");
+                str.append(" dd.thoi_gian_vao,dd.thoi_gian_ra, ");
                 str.append(" ht.ten_hinh_thuc,lp.gia_tien ; ");
 
                 Query query = entityManager.createNativeQuery(str.toString());
@@ -47,10 +49,12 @@ public class HoaDonCustomRepositoryImpl implements HoaDonCustomRepository {
                                        dto.setPhong_dat_id_phong_dat(DataConvertUtil.safeToInt(objects[0]));
                                        dto.setTienPhong(DataConvertUtil.safeToBigDecimal(objects[1]));
                                        dto.setTienDichVu(DataConvertUtil.safeToBigDecimal(objects[2]));
-                                       dto.setThoiGianVao((Timestamp) objects[3]);
-                                       dto.setThoiGianRa((Timestamp) objects[4]);
-                                       dto.setHinhThucDat(DataConvertUtil.safeToString(objects[5]));
-                                       dto.setTienLoaiPhong(DataConvertUtil.safeToBigDecimal(objects[6]));
+                                       dto.setThoiGianVaoPD((Timestamp) objects[3]);
+                                       dto.setThoiGianRaPD((Timestamp) objects[4]);
+                                       dto.setThoiGianVao((Timestamp) objects[5]);
+                                       dto.setThoiGianRa((Timestamp) objects[6]);
+                                       dto.setHinhThucDat(DataConvertUtil.safeToString(objects[7]));
+                                       dto.setTienLoaiPhong(DataConvertUtil.safeToBigDecimal(objects[8]));
                                        result.add(dto);
                                });
                                return new ArrayList<>(result);

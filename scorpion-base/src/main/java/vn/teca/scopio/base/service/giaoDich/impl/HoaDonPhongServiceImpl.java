@@ -12,10 +12,7 @@ import vn.teca.scopio.base.repository.HoaDonPhongRepository;
 import vn.teca.scopio.base.service.giaoDich.HoaDonPhongService;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -48,10 +45,13 @@ public class HoaDonPhongServiceImpl implements HoaDonPhongService {
         try {
             if (dto.getHinhThucDat().equalsIgnoreCase("Online")) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-                LocalDateTime thoiGianVao = LocalDateTime.parse(dto.getThoiGianVao().toString(), formatter);
-                LocalDateTime thoiGianRa = LocalDateTime.parse(dto.getThoiGianRa().toString(), formatter);
-
-                long soNgayChenhLech = ChronoUnit.DAYS.between(thoiGianVao, thoiGianRa);
+                LocalDateTime thoiGianVao = LocalDateTime.ofInstant(dto.getThoiGianVao().toInstant(), ZoneOffset.UTC);
+                LocalDateTime thoiGianRa = LocalDateTime.ofInstant(dto.getThoiGianRa().toInstant(), ZoneOffset.UTC);
+//                LocalDateTime thoiGianVao = LocalDateTime.parse(dto.getThoiGianVao().toString(), formatter);
+//                LocalDateTime thoiGianRa = LocalDateTime.parse(dto.getThoiGianRa().toString(), formatter);
+                LocalDate ngayVao = thoiGianVao.toLocalDate();
+                LocalDate ngayRa = thoiGianRa.toLocalDate();
+                long soNgayChenhLech = ChronoUnit.DAYS.between(ngayVao, ngayRa);
                 BigDecimal giaTien = dto.getTienLoaiPhong().multiply(BigDecimal.valueOf(soNgayChenhLech));
 
                 BigDecimal tienPhong = dto.getTienPhong() != null ? dto.getTienPhong() : BigDecimal.ZERO;

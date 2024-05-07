@@ -24,4 +24,7 @@ public class HoaDonRequestDto {
     private Timestamp thoiGianVao;
     private Timestamp thoiGianRa;
     private String hinhThucDat;
+
+    private Timestamp thoiGianVaoPD;
+    private Timestamp thoiGianRaPD;
 }
