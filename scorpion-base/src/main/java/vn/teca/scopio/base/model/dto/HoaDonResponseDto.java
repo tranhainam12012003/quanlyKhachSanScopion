@@ -25,4 +25,5 @@ public class HoaDonResponseDto {
     private Timestamp thoiGianRa;
     private BigDecimal tienPhong;
     private List<DichVuDatDto> dichVuDat;
+    private BigDecimal tongTien;
 }

@@ -47,8 +47,6 @@ public class HoaDonPhongServiceImpl implements HoaDonPhongService {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
                 LocalDateTime thoiGianVao = LocalDateTime.ofInstant(dto.getThoiGianVao().toInstant(), ZoneOffset.UTC);
                 LocalDateTime thoiGianRa = LocalDateTime.ofInstant(dto.getThoiGianRa().toInstant(), ZoneOffset.UTC);
-//                LocalDateTime thoiGianVao = LocalDateTime.parse(dto.getThoiGianVao().toString(), formatter);
-//                LocalDateTime thoiGianRa = LocalDateTime.parse(dto.getThoiGianRa().toString(), formatter);
                 LocalDate ngayVao = thoiGianVao.toLocalDate();
                 LocalDate ngayRa = thoiGianRa.toLocalDate();
                 long soNgayChenhLech = ChronoUnit.DAYS.between(ngayVao, ngayRa);
@@ -56,10 +54,8 @@ public class HoaDonPhongServiceImpl implements HoaDonPhongService {
 
                 BigDecimal tienPhong = dto.getTienPhong() != null ? dto.getTienPhong() : BigDecimal.ZERO;
                 BigDecimal tienDichVu = dto.getTienDichVu() != null ? dto.getTienDichVu() : BigDecimal.ZERO;
-//                BigDecimal tienDaThanhToan = dto.getTienDaThanhToan() != null ? dto.getTienDaThanhToan() : BigDecimal.ZERO;
                 BigDecimal tongTien = tienPhong.add(tienDichVu);
                 BigDecimal tienPhaiTra = tienPhong.add(tienDichVu).subtract(giaTien);
-//                BigDecimal tienPhaiTra = (dto.getTienPhong().add(dto.getTienDichVu())).subtract(dto.getTienDaThanhToan());
                 dto.setTienDaThanhToan(giaTien);
                 dto.setTienPhaiTra(tienPhaiTra);
                 dto.setTongTien(tongTien);
@@ -86,13 +82,7 @@ public class HoaDonPhongServiceImpl implements HoaDonPhongService {
 
     @Override
     public List<HoaDonResponseDto> hienThiHoaDonCT(Integer id) {
-        //        List<LoaiPhongDto> result = loaiPhongRepository.searchLoaiPhongTrong(thoiGianVao,thoiGianRa);
-//        if (result!=null){
-//            result.forEach(p ->{
-//                p = getMoreInfro(p);
-//            });
-//        }
-//        return result;
+
         List<HoaDonResponseDto> result = hoaDonPhongRepository.layHoaDonChiTiet(id);
         if (result != null) {
             result.forEach(p -> {

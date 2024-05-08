@@ -23,7 +23,8 @@ public class HoaDonResponseRepositoryImpl implements HoaDonResponseRepository {
     public List<HoaDonResponseDto> layHoaDonChiTiet(Integer id){
         StringBuilder str = new StringBuilder();
         str.append(" SELECT id_phong_dat, lp.ten_loai_phong, p.so_phong, pd.thoi_gian_vao,pd.thoi_gian_ra,pd.so_tien_phong ");
-        str.append(" FROM phong_dat pd ");
+        str.append(" , hd.tien_thanh_toan FROM phong_dat pd ");
+        str.append(" JOIN hoa_don_phong hd ON pd.id_phong_dat = hd.phong_dat_id_phong_dat ");
         str.append(" JOIN phong p ON pd.phong_id_phong = p.id_phong ");
         str.append(" JOIN loai_phong lp ON p.loai_phong_Id_loai_phong = lp.Id_loai_phong ");
         str.append(" WHERE pd.id_phong_dat = :id ; ");
@@ -41,6 +42,7 @@ public class HoaDonResponseRepositoryImpl implements HoaDonResponseRepository {
                     dto.setThoiGianVao((Timestamp)(objects[3]));
                     dto.setThoiGianRa((Timestamp)(objects[4]));
                     dto.setTienPhong(DataConvertUtil.safeToBigDecimal(objects[5]));
+                    dto.setTongTien(DataConvertUtil.safeToBigDecimal(objects[6]));
                     result.add(dto);
                 });
                 return new ArrayList<>(result);
