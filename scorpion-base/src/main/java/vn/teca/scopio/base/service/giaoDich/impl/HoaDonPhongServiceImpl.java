@@ -57,11 +57,12 @@ public class HoaDonPhongServiceImpl implements HoaDonPhongService {
                 BigDecimal tienPhong = dto.getTienPhong() != null ? dto.getTienPhong() : BigDecimal.ZERO;
                 BigDecimal tienDichVu = dto.getTienDichVu() != null ? dto.getTienDichVu() : BigDecimal.ZERO;
 //                BigDecimal tienDaThanhToan = dto.getTienDaThanhToan() != null ? dto.getTienDaThanhToan() : BigDecimal.ZERO;
-
+                BigDecimal tongTien = tienPhong.add(tienDichVu);
                 BigDecimal tienPhaiTra = tienPhong.add(tienDichVu).subtract(giaTien);
 //                BigDecimal tienPhaiTra = (dto.getTienPhong().add(dto.getTienDichVu())).subtract(dto.getTienDaThanhToan());
                 dto.setTienDaThanhToan(giaTien);
                 dto.setTienPhaiTra(tienPhaiTra);
+                dto.setTongTien(tongTien);
             }
             else {
                 BigDecimal tienDaThanhToan = dto.getTienDaThanhToan() != null ? dto.getTienDaThanhToan() : BigDecimal.ZERO;

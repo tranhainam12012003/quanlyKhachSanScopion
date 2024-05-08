@@ -19,6 +19,7 @@ public class HoaDonRequestDto {
 
     private BigDecimal tienDaThanhToan;
     private BigDecimal tienPhaiTra;
+    private BigDecimal tongTien;
 
     private BigDecimal tienLoaiPhong;
     private Timestamp thoiGianVao;
