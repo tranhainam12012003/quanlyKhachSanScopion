@@ -12,7 +12,7 @@ public interface DonDatService {
     List<DonDat> findAllOffline(int page);
     DonDat save(DonDat entity);
 
-    DonDat findById(Integer integer);
+    List<DonDat> findById(Integer integer);
 
     List<DonDat> findBySDT(String sdt, int page);
 

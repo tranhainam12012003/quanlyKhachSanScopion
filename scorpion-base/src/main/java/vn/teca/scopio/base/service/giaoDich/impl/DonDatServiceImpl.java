@@ -54,9 +54,11 @@ public class DonDatServiceImpl implements DonDatService {
     }
 
     @Override
-    public DonDat findById(Integer integer) {
+    public List<DonDat> findById(Integer integer) {
         Optional<DonDat> optional = donDatRepository.findById(integer);
-        return optional.isPresent() ? optional.get() : null;
+        List<DonDat> dt = new ArrayList<>();
+        dt.add(optional.get());
+        return dt;
     }
     @Override
     public List<DonDat> findBySDT(String sdt, int page){
