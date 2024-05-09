@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("staff/don-dat/")
+@RequestMapping("staff/don-dat")
 
 public class DonDatController_Dong {
     @Autowired
@@ -28,28 +28,28 @@ public class DonDatController_Dong {
     LoaiPhongDatService loaiPhongDatService;
     @Autowired
     ThongTinDatPhongServices thongTinDatPhongServices;
-    @GetMapping("thong-tin-phong-dat/{id}")
+    @GetMapping("/thong-tin-phong-dat/{id}")
     public ResponseEntity<?> detailByIdDonDat(@PathVariable String id) {
         return ResponseEntity.ok(thongTinDatPhongServices.detailTheoDonDat(Integer.parseInt(id)));
     }
 
-    @GetMapping("phong-dat-online")
+    @GetMapping("/phong-dat-online")
     public ResponseEntity<?> getAllOnline(@RequestParam(value = "page", defaultValue = "0") int page) {
 //        Pageable pageable=PageRequest.of(page,size);
         return ResponseEntity.ok(donDatService.findAllOnline(page));
     }
 
 
-    @GetMapping("phong-dat-offline")
+    @GetMapping("/phong-dat-offline")
     public ResponseEntity<?> getallOffline(@RequestParam(value = "page", defaultValue = "0") int page) {
 //        Pageable pageable=PageRequest.of(page,size);
         return ResponseEntity.ok(donDatService.findAllDonDat(page));
     }
-    @GetMapping("don-dat")
+    @GetMapping()
     public ResponseEntity<?> getDonDatOnline(@RequestParam(value = "page", defaultValue = "0") int page,
                                              @RequestParam(required = false)String sdt){
         if (sdt == null){
-            return ResponseEntity.ok(donDatService.findAllOnline(page));
+            return ResponseEntity.ok(donDatService.findAllDonDat(page));
 
         }
         DonDat theoMa = donDatService.findById(Integer.parseInt(sdt));
@@ -65,7 +65,7 @@ public class DonDatController_Dong {
         return null;
     }
 
-    @GetMapping("hien-thi-tat-ca")
+    @GetMapping("/hien-thi-tat-ca")
     public ResponseEntity<?> getAll(@RequestParam(value = "page", defaultValue = "0") int page) {
 //        Pageable pageable=PageRequest.of(page,size);
         return ResponseEntity.ok(donDatService.findAllDonDat(page));
