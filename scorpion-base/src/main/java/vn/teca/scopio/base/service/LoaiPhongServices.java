@@ -138,6 +138,7 @@ public class LoaiPhongServices {
         LoaiPhong loaiPhong = loaiPhongRepository.getById(loaiPhongDTOAdd.getIdLoaiPhong());
         loaiPhong.setTenLoaiPhong(loaiPhongDTOAdd.getTenLoaiPhong());
         loaiPhong.setDienTich(loaiPhongDTOAdd.getDienTich());
+        loaiPhong.setGiaTien(loaiPhongDTOAdd.getGiaTien());
         loaiPhong.setMoTa(loaiPhongDTOAdd.getMoTa());
         loaiPhong.setHuongNhin(loaiPhongDTOAdd.getHuongNhin());
         loaiPhong.setSoLuongNguoiO(loaiPhongDTOAdd.getSoNguoi());
