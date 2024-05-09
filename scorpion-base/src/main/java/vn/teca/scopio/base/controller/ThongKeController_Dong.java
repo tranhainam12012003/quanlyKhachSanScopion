@@ -45,4 +45,9 @@ public class ThongKeController_Dong {
     public ResponseEntity<?>getDoanhThu(@PathVariable String id){
         return ResponseEntity.ok(thongKeServicesDong.getDoanhThu(Integer.parseInt(id)));
     }
+    @GetMapping("thong-ke-top-loai-phong")
+    public ResponseEntity<?> getTopLoaiPhong() {
+        return ResponseEntity.ok(thongKeServicesDong.getTopLoaiPhong());
+    }
+
 }

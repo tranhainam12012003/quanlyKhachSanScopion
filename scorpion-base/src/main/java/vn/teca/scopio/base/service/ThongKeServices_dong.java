@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.dto.DoanhThuDto_dong;
 import vn.teca.scopio.base.model.dto.ThongKeDto_dong;
+import vn.teca.scopio.base.model.dto.ThongKeTopLoaiPhongDTO_dong;
 import vn.teca.scopio.base.repository.custom.impl.ThongKeRepositoryImpl_dong;
 
 import java.util.List;
@@ -41,5 +42,8 @@ public class ThongKeServices_dong {
             return thongKeRepositoryImplDong.getDoanhThuTheoNam();
         }
         return null;
+    }
+    public List<ThongKeTopLoaiPhongDTO_dong>getTopLoaiPhong(){
+        return thongKeRepositoryImplDong.getTopLoaiPhong();
     }
 }

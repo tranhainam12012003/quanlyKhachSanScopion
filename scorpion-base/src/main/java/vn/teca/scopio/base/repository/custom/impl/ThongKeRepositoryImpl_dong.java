@@ -6,6 +6,7 @@ import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.DoanhThuDto_dong;
 import vn.teca.scopio.base.model.dto.KhachoDTO_Dong;
 import vn.teca.scopio.base.model.dto.ThongKeDto_dong;
+import vn.teca.scopio.base.model.dto.ThongKeTopLoaiPhongDTO_dong;
 import vn.teca.scopio.base.repository.custom.ThongKeRepository_dong;
 
 import javax.persistence.EntityManager;
@@ -121,6 +122,41 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
 
         return listDoanhThu;
     }
+
+    @Override
+    public List<ThongKeTopLoaiPhongDTO_dong> getTopLoaiPhong() {
+        List<Object[]> getTopLoaiPhong = entityManager.createNativeQuery("SELECT\n" +
+                        "    loai_phong.ten_loai_phong,\n" +
+                        "    MONTH(dd.thoi_gian_vao) AS [Tháng]\n" +
+                        "FROM\n" +
+                        "    loai_phong_dat lpd\n" +
+                        "JOIN\n" +
+                        "    don_dat dd ON lpd.don_dat_id_don_dat = dd.id_don_dat\n" +
+                        "\tjoin loai_phong on loai_phong.Id_loai_phong=lpd.loai_phong_Id_loai_phong\n" +
+                        "WHERE\n" +
+                        "    MONTH(dd.thoi_gian_vao) = MONTH(GETDATE())\n" +
+                        "GROUP BY\n" +
+                        "    loai_phong.ten_loai_phong,\n" +
+                        "    lpd.loai_phong_Id_loai_phong,\n" +
+                        "    MONTH(dd.thoi_gian_vao);\n")
+                .getResultList();
+
+
+        List<ThongKeTopLoaiPhongDTO_dong> listTop = new ArrayList<>();
+
+        // Process phongDaGanResults
+        for (Object[] result : getTopLoaiPhong) {
+            ThongKeTopLoaiPhongDTO_dong thongKeTopLoaiPhongDTODong=new ThongKeTopLoaiPhongDTO_dong();
+            thongKeTopLoaiPhongDTODong.setTenLoaiPhong((String) result[0]);
+            thongKeTopLoaiPhongDTODong.setThang((Integer) result[1]);
+
+            listTop.add(thongKeTopLoaiPhongDTODong);
+        }
+
+
+        return listTop;
+    }
+
     public List<ThongKeDto_dong> thongKe() {
         List<Object[]> thongKeSoLuong = entityManager.createNativeQuery("SELECT \n" +
                         "    DATEADD(DAY, -n, CAST(GETDATE() AS DATE)) AS 'ngay',\n" +
