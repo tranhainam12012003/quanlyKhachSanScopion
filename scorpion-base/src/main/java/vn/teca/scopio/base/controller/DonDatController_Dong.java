@@ -43,7 +43,7 @@ public class DonDatController_Dong {
     @GetMapping("/phong-dat-offline")
     public ResponseEntity<?> getallOffline(@RequestParam(value = "page", defaultValue = "0") int page) {
 //        Pageable pageable=PageRequest.of(page,size);
-        return ResponseEntity.ok(donDatService.findAllDonDat(page));
+       return ResponseEntity.ok(donDatService.findAllDonDat(page));
     }
     @GetMapping()
     public ResponseEntity<?> getDonDatOnline(@RequestParam(value = "page", defaultValue = "0") int page,

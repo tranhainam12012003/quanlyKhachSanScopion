@@ -36,10 +36,10 @@ public class LoaiDichVuController {
         }
     }
 
-    @PostMapping("update/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody LoaiDichVu loaiDichVu) {
+    @PostMapping("update")
+    public ResponseEntity<?> update( @RequestBody LoaiDichVu loaiDichVu) {
         try {
-            loaiDichVuSerices.update(loaiDichVu, Integer.parseInt(id));
+            loaiDichVuSerices.update(loaiDichVu);
          return  ResponseEntity.ok().body("sua thanh cong");
 
         }catch (Exception e){

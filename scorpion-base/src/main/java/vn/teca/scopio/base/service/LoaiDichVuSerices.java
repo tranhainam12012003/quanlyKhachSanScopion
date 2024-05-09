@@ -32,8 +32,8 @@ public class LoaiDichVuSerices {
         return loaiDichVuRepository.save(loaiDichVu);
     }
 
-    public LoaiDichVu update(LoaiDichVu loaiDichVu, Integer id) {
-        Optional<LoaiDichVu> optional = loaiDichVuRepository.findById(id);
+    public LoaiDichVu update(LoaiDichVu loaiDichVu) {
+        Optional<LoaiDichVu> optional = loaiDichVuRepository.findById(loaiDichVu.getId());
         return optional.map(o -> {
             o.setTenLoaiDichVu(loaiDichVu.getTenLoaiDichVu());
             return loaiDichVuRepository.save(o);
