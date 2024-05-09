@@ -126,19 +126,23 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
     @Override
     public List<ThongKeTopLoaiPhongDTO_dong> getTopLoaiPhong() {
         List<Object[]> getTopLoaiPhong = entityManager.createNativeQuery("SELECT\n" +
-                        "    loai_phong.ten_loai_phong,\n" +
-                        "    MONTH(dd.thoi_gian_vao) AS [Tháng]\n" +
+                        "    lp.ten_loai_phong,\n" +
+                        "    Count(lpd.loai_phong_Id_loai_phong) AS [Số lượng đặt],\n" +
+                        "    MONTH(GETDATE()) AS 'thang'\n" +
                         "FROM\n" +
-                        "    loai_phong_dat lpd\n" +
-                        "JOIN\n" +
+                        "    loai_phong lp\n" +
+                        "LEFT JOIN\n" +
+                        "    loai_phong_dat lpd ON lp.id_loai_phong = lpd.loai_phong_Id_loai_phong\n" +
+                        "LEFT JOIN\n" +
                         "    don_dat dd ON lpd.don_dat_id_don_dat = dd.id_don_dat\n" +
-                        "\tjoin loai_phong on loai_phong.Id_loai_phong=lpd.loai_phong_Id_loai_phong\n" +
                         "WHERE\n" +
-                        "    MONTH(dd.thoi_gian_vao) = MONTH(GETDATE())\n" +
-                        "GROUP BY\n" +
-                        "    loai_phong.ten_loai_phong,\n" +
-                        "    lpd.loai_phong_Id_loai_phong,\n" +
-                        "    MONTH(dd.thoi_gian_vao);\n")
+                        "    MONTH(dd.thoi_gian_vao) = MONTH(GETDATE()) OR dd.thoi_gian_vao IS NULL\n" +
+                        "GROUP BY \n" +
+                        "    lp.ten_loai_phong,\n" +
+                        "\tlpd.loai_phong_Id_loai_phong,\n" +
+                        "    MONTH(dd.thoi_gian_vao)\n" +
+                        "ORDER BY\n" +
+                        "    [Số lượng đặt] DESC;")
                 .getResultList();
 
 
@@ -148,8 +152,8 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
         for (Object[] result : getTopLoaiPhong) {
             ThongKeTopLoaiPhongDTO_dong thongKeTopLoaiPhongDTODong=new ThongKeTopLoaiPhongDTO_dong();
             thongKeTopLoaiPhongDTODong.setTenLoaiPhong((String) result[0]);
-            thongKeTopLoaiPhongDTODong.setThang((Integer) result[1]);
-
+            thongKeTopLoaiPhongDTODong.setSoLuongDat((Integer) result[1]);
+            thongKeTopLoaiPhongDTODong.setThang((Integer) result[2]);
             listTop.add(thongKeTopLoaiPhongDTODong);
         }
 

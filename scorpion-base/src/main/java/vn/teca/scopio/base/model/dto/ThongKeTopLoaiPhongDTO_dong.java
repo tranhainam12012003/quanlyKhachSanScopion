@@ -15,4 +15,5 @@ import java.sql.Timestamp;
 public class ThongKeTopLoaiPhongDTO_dong {
     private String tenLoaiPhong;
     private Integer thang;
+    private Integer soLuongDat;
 }
