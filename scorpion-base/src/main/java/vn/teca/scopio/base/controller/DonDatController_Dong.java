@@ -48,7 +48,7 @@ public class DonDatController_Dong {
     @GetMapping()
     public ResponseEntity<?> getDonDatOnline(@RequestParam(value = "page", defaultValue = "0") int page,
                                              @RequestParam(required = false)String sdt){
-        if (sdt == null){
+        if (sdt == null || sdt.isEmpty()){
             return ResponseEntity.ok(donDatService.findAllDonDat(page));
 
         }
