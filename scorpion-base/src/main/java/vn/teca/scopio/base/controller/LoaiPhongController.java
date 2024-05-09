@@ -69,10 +69,10 @@ public class LoaiPhongController {
         return ResponseEntity.ok(loaiPhongServices.delete(Integer.parseInt(id)));
     }
 
-    @PostMapping("/sua/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody LoaiPhongDTOAdd loaiPhongDTOAdd) {
+    @PostMapping("/sua")
+    public ResponseEntity<?> update( @RequestBody LoaiPhongDTOAdd loaiPhongDTOAdd) {
        try {
-           loaiPhongServices.update(loaiPhongDTOAdd,Integer.parseInt(id));
+           loaiPhongServices.update(loaiPhongDTOAdd);
            return ResponseEntity.ok().body("sua thanh cong");
        }catch(Exception e){
            e.printStackTrace();

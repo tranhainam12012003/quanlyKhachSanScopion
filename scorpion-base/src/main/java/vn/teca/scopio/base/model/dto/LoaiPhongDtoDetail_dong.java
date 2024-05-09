@@ -23,5 +23,5 @@ public class LoaiPhongDtoDetail_dong {
     private BigDecimal giaTien;
     private String moTa;
     private List<Phong> phongIdPhong;
-    private List<TienIch>tienIch;
+    private List<TienIch>tienichidtienich;
 }

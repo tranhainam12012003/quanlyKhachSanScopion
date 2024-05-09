@@ -6,6 +6,7 @@ import vn.teca.scopio.base.model.Phong;
 import vn.teca.scopio.base.model.TienIch;
 import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.KhachoDTO_Dong;
+import vn.teca.scopio.base.model.dto.LoaiPhongDTOAdd;
 import vn.teca.scopio.base.model.dto.LoaiPhongDtoDetail_dong;
 
 import javax.persistence.EntityManager;
@@ -19,7 +20,7 @@ public class DetailLoaiPhongCustomRepoSitory_dong {
     @Autowired
     private EntityManager entityManager;
 
-    public List<LoaiPhongDtoDetail_dong> detailLoaiPhong(Integer idLoaiPhong) {
+    public LoaiPhongDTOAdd detailLoaiPhong(Integer idLoaiPhong) {
         List<Object[]> detailLoaiPhong = entityManager.createNativeQuery("  select loai_phong.Id_loai_phong,loai_phong.ten_loai_phong,loai_phong.dien_tich,\n" +
                         "  loai_phong.gia_tien,loai_phong.huong_nhin,loai_phong.mo_ta,loai_phong.so_luong_nguoi_o\n" +
                         "  from \n" +
@@ -41,8 +42,8 @@ public class DetailLoaiPhongCustomRepoSitory_dong {
         List<LoaiPhongDtoDetail_dong> listDetail = new ArrayList<>();
 
 
+        LoaiPhongDTOAdd loaiPhongDtoDetailDong = new LoaiPhongDTOAdd();
         for (Object[] result : detailLoaiPhong) {
-            LoaiPhongDtoDetail_dong loaiPhongDtoDetailDong = new LoaiPhongDtoDetail_dong();
             List<Phong> listPhong = new ArrayList<>();
             List<TienIch> listTienIch = new ArrayList<>();
 
@@ -59,7 +60,7 @@ public class DetailLoaiPhongCustomRepoSitory_dong {
                 phong.setId((Integer) reObjects[1]);
                 listPhong.add(phong);
             }
-            loaiPhongDtoDetailDong.setPhongIdPhong(listPhong);
+            loaiPhongDtoDetailDong.setPhongidPhong(listPhong);
 
             for(Object[] reObjectsTienIch: getTienIch){
                 TienIch tienIch=new TienIch();
@@ -67,12 +68,12 @@ public class DetailLoaiPhongCustomRepoSitory_dong {
                 tienIch.setTenTienIch((String) reObjectsTienIch[1]);
                 listTienIch.add(tienIch);
             }
-            loaiPhongDtoDetailDong.setTienIch(listTienIch);
-            listDetail.add(loaiPhongDtoDetailDong);
+            loaiPhongDtoDetailDong.setTienichidtienich(listTienIch);
+//            listDetail.add(loaiPhongDtoDetailDong);
         }
 
         System.out.printf(listDetail.toString());
-        return listDetail;
+        return loaiPhongDtoDetailDong;
 
     }
 

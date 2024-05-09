@@ -80,8 +80,7 @@ public class LoaiPhongServices {
 //
 //    }
 
-    public List<LoaiPhongDtoDetail_dong> detaiiByIdLoaiPhong(Integer id) {
-
+    public LoaiPhongDTOAdd detaiiByIdLoaiPhong(Integer id) {
         return detailLoaiPhongCustomRepoSitoryDong.detailLoaiPhong(id);
     }
 
@@ -134,9 +133,9 @@ public class LoaiPhongServices {
 
     }
     @Transactional
-    public void update(LoaiPhongDTOAdd loaiPhongDTOAdd, Integer id) {
+    public void update(LoaiPhongDTOAdd loaiPhongDTOAdd) {
         // Cập nhật thông tin loại phòng
-        LoaiPhong loaiPhong = loaiPhongRepository.getById(id);
+        LoaiPhong loaiPhong = loaiPhongRepository.getById(loaiPhongDTOAdd.getIdLoaiPhong());
         loaiPhong.setTenLoaiPhong(loaiPhongDTOAdd.getTenLoaiPhong());
         loaiPhong.setDienTich(loaiPhongDTOAdd.getDienTich());
         loaiPhong.setMoTa(loaiPhongDTOAdd.getMoTa());
@@ -168,7 +167,7 @@ public class LoaiPhongServices {
 //        }
 
         // Thêm mới hoặc cập nhật danh sách tiện ích cho loại phòng
-        tienIchLoaiPhongRepository.deleteTienIchLoaiPhong(id);
+        tienIchLoaiPhongRepository.deleteTienIchLoaiPhong(loaiPhongDTOAdd.getIdLoaiPhong());
 
 // Lặp qua danh sách tiện ích từ DTO và thêm mới các bản ghi tiện ích loại phòng
         List<TienIch> listTienIch = loaiPhongDTOAdd.getTienichidtienich();

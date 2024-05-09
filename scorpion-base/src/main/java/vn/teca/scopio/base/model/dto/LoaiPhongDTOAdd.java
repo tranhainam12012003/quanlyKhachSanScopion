@@ -21,6 +21,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class LoaiPhongDTOAdd {
+    private Integer idLoaiPhong;
     private String tenLoaiPhong;
     private String huongNhin;
     private int soNguoi;
