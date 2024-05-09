@@ -117,18 +117,18 @@ public class LoaiPhongServices {
 //        }
         // Lấy danh sách tiện ích từ DTO
         // Lấy danh sách tiện ích từ DTO
-        List<TienIch> listTienIch = loaiPhongDTOAdd.getTienichidtienich();
-
-// Lặp qua từng tiện ích
-        for (TienIch tienIch : listTienIch) {
-            // Tạo một đối tượng mới cho mỗi tiện ích loại phòng
-            TienIchLoaiPhong tienIchLoaiPhong = new TienIchLoaiPhong();
-            tienIchLoaiPhong.setLoaiPhong(loaiPhong);
-            tienIchLoaiPhong.setTienIchIdTienIch(tienIch);
-
-            // Lưu đối tượng mới vào cơ sở dữ liệu
-            tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
-        }
+//        List<TienIch> listTienIch = loaiPhongDTOAdd.getTienichidtienich();
+//
+//// Lặp qua từng tiện ích
+//        for (TienIch tienIch : listTienIch) {
+//            // Tạo một đối tượng mới cho mỗi tiện ích loại phòng
+//            TienIchLoaiPhong tienIchLoaiPhong = new TienIchLoaiPhong();
+//            tienIchLoaiPhong.setLoaiPhong(loaiPhong);
+//            tienIchLoaiPhong.setTienIchIdTienIch(tienIch);
+//
+//            // Lưu đối tượng mới vào cơ sở dữ liệu
+//            tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
+//        }
 
 
     }
@@ -166,19 +166,21 @@ public class LoaiPhongServices {
 //
 //        }
 
+
+
         // Thêm mới hoặc cập nhật danh sách tiện ích cho loại phòng
-        tienIchLoaiPhongRepository.deleteTienIchLoaiPhong(loaiPhongDTOAdd.getIdLoaiPhong());
-
-// Lặp qua danh sách tiện ích từ DTO và thêm mới các bản ghi tiện ích loại phòng
-        List<TienIch> listTienIch = loaiPhongDTOAdd.getTienichidtienich();
-        for (TienIch tienIch : listTienIch) {
-            // Tạo mới đối tượng TienIchLoaiPhong cho mỗi tiện ích
-            TienIchLoaiPhong tienIchLoaiPhong = new TienIchLoaiPhong();
-            tienIchLoaiPhong.setLoaiPhong(loaiPhong); // Sử dụng ID của loại phòng cần cập nhật
-            tienIchLoaiPhong.setTienIchIdTienIch(tienIch); // Sử dụng ID của tiện ích từ DTO
-
-            tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
-        }
+//        tienIchLoaiPhongRepository.deleteTienIchLoaiPhong(loaiPhongDTOAdd.getIdLoaiPhong());
+//
+//// Lặp qua danh sách tiện ích từ DTO và thêm mới các bản ghi tiện ích loại phòng
+//        List<TienIch> listTienIch = loaiPhongDTOAdd.getTienichidtienich();
+//        for (TienIch tienIch : listTienIch) {
+//            // Tạo mới đối tượng TienIchLoaiPhong cho mỗi tiện ích
+//            TienIchLoaiPhong tienIchLoaiPhong = new TienIchLoaiPhong();
+//            tienIchLoaiPhong.setLoaiPhong(loaiPhong); // Sử dụng ID của loại phòng cần cập nhật
+//            tienIchLoaiPhong.setTienIchIdTienIch(tienIch); // Sử dụng ID của tiện ích từ DTO
+//
+//            tienIchLoaiPhongRepository.save(tienIchLoaiPhong);
+//        }
     }
 
     public List<LoaiPhong> timthemten(String name) {

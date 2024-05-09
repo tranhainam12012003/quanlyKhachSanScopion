@@ -29,6 +29,6 @@ public class LoaiPhongDTOAdd {
     private BigDecimal giaTien;
     private String moTa;
     private List<Phong> phongidPhong;
-    private List<TienIch> tienichidtienich;
+//    private List<TienIch> tienichidtienich;
 
 }
