@@ -10,6 +10,7 @@ import vn.teca.scopio.base.repository.custom.ThongKeRepository_dong;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,36 +121,36 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
 
         return listDoanhThu;
     }
-    public List<ThongKeDto_dong> thongKeSoLuongPhongBang() {
-        List<Object[]> thongKeSoLuongPhongBang = entityManager.createNativeQuery("SELECT \n" +
-                        "    loai_phong.ten_loai_phong AS TenLoaiPhong,\n" +
-                        "    (SELECT COUNT(*) FROM phong WHERE phong.loai_phong_Id_loai_phong = loai_phong.Id_loai_phong) AS TongSoPhong,\n" +
-                        "    COUNT(phong_dat.id_phong_dat) AS SoLuongPhongDaDung,\n" +
-                        "    (SELECT COUNT(*) FROM phong WHERE phong.loai_phong_Id_loai_phong = loai_phong.Id_loai_phong) - COUNT(phong_dat.id_phong_dat) AS SoLuongPhongTrong,\n" +
-                        "    phong_dat.thoi_gian_vao AS ThoiGianVao\n" +
+    public List<ThongKeDto_dong> thongKe() {
+        List<Object[]> thongKeSoLuong = entityManager.createNativeQuery("SELECT \n" +
+                        "    DATEADD(DAY, -n, CAST(GETDATE() AS DATE)) AS 'ngay',\n" +
+                        "    (SELECT COUNT(*) FROM phong) AS 'tổng số phòng',\n" +
+                        "    (SELECT COUNT(*) FROM phong_dat WHERE thoi_gian_vao <= DATEADD(DAY, -n, CAST(GETDATE() AS DATE)) AND thoi_gian_ra >= DATEADD(DAY, -n, CAST(GETDATE() AS DATE))) AS 'số phòng đã dùng',\n" +
+                        "    (SELECT COUNT(*) FROM phong) - (SELECT COUNT(*) FROM phong_dat WHERE (thoi_gian_vao <= DATEADD(DAY, -n, CAST(GETDATE() AS DATE)) AND thoi_gian_ra >= DATEADD(DAY, -n, CAST(GETDATE() AS DATE))) OR (thoi_gian_vao < DATEADD(DAY, -n, CAST(GETDATE() AS DATE)) AND thoi_gian_ra > DATEADD(DAY, -n, CAST(GETDATE() AS DATE)))) AS 'phòng trống',\n" +
+                        "    (SELECT COUNT(*) FROM thong_tin_khach_o ko left JOIN phong_dat pd ON ko.phong_dat_id_phong_dat = pd.id_phong_dat WHERE pd.thoi_gian_vao <= DATEADD(DAY, -n, CAST(GETDATE() AS DATE)) AND pd.thoi_gian_ra >= DATEADD(DAY, -n, CAST(GETDATE() AS DATE))) AS 'khách ở'\n" +
                         "FROM \n" +
-                        "    loai_phong\n" +
-                        "LEFT JOIN \n" +
-                        "    phong ON loai_phong.Id_loai_phong = phong.loai_phong_Id_loai_phong\n" +
-                        "LEFT JOIN\n" +
-                        "    phong_dat ON phong.id_phong = phong_dat.phong_id_phong\n" +
-                        "WHERE\n" +
-                        "    phong_dat.thoi_gian_vao IS NOT NULL\n" +
-                        "GROUP BY \n" +
-                        "    loai_phong.Id_loai_phong, loai_phong.ten_loai_phong, phong_dat.thoi_gian_vao;\n")
+                        "    (\n" +
+                        "        SELECT 0 AS n UNION ALL\n" +
+                        "        SELECT 1 UNION ALL\n" +
+                        "        SELECT 2 UNION ALL\n" +
+                        "        SELECT 3 UNION ALL\n" +
+                        "        SELECT 4 UNION ALL\n" +
+                        "        SELECT 5 UNION ALL\n" +
+                        "        SELECT 6\n" +
+                        "    ) AS days\n")
                 .getResultList();
 
 
         List<ThongKeDto_dong> listDetail = new ArrayList<>();
 
 
-        for (Object[] result : thongKeSoLuongPhongBang) {
+        for (Object[] result : thongKeSoLuong) {
             ThongKeDto_dong thongKeDtoDong = new ThongKeDto_dong();
-            thongKeDtoDong.setTenLoaiPhong((String) result[0]);
+            thongKeDtoDong.setThoiGian((Date) result[0]);
             thongKeDtoDong.setTongSoPhong((Integer) result[1]);
             thongKeDtoDong.setSoLuongPhongDaDung((Integer) result[2]);
             thongKeDtoDong.setSoLuongPhongTrong((Integer) result[3]);
-            thongKeDtoDong.setThoiGian((Timestamp) result[4]);
+            thongKeDtoDong.setSoLuongNguoiO((int) result[4]);
             listDetail.add(thongKeDtoDong);
         }
 
@@ -157,39 +158,5 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
         return listDetail;
 
     }
-    public List<ThongKeDto_dong> thongKeSoLuongPhongBieuDo() {
-        List<Object[]> thongKeSoLuongPhongBang = entityManager.createNativeQuery("SELECT\n" +
-                        "    thoi_gian_vao,\n" +
-                        "    SUM(SoLuongPhongDaDung) AS TongSoLuongPhongDaDung,\n" +
-                        "    SUM(TongSoPhong - SoLuongPhongDaDung) AS TongSoLuongPhongChuaSuDung\n" +
-                        "FROM (\n" +
-                        "    SELECT \n" +
-                        "        phong_dat.thoi_gian_vao,\n" +
-                        "        COUNT(phong_dat.id_phong_dat) AS SoLuongPhongDaDung,\n" +
-                        "        (SELECT COUNT(*) FROM phong) AS TongSoPhong\n" +
-                        "    FROM \n" +
-                        "        phong_dat\n" +
-                        "    GROUP BY \n" +
-                        "        phong_dat.thoi_gian_vao\n" +
-                        ") AS PhongDaDung\n" +
-                        "GROUP BY\n" +
-                        "    thoi_gian_vao;")
-                .getResultList();
 
-
-        List<ThongKeDto_dong> listDetail = new ArrayList<>();
-
-
-        for (Object[] result : thongKeSoLuongPhongBang) {
-            ThongKeDto_dong thongKeDtoDong = new ThongKeDto_dong();
-            thongKeDtoDong.setThoiGian((Timestamp) result[0]);
-            thongKeDtoDong.setSoLuongPhongDaDung((Integer) result[1]);
-            thongKeDtoDong.setSoLuongPhongTrong((Integer) result[2]);
-            listDetail.add(thongKeDtoDong);
-        }
-
-        System.out.printf(listDetail.toString());
-        return listDetail;
-
-    }
 }

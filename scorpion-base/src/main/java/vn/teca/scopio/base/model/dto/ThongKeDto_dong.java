@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @AllArgsConstructor
@@ -16,9 +17,9 @@ import java.sql.Timestamp;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ThongKeDto_dong {
-    private String tenLoaiPhong;
     private int tongSoPhong;
     private int soLuongPhongDaDung;
     private int soLuongPhongTrong;
-    private Timestamp thoiGian;
+    private int soLuongNguoiO;
+    private Date thoiGian;
 }

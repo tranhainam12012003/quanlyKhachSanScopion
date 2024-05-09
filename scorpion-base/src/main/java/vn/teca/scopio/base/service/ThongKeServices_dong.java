@@ -14,13 +14,11 @@ public class ThongKeServices_dong {
     @Autowired
     ThongKeRepositoryImpl_dong thongKeRepositoryImplDong;
 
-    public List<ThongKeDto_dong> getSoLuongPhongBang() {
-        return thongKeRepositoryImplDong.thongKeSoLuongPhongBang();
+    public List<ThongKeDto_dong> getSoLuongPhong() {
+        return thongKeRepositoryImplDong.thongKe();
     }
 
-    public List<ThongKeDto_dong> getSoLuongPhongBieuDo() {
-        return thongKeRepositoryImplDong.thongKeSoLuongPhongBieuDo();
-    }
+
 
     public List<DoanhThuDto_dong> getDoanhThuTheoNam() {
         return thongKeRepositoryImplDong.getDoanhThuTheoNam();
