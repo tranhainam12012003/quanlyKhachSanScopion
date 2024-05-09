@@ -67,4 +67,8 @@ public class LoaiDichVuController {
     public ResponseEntity<?>findById(@PathVariable String id){
         return ResponseEntity.ok(loaiDichVuSerices.getDichVuTheoID(Integer.parseInt(id)));
     }
+    @GetMapping("detail/{id}")
+    public ResponseEntity<?>detail(@PathVariable String id){
+        return ResponseEntity.ok(loaiDichVuSerices.detail(Integer.parseInt(id)));
+    }
 }
