@@ -3,6 +3,7 @@ package vn.teca.scopio.base.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.DichVu;
+import vn.teca.scopio.base.model.LoaiPhong;
 import vn.teca.scopio.base.repository.DichVuRepository;
 
 import java.util.List;
@@ -26,9 +27,16 @@ public class DichVuServices {
         return optional.isPresent() ? optional.get() : null;
 
     }
-
-    public DichVu update(DichVu dv, Integer id) {
+    public DichVu delete(Integer id) {
         Optional<DichVu> optional = dichVuRepository.findById(id);
+        return optional.map(o -> {
+            dichVuRepository.delete(o);
+            return o;
+        }).orElse(null);
+    }
+
+    public DichVu update(DichVu dv) {
+        Optional<DichVu> optional = dichVuRepository.findById(dv.getId());
         return optional.map(o -> {
             o.setLoaiDichVuIdLoaiDichVu(dv.getLoaiDichVuIdLoaiDichVu());
             o.setGiaTien(dv.getGiaTien());

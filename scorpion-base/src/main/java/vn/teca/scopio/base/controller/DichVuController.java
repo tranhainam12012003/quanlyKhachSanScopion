@@ -2,6 +2,7 @@ package vn.teca.scopio.base.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,11 +34,14 @@ public class DichVuController {
         return ResponseEntity.ok(dichVuServices.detail(Integer.parseInt(id)));
     }
 
-    @PostMapping("update/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody DichVu dichVu) {
-        return ResponseEntity.ok(dichVuServices.update(dichVu, Integer.parseInt(id)));
+    @PostMapping("update")
+    public ResponseEntity<?> update( @RequestBody DichVu dichVu) {
+        return ResponseEntity.ok(dichVuServices.update(dichVu));
     }
-
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> delete( @PathVariable String id) {
+        return ResponseEntity.ok(dichVuServices.delete(Integer.parseInt(id)));
+    }
     @GetMapping("tim-kiem/{ten}")
     public ResponseEntity<?> timKiem(@PathVariable String ten) {
         return ResponseEntity.ok(dichVuServices.timkiem(ten));
