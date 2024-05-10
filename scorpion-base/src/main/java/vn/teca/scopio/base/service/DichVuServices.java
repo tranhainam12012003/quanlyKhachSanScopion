@@ -27,8 +27,8 @@ public class DichVuServices {
 
     }
 
-    public DichVu update(DichVu dv, Integer id) {
-        Optional<DichVu> optional = dichVuRepository.findById(id);
+    public DichVu update(DichVu dv) {
+        Optional<DichVu> optional = dichVuRepository.findById(dv.getId());
         return optional.map(o -> {
             o.setLoaiDichVuIdLoaiDichVu(dv.getLoaiDichVuIdLoaiDichVu());
             o.setGiaTien(dv.getGiaTien());

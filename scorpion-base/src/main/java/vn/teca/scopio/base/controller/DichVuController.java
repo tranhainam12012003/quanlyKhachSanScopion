@@ -33,9 +33,9 @@ public class DichVuController {
         return ResponseEntity.ok(dichVuServices.detail(Integer.parseInt(id)));
     }
 
-    @PostMapping("update/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody DichVu dichVu) {
-        return ResponseEntity.ok(dichVuServices.update(dichVu, Integer.parseInt(id)));
+    @PostMapping("update")
+    public ResponseEntity<?> update(@RequestBody DichVu dichVu) {
+        return ResponseEntity.ok(dichVuServices.update(dichVu));
     }
 
     @GetMapping("tim-kiem/{ten}")
