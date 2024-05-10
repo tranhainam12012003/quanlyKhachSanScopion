@@ -16,4 +16,5 @@ public class ThongKeTopLoaiPhongDTO_dong {
     private String tenLoaiPhong;
     private Integer thang;
     private Integer soLuongDat;
+    private double phanTram;
 }

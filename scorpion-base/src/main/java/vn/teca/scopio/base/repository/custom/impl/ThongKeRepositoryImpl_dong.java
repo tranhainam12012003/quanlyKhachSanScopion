@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,13 +148,26 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
 
 
         List<ThongKeTopLoaiPhongDTO_dong> listTop = new ArrayList<>();
+        double tongSoLuongDat = 0;
 
+        // Tính tổng số lượng đặt
+        for (Object[] result : getTopLoaiPhong) {
+            double soLuongDat = ((Number) result[1]).doubleValue();
+            tongSoLuongDat += soLuongDat;
+        }
         // Process phongDaGanResults
         for (Object[] result : getTopLoaiPhong) {
             ThongKeTopLoaiPhongDTO_dong thongKeTopLoaiPhongDTODong=new ThongKeTopLoaiPhongDTO_dong();
             thongKeTopLoaiPhongDTODong.setTenLoaiPhong((String) result[0]);
+            int soluong= (int) result[1];
             thongKeTopLoaiPhongDTODong.setSoLuongDat((Integer) result[1]);
             thongKeTopLoaiPhongDTODong.setThang((Integer) result[2]);
+            double phantram = (soluong / tongSoLuongDat) * 100;
+            DecimalFormat df = new DecimalFormat("#.##");
+            phantram = Double.parseDouble(df.format(phantram));
+
+            thongKeTopLoaiPhongDTODong.setPhanTram(phantram);
+
             listTop.add(thongKeTopLoaiPhongDTODong);
         }
 
