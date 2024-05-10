@@ -24,7 +24,7 @@ public class DonDatRepositoryImpl_dong implements DonDatRepoSitoryDTO_dong {
     @Override
     public List<DTOThongTinLoaiPhong> detailDonDat(Integer idDonDat) {
         List<Object[]> detailDonDat = entityManager.createNativeQuery("select  DISTINCT dd.thoi_gian_vao,dd.thoi_gian_ra,\n" +
-                        "   dd.tong_tien,ttkd.ho_ten,ttkd.ngay_sinh,ttkd.so_dien_thoai,ttkd.email,ttkd.quoc_tich,ttkd.gioi_tinh,ttkd.dia_chi\n" +
+                        "   dd.tong_tien,ttkd.ho_ten,ttkd.ngay_sinh,ttkd.so_dien_thoai,ttkd.email,ttkd.quoc_tich,ttkd.gioi_tinh,ttkd.dia_chi,dd.ghi_chu\n" +
                         "from don_dat dd join loai_phong_dat lpd on dd.id_don_dat=lpd.don_dat_id_don_dat join thong_tin_khach_dat ttkd on\n" +
                         "ttkd.id_khach_dat=dd.thong_tin_khach_dat_id_khach_dat where dd.id_don_dat=:idDonDat")
                 .setParameter("idDonDat", idDonDat)
@@ -51,7 +51,7 @@ public class DonDatRepositoryImpl_dong implements DonDatRepoSitoryDTO_dong {
             dtoThongTinLoaiPhong.setQuocTich((String) result[7]);
             dtoThongTinLoaiPhong.setGioiTinh((Boolean) result[8]);
             dtoThongTinLoaiPhong.setDiaChi((String) result[9]);
-
+            dtoThongTinLoaiPhong.setGhiChu((String) result[10]);
             for (Object[] reObjects : getLoaiPhongDat) {
                 LoaiPhongDatDto_Dong loaiPhongDatDtoDong = new LoaiPhongDatDto_Dong();
                 loaiPhongDatDtoDong.setTenLoaiPhong((String) reObjects[0]);
@@ -61,6 +61,6 @@ public class DonDatRepositoryImpl_dong implements DonDatRepoSitoryDTO_dong {
             dtoThongTinLoaiPhong.setLoaiphongDat(loaiPhongDatDtoDongList);
             listDetail.add(dtoThongTinLoaiPhong);
         }
-       return listDetail;
+        return listDetail;
     }
 }
