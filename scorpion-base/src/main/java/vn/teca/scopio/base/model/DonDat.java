@@ -60,6 +60,9 @@ public class DonDat {
     @Column(name = "trang_thai", length = 50)
     private String trangThai;
 
+    @Column(name = "ghi_chu", length = 200)
+    private String ghiChu;
+
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "donDatIdDonDat")
 //    private Set<LoaiPhongDat> loaiPhongDats = new LinkedHashSet<>();

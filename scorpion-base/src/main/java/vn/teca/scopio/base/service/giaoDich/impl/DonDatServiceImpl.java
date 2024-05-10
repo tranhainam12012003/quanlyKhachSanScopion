@@ -98,6 +98,7 @@ public class DonDatServiceImpl implements DonDatService {
         donDat.setHinhThucDatIdHinhThucDat(donDatDto.getHinhThucDatIdHinhThucDat());
         donDat.setThongTinKhachDatIdKhachDat(donDatDto.getThongTinKhachDatIdKhachDat());
         donDat.setThoiGianRa(donDatDto.getThoiGianRa());
+        donDat.setGhiChu(donDatDto.getGhiChu());
         donDatRepository.save(donDat);
 
 

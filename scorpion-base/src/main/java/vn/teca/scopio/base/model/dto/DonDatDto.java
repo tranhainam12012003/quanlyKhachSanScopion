@@ -30,6 +30,6 @@ public class DonDatDto implements Serializable {
     private LocalDateTime thoiGianRa;
     private BigDecimal tongTien;
     private String trangThai;
-
+    private String ghiChu;
     private List<LoaiPhongDatDto> loaiPhongDatDto;
 }
