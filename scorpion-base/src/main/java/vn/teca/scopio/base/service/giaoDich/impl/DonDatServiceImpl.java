@@ -63,7 +63,9 @@ public class DonDatServiceImpl implements DonDatService {
     public List<DonDat> findById(Integer integer) {
         Optional<DonDat> optional = donDatRepository.findById(integer);
         List<DonDat> dt = new ArrayList<>();
-        dt.add(optional.get());
+        if(optional.isPresent()){
+            dt.add(optional.get());
+        }
         return dt;
     }
     @Override
