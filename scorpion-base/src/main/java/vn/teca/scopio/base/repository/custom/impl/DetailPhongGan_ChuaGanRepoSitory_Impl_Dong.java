@@ -71,11 +71,13 @@ public class DetailPhongGan_ChuaGanRepoSitory_Impl_Dong implements DetailPhongGa
     @Override
     public DetailThongTinPhongDatDTO_Dong detailPhongDat(Integer id) {
         Object[] detailPhongDat = (Object[]) entityManager.createNativeQuery("select pd.id_phong_dat,pd.don_dat_id_don_dat,pd.phong_id_phong,pd.loai_phong_dat_id_loai_phong_dat,pd.so_tien_phong,\n" +
-                "pd.thoi_gian_vao,pd.thoi_gian_ra,pd.trang_thai,lp.ten_loai_phong,phong.so_phong ,lp.gia_tien as 'tiền loại phòng',lp.Id_loai_phong\n" +
-                "from phong_dat pd left join loai_phong_dat lpd\n" +
-                "on pd.loai_phong_dat_id_loai_phong_dat=lpd.id_loai_phong_dat\n" +
-                "left join loai_phong lp on lp.Id_loai_phong=lpd.loai_phong_Id_loai_phong  left join phong on phong.id_phong=pd.phong_id_phong\n" +
-                "where pd.id_phong_dat=:idPhongDat").setParameter("idPhongDat", id).getSingleResult();
+                "                pd.thoi_gian_vao,pd.thoi_gian_ra,pd.trang_thai,lp.ten_loai_phong,phong.so_phong ,lp.gia_tien \n" +
+                "\t\t\t\tas 'tiền loại phòng',lp.Id_loai_phong,don_dat.ghi_chu\n" +
+                "                from phong_dat pd left join loai_phong_dat lpd\n" +
+                "                on pd.loai_phong_dat_id_loai_phong_dat=lpd.id_loai_phong_dat\n" +
+                "                left join loai_phong lp on lp.Id_loai_phong=lpd.loai_phong_Id_loai_phong  left join phong on phong.id_phong=pd.phong_id_phong\n" +
+                "\t\t\t\tleft join don_dat on don_dat.id_don_dat=lpd.don_dat_id_don_dat\n" +
+                "                where pd.id_phong_dat=:idPhongDat").setParameter("idPhongDat", id).getSingleResult();
 
 
         List<Object[]> getKhachO = entityManager.createNativeQuery("\n" +
@@ -102,6 +104,7 @@ public class DetailPhongGan_ChuaGanRepoSitory_Impl_Dong implements DetailPhongGa
         detailThongTinDonDatDTODong.setTenPhong((String) detailPhongDat[9]);
         detailThongTinDonDatDTODong.setTienLoaiPhong((BigDecimal) detailPhongDat[10]);
         detailThongTinDonDatDTODong.setIdLoaiPhong((Integer) detailPhongDat[11]);
+        detailThongTinDonDatDTODong.setGhiChu((String) detailPhongDat[12]);
         for (Object[] reObjectsKhachO : getKhachO) {
             KhachoDTO_Dong khachoDTODong = new KhachoDTO_Dong();
             khachoDTODong.setIdKhachO((Integer) reObjectsKhachO[0]);

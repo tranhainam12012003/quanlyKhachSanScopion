@@ -28,4 +28,5 @@ public class DetailThongTinPhongDatDTO_Dong {
     private List<KhachoDTO_Dong> khachO;
     private List<DichVuDatDTO_dong>dichVuDat;
     private BigDecimal tongTienDichVu;
+    private String ghiChu;
 }
