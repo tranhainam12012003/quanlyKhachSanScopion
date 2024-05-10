@@ -32,8 +32,8 @@ public class PhongServices {
             return o;
         }).orElse(null);
     }
-    public Phong update(Phong phong,Integer id){
-        Optional<Phong>optional=phongRepository.findById(id);
+    public Phong update(Phong phong){
+        Optional<Phong>optional=phongRepository.findById(phong.getId());
         return optional.map(o -> {
             o.setSoPhong(phong.getSoPhong());
             o.setLoaiPhongIdLoaiPhong(phong.getLoaiPhongIdLoaiPhong());

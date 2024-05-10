@@ -29,9 +29,9 @@ public class PhongController {
     public ResponseEntity<?>delete(@PathVariable String id){
         return ResponseEntity.ok(phongServices.xoa(Integer.parseInt(id)));
     }
-    @PutMapping("/sua/{id}")
-    public ResponseEntity<?>update(@PathVariable String id, @RequestBody Phong phong){
-        return ResponseEntity.ok(phongServices.update(phong,Integer.parseInt(id)));
+    @PutMapping("/sua")
+    public ResponseEntity<?>update(@RequestBody Phong phong){
+        return ResponseEntity.ok(phongServices.update(phong));
     }
     @PostMapping("/add")
     public ResponseEntity<?>add(@RequestBody Phong phong){

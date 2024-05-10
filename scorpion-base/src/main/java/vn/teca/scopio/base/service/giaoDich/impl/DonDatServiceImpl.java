@@ -9,10 +9,14 @@ import vn.teca.scopio.base.model.DonDat;
 import vn.teca.scopio.base.model.LoaiPhongDat;
 import vn.teca.scopio.base.model.dto.DonDatDto;
 import vn.teca.scopio.base.model.dto.LoaiPhongDatDto;
+import vn.teca.scopio.base.model.dto.LoaiPhongDto;
 import vn.teca.scopio.base.repository.DonDatRepository;
 import vn.teca.scopio.base.repository.LoaiPhongDatRepository;
+import vn.teca.scopio.base.service.LoaiPhongServices;
 import vn.teca.scopio.base.service.giaoDich.DonDatService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +33,8 @@ public class DonDatServiceImpl implements DonDatService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private LoaiPhongServices loaiPhongServices;
 
     @Override
     public List<DonDat> findAllDonDat(int page) {
@@ -78,7 +84,13 @@ public class DonDatServiceImpl implements DonDatService {
 
     @Override
     public DonDat luuDonDat(DonDatDto donDatDto) {
-
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+//        LocalDateTime vao = LocalDateTime.parse(thoiGianVao, formatter);
+//        LocalDateTime ra = LocalDateTime.parse(thoiGianRa, formatter);
+//        List<LoaiPhongDto> loaiPhongDtos = loaiPhongServices.searchLoaiPhongTrong(donDatDto.getThoiGianVao(),donDatDto.getThoiGianRa());
+//        loaiPhongDtos.forEach(loaiPhongDto -> {
+//            for ()
+//        });
         DonDat donDat = new DonDat();
         donDat.setTongTien(donDatDto.getTongTien());
         donDat.setThoiGianVao(donDatDto.getThoiGianVao());
@@ -87,14 +99,7 @@ public class DonDatServiceImpl implements DonDatService {
         donDat.setThongTinKhachDatIdKhachDat(donDatDto.getThongTinKhachDatIdKhachDat());
         donDat.setThoiGianRa(donDatDto.getThoiGianRa());
         donDatRepository.save(donDat);
-//        DonDat donDat = new DonDat();
-//        donDat = modelMapper.map(donDatDto, DonDat.class);
-//        donDatRepository.save(donDat);
-//        LoaiPhongDat loaiPhongDat = new LoaiPhongDat();
-//        loaiPhongDat.setDonDatIdDonDat(donDat);
-//        loaiPhongDat.setLoaiPhongIdLoaiPhong(donDatDto.getLoaiPhongIdLoaiPhong());
-//        loaiPhongDat.setSoLuong(donDatDto.getSoLuong());
-//        loaiPhongDatRepository.save(loaiPhongDat);
+
 
         List<LoaiPhongDat> loaiPhongDatList = new ArrayList<>();
         for (LoaiPhongDatDto loaiPhongDatDto : donDatDto.getLoaiPhongDatDto()) {
@@ -108,9 +113,7 @@ public class DonDatServiceImpl implements DonDatService {
 //         donDatDto.setLoaiPhongDatDto(loaiPhongDat);
 
         return donDat;
-//        LoaiPhongDat loaiPhongDat = modelMapper.map(donDatDto, LoaiPhongDat.class);
-//        loaiPhongDat.setDonDatIdDonDat(donDat);
-//        loaiPhongDatRepository.save(loaiPhongDat);
+
     }
 
     @Override
