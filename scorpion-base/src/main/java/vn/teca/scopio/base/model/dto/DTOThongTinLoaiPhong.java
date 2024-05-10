@@ -29,4 +29,5 @@ public class DTOThongTinLoaiPhong {
     private boolean gioiTinh;
     private String quocTich;
     private Date ngaySinh;
+    private String ghiChu;
 }
