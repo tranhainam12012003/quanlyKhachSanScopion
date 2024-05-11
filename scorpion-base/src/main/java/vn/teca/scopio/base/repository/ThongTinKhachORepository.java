@@ -2,6 +2,7 @@ package vn.teca.scopio.base.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import vn.teca.scopio.base.model.ThongTinKhachO;
 
@@ -17,4 +18,14 @@ public interface ThongTinKhachORepository extends JpaRepository<ThongTinKhachO, 
             "OR phong_dat.thoi_gian_ra <= ?3 \n" +
             "OR thong_tin_khach_o.so_giay_to = ?4", nativeQuery = true)
     List<ThongTinKhachO> timkiem(String ten, Date thoiGianVao, Date thoiGianRa, String soGiayTo);
+    List<ThongTinKhachO> findByPhongDatIdPhongDat(Integer idPhongDat);
+
+    @Query(value = "SELECT *\n" +
+            "FROM thong_tin_khach_o\n" +
+            "WHERE phong_dat_id_phong_dat IN (\n" +
+            "    SELECT id_phong_dat\n" +
+            "    FROM phong_dat\n" +
+            "    WHERE don_dat_id_don_dat = :idDonDat \n" +
+            ")",nativeQuery = true)
+    List<ThongTinKhachO> findByIdDonDat(@Param("idDonDat") Integer idDonDat);
 }

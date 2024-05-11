@@ -37,8 +37,8 @@ public class thongTinKhachOController {
         return ResponseEntity.ok(thongtinKhachOSevices.detail(Integer.parseInt(id)));
     }
     @PostMapping("/khach-hang-o/add")
-    public ResponseEntity<?> add(@RequestBody ThongTinKhachO thongTinKhachO) {
-        return ResponseEntity.ok(thongtinKhachOSevices.add(thongTinKhachO));
+    public ResponseEntity<?> add(@RequestParam String idDonDat, @RequestBody ThongTinKhachO thongTinKhachO) {
+        return ResponseEntity.ok(thongtinKhachOSevices.add(thongTinKhachO,Integer.parseInt(idDonDat)));
     }
     @DeleteMapping("/khach-hang-o/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {

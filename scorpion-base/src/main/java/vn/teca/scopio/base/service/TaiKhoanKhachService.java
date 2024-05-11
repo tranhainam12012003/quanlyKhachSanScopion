@@ -46,6 +46,7 @@ public class TaiKhoanKhachService {
     }
     public TaiKhoanKhach add(TaiKhoanKhachAddDto taiKhoanKhach){
         // tạo thông tin khách đặt
+
         ThongTinKhachDat thongTinKhachDat = new ThongTinKhachDat();
         thongTinKhachDat.setHoTen(taiKhoanKhach.getHoTen());
         thongTinKhachDat.setSoDienThoai(taiKhoanKhach.getSdt());

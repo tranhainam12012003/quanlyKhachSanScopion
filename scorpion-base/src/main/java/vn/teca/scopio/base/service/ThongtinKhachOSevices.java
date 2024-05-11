@@ -1,5 +1,6 @@
 package vn.teca.scopio.base.service;
 
+import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.ThongTinKhachO;
@@ -7,6 +8,7 @@ import vn.teca.scopio.base.repository.ThongTinKhachORepository;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,8 +27,21 @@ public class ThongtinKhachOSevices {
     public List<ThongTinKhachO> timKiem(String hovaten , java.sql.Date thoiGianVao , Date thoiGianRa,String soGiayTo){
         return thongTinKhachORepository.timkiem(hovaten,thoiGianVao,thoiGianRa,soGiayTo);
     }
-    public ThongTinKhachO add(ThongTinKhachO thongTinKhachO){
-        return thongTinKhachORepository.save(thongTinKhachO);
+    public ThongTinKhachO add(ThongTinKhachO thongTinKhachO,Integer idDonDat){
+//        List<ThongTinKhachO> thongTinKhachO1 = thongTinKhachORepository.findByPhongDatIdPhongDat(thongTinKhachO.getPhongDatIdPhongDat());
+        List<ThongTinKhachO> thongTinKhachO1 = thongTinKhachORepository.findByIdDonDat(idDonDat);
+        if (!Objects.isNull(thongTinKhachO1)){
+             thongTinKhachO1.forEach(thongTinKhachO2 -> {
+                if (thongTinKhachO2.getSoGiayTo().equals(thongTinKhachO.getSoGiayTo())){
+                     throw new RuntimeException("số giấy tờ bị trùng");
+
+                }
+
+            });
+        }
+            return thongTinKhachORepository.save(thongTinKhachO);
+
+
     }
     public ThongTinKhachO update(ThongTinKhachO thongTinKhachO,Integer id){
         Optional<ThongTinKhachO> optional = thongTinKhachORepository.findById(id);

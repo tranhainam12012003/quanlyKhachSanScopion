@@ -145,4 +145,11 @@ public class GlobalExceptionHandler {
         ErrorDetail errorDetail = new ErrorDetail(new Date(), messageTemplate.message("error.system"), "", request.getDescription(false));
         return new ResponseEntity<>(errorDetail, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @ExceptionHandler(value = RuntimeException.class)
+    ResponseEntity<?> handlingRunException(RuntimeException exception){
+//        APIResponse apiResponse = new APIResponse();
+//        apiResponse.setCode(1001);
+//        apiResponse.setMessasge(exception.getMessage());
+        return ResponseEntity.badRequest().body(exception.getMessage());
+    }
 }
