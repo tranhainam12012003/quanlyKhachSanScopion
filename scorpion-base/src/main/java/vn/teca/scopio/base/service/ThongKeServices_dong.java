@@ -4,6 +4,7 @@ import com.sun.org.apache.bcel.internal.generic.LUSHR;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.dto.DoanhThuDto_dong;
+import vn.teca.scopio.base.model.dto.DoanhThuNam_Thang_TuanDTO;
 import vn.teca.scopio.base.model.dto.ThongKeDto_dong;
 import vn.teca.scopio.base.model.dto.ThongKeTopLoaiPhongDTO_dong;
 import vn.teca.scopio.base.repository.custom.impl.ThongKeRepositoryImpl_dong;
@@ -21,19 +22,19 @@ public class ThongKeServices_dong {
 
 
 
-    public List<DoanhThuDto_dong> getDoanhThuTheoNam() {
-        return thongKeRepositoryImplDong.getDoanhThuTheoNam();
-    }
+//    public List<DoanhThuDto_dong> getDoanhThuTheoNam() {
+//        return thongKeRepositoryImplDong.getDoanhThuTheoNam();
+//    }
+//
+//    public List<DoanhThuDto_dong> getDoanhThuTheoThang() {
+//        return thongKeRepositoryImplDong.getDoanhThuTheoThang();
+//    }
+//
+//    public List<DoanhThuDto_dong> getDoanhThuTheoTuan() {
+//        return thongKeRepositoryImplDong.getDoanhThuTheoTuan();
+//    }
 
-    public List<DoanhThuDto_dong> getDoanhThuTheoThang() {
-        return thongKeRepositoryImplDong.getDoanhThuTheoThang();
-    }
-
-    public List<DoanhThuDto_dong> getDoanhThuTheoTuan() {
-        return thongKeRepositoryImplDong.getDoanhThuTheoTuan();
-    }
-
-    public List<DoanhThuDto_dong>getDoanhThu(Integer id){
+    public List<DoanhThuNam_Thang_TuanDTO>getDoanhThu(Integer id){
         if (id==1){
             return thongKeRepositoryImplDong.getDoanhThuTheoTuan();
         } else if (id==2) {

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,11 +16,7 @@ import java.math.BigDecimal;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DoanhThuDto_dong {
-    private Integer tuan;
-    private Integer nam;
-    private Integer thang;
-    private BigDecimal doanhThuOnline;
-    private BigDecimal doanhThuOffline;
+    private String thoiGian;
     private BigDecimal TongDoanhThu;
 
 }

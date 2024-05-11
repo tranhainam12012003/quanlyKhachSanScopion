@@ -14,21 +14,6 @@ public class ThongKeController_Dong {
     @Autowired
     ThongKeServices_dong thongKeServicesDong;
 
-    @GetMapping("doanh-thu-theo-nam")
-    public ResponseEntity<?> getDoanhThuTheoNam() {
-        return ResponseEntity.ok(thongKeServicesDong.getDoanhThuTheoNam());
-    }
-
-    @GetMapping("doanh-thu-theo-thang")
-    public ResponseEntity<?> getDoanhThuTheoThang() {
-        return ResponseEntity.ok(thongKeServicesDong.getDoanhThuTheoThang());
-    }
-
-    @GetMapping("doanh-thu-theo-tuan")
-    public ResponseEntity<?> getDoanhThuTheoTuan() {
-        return ResponseEntity.ok(thongKeServicesDong.getDoanhThuTheoTuan());
-    }
-
 
 //    so luong phong bang: hien thi thoi gian checkin, ten loai phong,tong so luong phong ma loai phong ay co
 //    so luong phong da dung,so luong phong chua dung
