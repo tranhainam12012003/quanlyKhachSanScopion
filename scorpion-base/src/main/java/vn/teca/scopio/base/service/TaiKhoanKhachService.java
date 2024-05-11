@@ -3,8 +3,11 @@ package vn.teca.scopio.base.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.TaiKhoanKhach;
+import vn.teca.scopio.base.model.ThongTinKhachDat;
 import vn.teca.scopio.base.model.authentication.TaiKhoanKhachDtoLogin;
+import vn.teca.scopio.base.model.dto.TaiKhoanKhachAddDto;
 import vn.teca.scopio.base.repository.TaiKhoanKhachRepository;
+import vn.teca.scopio.base.repository.ThongTinKhachDatRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +16,8 @@ import java.util.Optional;
 public class TaiKhoanKhachService {
     @Autowired
     private TaiKhoanKhachRepository repository;
+    @Autowired
+    private ThongTinKhachDatRepository thongTinKhachDatRepository;
 
     public Optional<TaiKhoanKhachDtoLogin> findTaiKhoan(String soDienThoai, String password) {
         Optional<TaiKhoanKhachDtoLogin> optionalTaiKhoan = Optional.ofNullable(repository.getInfoKhachByLogin(soDienThoai, password));
@@ -39,8 +44,20 @@ public class TaiKhoanKhachService {
         }
         return message;
     }
-    public TaiKhoanKhach add(TaiKhoanKhach taiKhoanKhach){
-        return repository.save(taiKhoanKhach);
+    public TaiKhoanKhach add(TaiKhoanKhachAddDto taiKhoanKhach){
+        // tạo thông tin khách đặt
+        ThongTinKhachDat thongTinKhachDat = new ThongTinKhachDat();
+        thongTinKhachDat.setHoTen(taiKhoanKhach.getHoTen());
+        thongTinKhachDat.setSoDienThoai(taiKhoanKhach.getSdt());
+        thongTinKhachDat.setEmail(taiKhoanKhach.getEmail());
+        thongTinKhachDat.setGioiTinh(taiKhoanKhach.getGioiTinh());
+        thongTinKhachDatRepository.save(thongTinKhachDat);
+        TaiKhoanKhach taiKhoan = new TaiKhoanKhach();
+        taiKhoan.setSoDienThoai(taiKhoanKhach.getSdt());
+        taiKhoan.setMatKhau(taiKhoanKhach.getMatKhau());
+        taiKhoan.setThongTinKhachDatIdKhachDat(thongTinKhachDat);
+        repository.save(taiKhoan);
+        return taiKhoan;
     }
     public List<TaiKhoanKhach> getAll(){
         return repository.findAll();

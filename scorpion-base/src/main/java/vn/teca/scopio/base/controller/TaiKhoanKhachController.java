@@ -7,6 +7,7 @@ import vn.teca.scopio.base.model.TaiKhoanKhach;
 import vn.teca.scopio.base.model.authentication.LoginRequest;
 import vn.teca.scopio.base.model.authentication.SignUpRequest;
 import vn.teca.scopio.base.model.authentication.TaiKhoanKhachDtoLogin;
+import vn.teca.scopio.base.model.dto.TaiKhoanKhachAddDto;
 import vn.teca.scopio.base.service.TaiKhoanKhachService;
 
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class TaiKhoanKhachController {
         return ResponseEntity.ok(service.update(taiKhoanKhach, Integer.parseInt(id)));
     }
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody TaiKhoanKhach taiKhoanKhach) {
+    public ResponseEntity<?> add(@RequestBody TaiKhoanKhachAddDto taiKhoanKhach) {
         return ResponseEntity.ok(service.add(taiKhoanKhach));
     }
     @GetMapping("/detail/{id}")
