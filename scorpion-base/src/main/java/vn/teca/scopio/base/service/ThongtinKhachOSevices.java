@@ -33,7 +33,7 @@ public class ThongtinKhachOSevices {
         if (!Objects.isNull(thongTinKhachO1)){
              thongTinKhachO1.forEach(thongTinKhachO2 -> {
                 if (thongTinKhachO2.getSoGiayTo().equals(thongTinKhachO.getSoGiayTo())){
-                     throw new RuntimeException("số giấy tờ bị trùng");
+                     throw new RuntimeException("Số giấy tờ bị trùng");
 
                 }
 

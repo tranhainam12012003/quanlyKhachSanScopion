@@ -49,10 +49,10 @@ public class TaiKhoanKhachService {
         TaiKhoanKhach existed = repository.findTaiKhoanKhachBySoDienThoai(taiKhoanKhach.getSdt());
         ThongTinKhachDat exist = thongTinKhachDatRepository.findThongTinKhachDatByEmail(taiKhoanKhach.getEmail());
         if (existed != null){
-             throw new RuntimeException("tài khoản đã tồn tại");
+             throw new RuntimeException("Số điện thoại đã đươc sử dụng!");
         }
         if (exist !=null){
-            throw new RuntimeException("email đã tồn tại");
+            throw new RuntimeException("Email đã đươc sử dụng!");
 
         }
         ThongTinKhachDat thongTinKhachDat = new ThongTinKhachDat();
