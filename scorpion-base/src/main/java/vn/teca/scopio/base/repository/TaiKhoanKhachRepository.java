@@ -30,4 +30,5 @@ public interface TaiKhoanKhachRepository extends JpaRepository<TaiKhoanKhach, In
                                                     @Param("email") String email,
                                                     @Param("gioi_tinh") int gioiTinh,
                                                     @Param("mat_khau") String password);
+    TaiKhoanKhach findTaiKhoanKhachBySoDienThoai(String sdt);
 }

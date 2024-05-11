@@ -46,7 +46,15 @@ public class TaiKhoanKhachService {
     }
     public TaiKhoanKhach add(TaiKhoanKhachAddDto taiKhoanKhach){
         // tạo thông tin khách đặt
+        TaiKhoanKhach existed = repository.findTaiKhoanKhachBySoDienThoai(taiKhoanKhach.getSdt());
+        ThongTinKhachDat exist = thongTinKhachDatRepository.findThongTinKhachDatByEmail(taiKhoanKhach.getEmail());
+        if (existed != null){
+             throw new RuntimeException("tài khoản đã tồn tại");
+        }
+        if (exist !=null){
+            throw new RuntimeException("email đã tồn tại");
 
+        }
         ThongTinKhachDat thongTinKhachDat = new ThongTinKhachDat();
         thongTinKhachDat.setHoTen(taiKhoanKhach.getHoTen());
         thongTinKhachDat.setSoDienThoai(taiKhoanKhach.getSdt());
