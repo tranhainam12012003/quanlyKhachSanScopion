@@ -37,9 +37,9 @@ public class TaiKhoanNVController {
         return ResponseEntity.ok(taiKhoanNVService.delete(Integer.parseInt(id)));
     }
 
-    @PostMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody TaiKhoanNv taiKhoanNv) {
-        return ResponseEntity.ok(taiKhoanNVService.update(taiKhoanNv, Integer.parseInt(id)));
+    @PostMapping("/update")
+    public ResponseEntity<?> update(@RequestBody TaiKhoanNv taiKhoanNv) {
+        return ResponseEntity.ok(taiKhoanNVService.update(taiKhoanNv));
     }
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody TaiKhoanNv taiKhoanNv) {

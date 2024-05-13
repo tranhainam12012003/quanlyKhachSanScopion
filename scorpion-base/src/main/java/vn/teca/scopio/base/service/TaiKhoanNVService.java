@@ -34,8 +34,8 @@ public class TaiKhoanNVService {
     public List<TaiKhoanNv> getAll(){
         return repository.findAll();
     }
-    public TaiKhoanNv update(TaiKhoanNv taiKhoanNv, Integer id) {
-        Optional<TaiKhoanNv> optional = repository.findById(id);
+    public TaiKhoanNv update(TaiKhoanNv taiKhoanNv) {
+        Optional<TaiKhoanNv> optional = repository.findById(taiKhoanNv.getId());
         return optional.map(o -> {
             o.setHoTen(taiKhoanNv.getHoTen());
             o.setTenTaiKhoan(taiKhoanNv.getTenTaiKhoan());
