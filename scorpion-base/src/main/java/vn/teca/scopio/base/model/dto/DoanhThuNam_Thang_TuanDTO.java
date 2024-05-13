@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public class DoanhThuNam_Thang_TuanDTO {
     private Integer thang;
     private Integer tuan;
     private List<DoanhThuDto_dong>doanhThu;
+    private BigDecimal tongDoanhThu;
 }

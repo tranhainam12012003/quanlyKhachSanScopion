@@ -63,14 +63,18 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
 
         DoanhThuNam_Thang_TuanDTO doanhThuNamThangTuan = new DoanhThuNam_Thang_TuanDTO();
         doanhThuNamThangTuan.setNam(nam);
+        BigDecimal tongTien = BigDecimal.ZERO; // Tổng tiền
         List<DoanhThuDto_dong> list = new ArrayList<>();
         for (Object[] reObjects : getDoanhThu) {
             DoanhThuDto_dong doanhThuDto = new DoanhThuDto_dong();
             doanhThuDto.setThoiGian(String.valueOf(BigInteger.valueOf((Integer) reObjects[0])));
             doanhThuDto.setTongDoanhThu((BigDecimal) reObjects[1]);
+            tongTien = tongTien.add((BigDecimal) reObjects[1]); // Cộng vào tổng tiền
             list.add(doanhThuDto);
+
         }
         doanhThuNamThangTuan.setDoanhThu(list);
+        doanhThuNamThangTuan.setTongDoanhThu(tongTien);
         listDoanhThu.add(doanhThuNamThangTuan);
 
         return listDoanhThu;
@@ -120,7 +124,7 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
                 .getSingleResult();
 
         List<DoanhThuNam_Thang_TuanDTO> listDoanhThu = new ArrayList<>();
-
+        BigDecimal tongTien = BigDecimal.ZERO; // Tổng tiền
         DoanhThuNam_Thang_TuanDTO doanhThuNamThangTuan = new DoanhThuNam_Thang_TuanDTO();
         doanhThuNamThangTuan.setThang(thang);
         List<DoanhThuDto_dong> list = new ArrayList<>();
@@ -128,9 +132,11 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
             DoanhThuDto_dong doanhThuDto = new DoanhThuDto_dong();
             doanhThuDto.setThoiGian(String.valueOf((reObjects[0])));
             doanhThuDto.setTongDoanhThu((BigDecimal) reObjects[1]);
+            tongTien = tongTien.add((BigDecimal) reObjects[1]); // Cộng vào tổng tiền
             list.add(doanhThuDto);
         }
         doanhThuNamThangTuan.setDoanhThu(list);
+        doanhThuNamThangTuan.setTongDoanhThu(tongTien);
         listDoanhThu.add(doanhThuNamThangTuan);
 
         return listDoanhThu;
@@ -143,7 +149,7 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
 //
     @Override
     public List<DoanhThuNam_Thang_TuanDTO> getDoanhThuTheoTuan() {
-        List<Object[]> getDoanhThu = entityManager.createNativeQuery("DECLARE @CurrentWeek INT = DATEPART(WEEK, GETDATE()); -- Lấy tuần hiện tại\n" +
+        List<Object[]> getDoanhThu = entityManager.createNativeQuery("DECLARE @CurrentWeek INT = DATEPART(ISO_WEEK, GETDATE()); -- Lấy tuần hiện tại\\n" +
                         "\n" +
                         "-- Tạo bảng chứa tất cả các ngày trong tuần\n" +
                         "DECLARE @AllDaysInWeek TABLE (WeekDay INT);\n" +
@@ -175,11 +181,11 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
                         "ORDER BY \n" +
                         "    ad.WeekDay;")
                 .getResultList();
-        Integer Tuan = (Integer) entityManager.createNativeQuery("SELECT DATEPART(WEEK, GETDATE()) AS WeekNumber;")
+        Integer Tuan = (Integer) entityManager.createNativeQuery("SELECT DATEPART(ISO_WEEK, GETDATE()) AS WeekNumber;")
                 .getSingleResult();
 
         List<DoanhThuNam_Thang_TuanDTO> listDoanhThu = new ArrayList<>();
-
+        BigDecimal tongTien = BigDecimal.ZERO; // Tổng tiền
         DoanhThuNam_Thang_TuanDTO doanhThuNamThangTuan = new DoanhThuNam_Thang_TuanDTO();
         doanhThuNamThangTuan.setTuan(Tuan);
         List<DoanhThuDto_dong> list = new ArrayList<>();
@@ -188,8 +194,10 @@ public class ThongKeRepositoryImpl_dong implements ThongKeRepository_dong {
             doanhThuDto.setThoiGian((String) reObjects[0]);
             doanhThuDto.setTongDoanhThu((BigDecimal) reObjects[1]);
             list.add(doanhThuDto);
+            tongTien = tongTien.add((BigDecimal) reObjects[1]); // Cộng vào tổng tiền
         }
         doanhThuNamThangTuan.setDoanhThu(list);
+        doanhThuNamThangTuan.setTongDoanhThu(tongTien);
         listDoanhThu.add(doanhThuNamThangTuan);
 
         return listDoanhThu;
