@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import vn.teca.scopio.base.model.LoaiPhong;
 import vn.teca.scopio.base.model.dto.LoaiPhongDTOAdd;
+import vn.teca.scopio.base.repository.HinhAnhRepository;
 import vn.teca.scopio.base.service.LoaiPhongServices;
 
 import java.math.BigDecimal;
@@ -20,6 +21,8 @@ import java.time.format.DateTimeFormatter;
 public class LoaiPhongController {
     @Autowired
     LoaiPhongServices loaiPhongServices;
+    @Autowired
+    private HinhAnhRepository hinhAnhRepository;
 
     @GetMapping("/list")
     public ResponseEntity<?> getall() {
@@ -51,22 +54,12 @@ public class LoaiPhongController {
    }
 
 
-//    @PostMapping("tim-loai_phong")
-//    public ResponseEntity<?> searchLoaiPhongTrong(@RequestParam String thoiGianVao,@RequestParam String thoiGianRa){
-//        return ResponseEntity.ok(loaiPhongServices.searchLoaiPhongTrong(LocalDate.parse(thoiGianVao),LocalDate.parse(thoiGianRa)));
-//    }
-//    @GetMapping("/listAllHinhAnh")
-//    public ResponseEntity<?> getAllHinhAnh(){return ResponseEntity.ok(loaiPhongServices.getAllHinhAnh());};
 
-//    @GetMapping("/detail/{id}")
-//    public ResponseEntity<?> getone(@PathVariable String id) {
-//
-//        return ResponseEntity.ok(loaiPhongServices.findbyId(Integer.parseInt(id)));
-//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         try {
+            hinhAnhRepository.deleteByIdLoaiPhong(Integer.parseInt(id));
             loaiPhongServices.delete(Integer.parseInt(id));
             return ResponseEntity.ok().body("Xóa thành công");
         }catch (Exception e){

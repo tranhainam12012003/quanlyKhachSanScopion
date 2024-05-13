@@ -3,10 +3,7 @@ package vn.teca.scopio.base.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import vn.teca.scopio.base.model.LoaiPhong;
-import vn.teca.scopio.base.model.Phong;
-import vn.teca.scopio.base.model.TienIch;
-import vn.teca.scopio.base.model.TienIchLoaiPhong;
+import vn.teca.scopio.base.model.*;
 import vn.teca.scopio.base.model.dto.LoaiPhongDTOAdd;
 import vn.teca.scopio.base.model.dto.LoaiPhongDto;
 import vn.teca.scopio.base.model.dto.LoaiPhongDtoDetail_dong;
@@ -44,6 +41,7 @@ public class LoaiPhongServices {
     @Autowired
     PhongRepository phongRepository;
 
+
     @Autowired
     DetailLoaiPhongCustomRepoSitory_dong detailLoaiPhongCustomRepoSitoryDong;
     public List<LoaiPhong> getall() {
@@ -53,8 +51,11 @@ public class LoaiPhongServices {
     //    public List<LoaiPhongDto>getAllHinhAnh(){return loaiPhongRepository.findAllAndHinhAnh();};
     public LoaiPhong  delete(Integer id) {
         Optional<LoaiPhong> optional = loaiPhongRepository.findById(id);
+//        List<HinhAnh> listHA = hinhAnhRepository.findByLoaiPhongIdLoaiPhong(id);
+//        hinhAnhRepository.deleteAll(listHA);
         return optional.map(o -> {
             loaiPhongRepository.delete(o);
+//            hinhAnhRepository.deleteByIdLoaiPhong(id);
             return o;
         }).orElse(null);
     }
