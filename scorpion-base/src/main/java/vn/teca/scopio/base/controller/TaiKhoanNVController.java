@@ -26,6 +26,17 @@ public class TaiKhoanNVController {
     public ResponseEntity<?> getallnv(){
         return ResponseEntity.ok(taiKhoanNVService.getAll());
     }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<?> detail(@PathVariable String id){
+        return ResponseEntity.ok(taiKhoanNVService.detail(Integer.parseInt(id)));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable String id){
+        return ResponseEntity.ok(taiKhoanNVService.delete(Integer.parseInt(id)));
+    }
+
     @PostMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody TaiKhoanNv taiKhoanNv) {
         return ResponseEntity.ok(taiKhoanNVService.update(taiKhoanNv, Integer.parseInt(id)));

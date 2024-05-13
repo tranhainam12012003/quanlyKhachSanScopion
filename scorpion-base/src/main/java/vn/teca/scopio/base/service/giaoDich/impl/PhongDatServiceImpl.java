@@ -6,6 +6,7 @@ import vn.teca.scopio.base.model.*;
 import vn.teca.scopio.base.model.dto.DetailThongTinDonDatDTO_Dong;
 import vn.teca.scopio.base.model.dto.LoadDonDatDto;
 import vn.teca.scopio.base.model.dto.PhongDatDto;
+import vn.teca.scopio.base.model.dto.PhongDatGiaHanDto;
 import vn.teca.scopio.base.repository.*;
 import vn.teca.scopio.base.repository.custom.impl.DetailPhongGan_ChuaGanRepoSitory_Impl_Dong;
 import vn.teca.scopio.base.service.giaoDich.PhongDatServices;
@@ -145,26 +146,43 @@ public class PhongDatServiceImpl implements PhongDatServices {
     }
 
     @Override
-    public void update(PhongDatDto dto) {
+    public void update(PhongDatGiaHanDto dto) {
 //        PhongDat phongDat = new PhongDat();
 //        phongDat.setId(id);
         Optional<PhongDat> optional = phongDatRepository.findById(dto.getIdPhongDat());
         DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailDonDat(dto.getIdPhongDat());
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-        LocalDate thoiGianVao = LocalDate.parse(dto.getThoiGianVao().toString(), formatter);
-        LocalDate thoiGianRa = LocalDate.parse(dto.getThoiGianRa().toString(), formatter);
-        long soNgayChenhLech = ChronoUnit.DAYS.between(thoiGianVao, thoiGianRa);
+        LocalDateTime thoiGianVao = dto.getThoiGianVao();
+        LocalDateTime thoiGianRa = dto.getThoiGianRa();
+        LocalDateTime thoiGianRaBD = optional.get().getThoiGianRa();
 
-        BigDecimal giaTien = detail.getTienLoaiPhong().multiply(BigDecimal.valueOf(soNgayChenhLech));
-//        detail.setSoTienPhong(giaTien);
-        optional.map(o -> {
-            o.setThoiGianRa(dto.getThoiGianRa());
-            o.setSoTienPhong(giaTien);
+        LocalDate ngayVao = thoiGianVao.toLocalDate();
+        LocalDate ngayRa = thoiGianRa.toLocalDate();
+        LocalDate ngayRaBD = thoiGianRaBD.toLocalDate();
+
+        // Kiểm tra nếu ngày ra nhỏ hơn ngày vào
+        if (ngayRa.isBefore(ngayRaBD)){
+            // Nếu điều kiện đúng, hiển thị thông báo lỗi
+            throw new RuntimeException("Ngày không được nhỏ hơn ngày ban đầu");
+
+            // Hoặc bạn có thể throw một exception nếu cần thiết
+            // throw new IllegalArgumentException("Thời gian ra không thể nhỏ hơn thời gian vào.");
+        } else {
+            long soNgayChenhLech = ChronoUnit.DAYS.between(ngayVao, ngayRa);
+
+            BigDecimal giaTien = detail.getTienLoaiPhong().multiply(BigDecimal.valueOf(soNgayChenhLech));
+            optional.map(o -> {
+                o.setThoiGianRa(dto.getThoiGianRa());
+                o.setSoTienPhong(giaTien);
 //            o.setTrangThai("Checkin");
-            return phongDatRepository.save(o);
-        }).orElse(null);
+                return phongDatRepository.save(o);
+            }).orElse(null);
+            // Nếu không, tiếp tục xử lý
+        }
+
+
     }
 
     @Override

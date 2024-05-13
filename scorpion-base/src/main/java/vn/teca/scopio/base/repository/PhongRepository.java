@@ -36,4 +36,6 @@ public interface PhongRepository extends JpaRepository<Phong, Integer>, PhongCus
     @Modifying
     @Query(value = "delete from phong where loai_phong_Id_loai_phong=:idLoaiPhong", nativeQuery = true)
     void deleteLoaiPhong(@Param("idLoaiPhong")Integer idLoaiPhong);
+
+
 }

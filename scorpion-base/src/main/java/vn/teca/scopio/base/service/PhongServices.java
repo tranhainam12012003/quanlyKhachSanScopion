@@ -1,5 +1,7 @@
 package vn.teca.scopio.base.service;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import com.sun.org.apache.bcel.internal.generic.ATHROW;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.teca.scopio.base.model.Phong;
@@ -27,6 +29,13 @@ public class PhongServices {
 
     public Phong xoa(Integer id){
         Optional<Phong> optional=phongRepository.findById(id);
+        List<PhongDto> listCheckIn = phongRepository.getPhongCheckin();
+        listCheckIn.forEach(phongDto -> {
+            if (phongDto.getIdPhong() == optional.get().getId()){
+                 throw new  RuntimeException("Phòng đang được sử dụng");
+
+            }
+        });
         return optional.map(o->{
             phongRepository.delete(o);
             return o;

@@ -51,7 +51,7 @@ public class LoaiPhongServices {
     }
 
     //    public List<LoaiPhongDto>getAllHinhAnh(){return loaiPhongRepository.findAllAndHinhAnh();};
-    public LoaiPhong delete(Integer id) {
+    public LoaiPhong  delete(Integer id) {
         Optional<LoaiPhong> optional = loaiPhongRepository.findById(id);
         return optional.map(o -> {
             loaiPhongRepository.delete(o);

@@ -3,6 +3,7 @@ package vn.teca.scopio.base.service.giaoDich;
 import vn.teca.scopio.base.model.PhongDat;
 import vn.teca.scopio.base.model.dto.LoadDonDatDto;
 import vn.teca.scopio.base.model.dto.PhongDatDto;
+import vn.teca.scopio.base.model.dto.PhongDatGiaHanDto;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface PhongDatServices {
     List<LoadDonDatDto> getDonDatToChekIn(Integer idDonDat);
 
     void checkin(Integer id);
-    void update(PhongDatDto dto);
+    void update(PhongDatGiaHanDto dto);
     void checkout(Integer id);
     Integer countCheckout(Integer id);
     void checkoutDonDat(Integer id);

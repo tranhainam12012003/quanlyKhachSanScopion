@@ -66,7 +66,14 @@ public class LoaiPhongController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
-        return ResponseEntity.ok(loaiPhongServices.delete(Integer.parseInt(id)));
+        try {
+            loaiPhongServices.delete(Integer.parseInt(id));
+            return ResponseEntity.ok().body("Xóa thành công");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Xóa không thành công! Vui lòng chuyển các phòng sang loại phòng khác");
+
+        }
+
     }
 
     @PostMapping("/sua")

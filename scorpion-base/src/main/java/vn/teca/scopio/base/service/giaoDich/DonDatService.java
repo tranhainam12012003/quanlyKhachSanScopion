@@ -20,7 +20,7 @@ public interface DonDatService {
 
     DonDat luuDonDat(DonDatDto donDatDto);
 
-    void update(DonDatDto donDatDto, Integer i);
+    void update(Integer i);
 
     List<DonDat> getListTheoKhach(Integer id);
 //    DetailThongTinDonDatDTO_Dong mapToObject(Object[] result);

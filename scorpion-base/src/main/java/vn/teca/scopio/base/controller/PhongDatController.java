@@ -6,7 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import vn.teca.scopio.base.model.dto.PhongDatDto;
+import vn.teca.scopio.base.model.dto.PhongDatGiaHanDto;
 import vn.teca.scopio.base.service.giaoDich.PhongDatServices;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @Controller
@@ -52,7 +56,9 @@ public class PhongDatController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> update(@RequestBody PhongDatDto dto){
+    public ResponseEntity<?> update(@RequestBody PhongDatGiaHanDto dto){
+
+
         phongDatServices.update(dto);
         return ResponseEntity.ok().body("update thanh cong");
     }

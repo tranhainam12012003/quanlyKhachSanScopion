@@ -50,4 +50,16 @@ public class TaiKhoanNVService {
     public TaiKhoanNv add(Integer id){
         return repository.findById(id).get();
     }
+
+    public TaiKhoanNv detail(Integer id){
+        return repository.findById(id).orElse(null);
+    }
+
+    public TaiKhoanNv delete(Integer id){
+        Optional<TaiKhoanNv> optional = repository.findById(id);
+        return optional.map(o -> {
+             repository.delete(o);
+             return o;
+        }).orElse(null);
+    }
 }
