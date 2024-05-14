@@ -53,7 +53,7 @@ public class DonDatController_Dong {
 
         }
         List<DonDat> theoMa = donDatService.findById(Integer.parseInt(sdt));
-        if (Objects.nonNull(theoMa)){
+        if (theoMa.size() != 0){
             return ResponseEntity.ok(theoMa);
         }
         List<DonDat> theoSDT = donDatService.findBySDT(sdt, page);
