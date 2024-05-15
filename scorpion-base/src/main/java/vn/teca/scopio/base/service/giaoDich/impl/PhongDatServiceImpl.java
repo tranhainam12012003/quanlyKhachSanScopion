@@ -43,15 +43,11 @@ public class PhongDatServiceImpl implements PhongDatServices {
         String trangThai = "WAIT FOR CHECKIN";
         Optional<PhongDat> phongDatOptional = phongDatRepository.findById(dto.getIdPhongDat());
         DonDat donDat = donDatRepository.findById(phongDatOptional.get().getDonDatIdDonDat().getId()).orElse(null);
-//        PhongDat phongDat = phongDatRepository.findById(dto.getIdPhongDat()).orElse(null);
-//        if (phongDatOptional.isPresent()) {
 
         PhongDat o = phongDatOptional.get();
         o.setPhongIdPhong(dto.getPhongIdPhong());
-
         o.setThoiGianVao(donDat.getThoiGianVao());
         o.setThoiGianRa(donDat.getThoiGianRa());
-//                o.setSoTienPhong(dto.getSoTienPhong());
         o.setTrangThai(trangThai);
         return phongDatRepository.save(o);
 
@@ -60,19 +56,10 @@ public class PhongDatServiceImpl implements PhongDatServices {
 
     @Override
     public PhongDat doiPhong(PhongDatDto dto) {
-//        String trangThai = "WAIT FOR CHECKIN";
-        Optional<PhongDat> phongDatOptional = phongDatRepository.findById(dto.getIdPhongDat());
-//        DonDat donDat = donDatRepository.findById(phongDatOptional.get().getDonDatIdDonDat().getId()).orElse(null);
-//        PhongDat phongDat = phongDatRepository.findById(dto.getIdPhongDat()).orElse(null);
-//        if (phongDatOptional.isPresent()) {
 
+        Optional<PhongDat> phongDatOptional = phongDatRepository.findById(dto.getIdPhongDat());
         PhongDat o = phongDatOptional.get();
         o.setPhongIdPhong(dto.getPhongIdPhong());
-
-//        o.setThoiGianVao(donDat.getThoiGianVao());
-//        o.setThoiGianRa(donDat.getThoiGianRa());
-////                o.setSoTienPhong(dto.getSoTienPhong());
-//        o.setTrangThai(trangThai);
         return phongDatRepository.save(o);
 
 
@@ -126,15 +113,18 @@ public class PhongDatServiceImpl implements PhongDatServices {
 
     @Override
     public void checkin(Integer id) {
-//        PhongDat phongDat = new PhongDat();
-//        phongDat.setId(id);
+
 
         Optional<PhongDat> optional = phongDatRepository.findById(id);
         Integer idDonDat = optional.get().getDonDatIdDonDat().getId();
         Optional<DonDat> dd = donDatRepository.findById(idDonDat);
+        LocalDate vao = dd.get().getThoiGianVao().toLocalDate();
+        LocalDate now = LocalDate.now();
+        if (vao!= now){
+            throw new RuntimeException("Ngày checkin khác ngày đặt");
+        }
         optional.map(o -> {
             o.setThoiGianVao(LocalDateTime.now());
-//            o.setThoiGianRa(dd.get().getThoiGianRa());
             o.setTrangThai("Checkin");
             return phongDatRepository.save(o);
         }).orElse(null);
@@ -190,7 +180,6 @@ public class PhongDatServiceImpl implements PhongDatServices {
 
         Optional<PhongDat> optional = phongDatRepository.findById(id);
         DetailThongTinDonDatDTO_Dong detail = detailPhongGanChuaGanRepoSitoryImplDong.detailDonDat(id);
-
 //        PhongDat pd = phongDatRepository.findById(id).orElse(null);
         LocalDateTime thoiGianRa = optional.get().getThoiGianRa();
         LocalDateTime thoiGianCheckIn = LocalDateTime.now();
@@ -198,7 +187,6 @@ public class PhongDatServiceImpl implements PhongDatServices {
         long phutChenhLech = ChronoUnit.MINUTES.between(thoiGianRa, thoiGianCheckIn);
         BigDecimal tienPhong;
         if (phutChenhLech <= 15) {
-
             optional.map(o -> {
                 o.setThoiGianRa(thoiGianCheckIn);
                 o.setTrangThai("Checkout");
@@ -219,9 +207,6 @@ public class PhongDatServiceImpl implements PhongDatServices {
             }).orElse(null);
         }
 
-
-//        checkoutDonDat(optional.get().getDonDatIdDonDat().getId());
-
     }
 
     @Override
@@ -240,7 +225,6 @@ public class PhongDatServiceImpl implements PhongDatServices {
     public void checkoutDonDat(Integer id) {
         // Bước 1: Lấy danh sách LoaiPhongDat
         List<LoaiPhongDat> loaiPhongDatList = loaiPhongDatRepository.findByIdDonDat(id);
-
         // Bước 2: Tính tổng số lượng phòng đặt từ danh sách các LoaiPhongDat
         int totalSoLuong = loaiPhongDatList.stream().mapToInt(LoaiPhongDat::getSoLuong).sum();
         int soLuongChechOut = countCheckout(id);
