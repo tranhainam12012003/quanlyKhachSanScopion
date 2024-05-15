@@ -114,13 +114,12 @@ public class PhongDatServiceImpl implements PhongDatServices {
     @Override
     public void checkin(Integer id) {
 
-
         Optional<PhongDat> optional = phongDatRepository.findById(id);
         Integer idDonDat = optional.get().getDonDatIdDonDat().getId();
         Optional<DonDat> dd = donDatRepository.findById(idDonDat);
         LocalDate vao = dd.get().getThoiGianVao().toLocalDate();
         LocalDate now = LocalDate.now();
-        if (vao!= now){
+        if (!vao.equals(now)){
             throw new RuntimeException("Ngày checkin khác ngày đặt");
         }
         optional.map(o -> {
