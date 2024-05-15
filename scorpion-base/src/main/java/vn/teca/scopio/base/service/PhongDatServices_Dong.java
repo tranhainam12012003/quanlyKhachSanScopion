@@ -111,10 +111,12 @@ public class PhongDatServices_Dong {
             detail.setThoiGianVao(Timestamp.valueOf(donDat.getThoiGianVao()));
             detail.setThoiGianRa(Timestamp.valueOf(donDat.getThoiGianRa()));
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-            LocalDate thoiGianVao = LocalDate.parse(donDat.getThoiGianVao().toString(), formatter);
-            LocalDate thoiGianRa = LocalDate.parse(donDat.getThoiGianRa().toString(), formatter);
+//            LocalDate thoiGianVao = LocalDate.parse(donDat.getThoiGianVao().toString(), formatter);
+//            LocalDate thoiGianRa = LocalDate.parse(donDat.getThoiGianRa().toString(), formatter);
+            LocalDate thoiGianVao = donDat.getThoiGianVao().toLocalDate();
+            LocalDate thoiGianRa = donDat.getThoiGianRa().toLocalDate();
             long soNgayChenhLech = ChronoUnit.DAYS.between(thoiGianVao, thoiGianRa);
 
             BigDecimal giaTien = detail.getTienLoaiPhong().multiply(BigDecimal.valueOf(soNgayChenhLech));
